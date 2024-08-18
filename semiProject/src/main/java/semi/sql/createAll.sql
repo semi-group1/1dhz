@@ -137,3 +137,5 @@ start with 1
 increment by 1
 nocache
 nocycle;
+
+ALTER TABLE SEMI_TOPIC ADD POST_STATUS VARCHAR2(8) DEFAULT 'active' NOT NULL;
