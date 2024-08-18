@@ -1,5 +1,5 @@
 package semi.model;
 
-public enum AdminUserReportStatus {
-	inProgress, completed
+public enum AdminReportStatus {
+	inProgress, completed, denied
 }
