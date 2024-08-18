@@ -8,6 +8,8 @@
 <title>관리자 페이지</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/css/admin.css">
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/admin.js"></script>
 </head>
 <body>
 	<div id="container">
@@ -39,6 +41,9 @@
 			<c:choose>
 				<c:when test='${command eq "userList" }'>
 					<%@ include file="../user/list.jsp"%>
+				</c:when>
+				<c:when test='${command eq "userInfo" }'>
+					<%@ include file="../user/info.jsp"%>
 				</c:when>
 			</c:choose>
 

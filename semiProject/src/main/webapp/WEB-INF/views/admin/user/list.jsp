@@ -18,7 +18,8 @@
 					<td>${item.userId }</td>
 					<td>${item.userName }</td>
 					<td>${item.userEmail }</td>
-					<td><button data-id="${item.userId }">상세보기</button></td>
+					<td><button type="button" class="admin-userinfo-btn"
+							data-id="${item.userId }">상세보기</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>
