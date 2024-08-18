@@ -41,10 +41,13 @@ public class AdminUserDAO {
 			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				AdminUser adminUser = new AdminUser();
+				AdminUser au = new AdminUser();
 
-				adminUser.setUserId(rs.getInt("user_id"));
-				adminUser.setUserName(rs.getString("user_name"));
+				au.setUserId(rs.getInt("user_id"));
+				au.setUserName(rs.getString("user_name"));
+				au.setUserEmail(rs.getString("user_email"));
+
+				adminUsers.add(au);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -62,11 +65,11 @@ public class AdminUserDAO {
 	}
 
 	public AdminUser selectUserInfo(int userId) {
-		AdminUser adminUser = new AdminUser();
+		AdminUser au = new AdminUser();
 		this.sql = """
 				SELECT user_id, user_name, user_email, job_category_super, job_category_sub, user_status, to_char(user_join_date, 'YYYY-MM-DD') user_join_date
 				FROM SEMI_USER su JOIN SEMI_JOB_CATEGORY sjc ON su.USER_JOB = sjc.JOB_CATEGORY_ID
-				WHERE user_id = ?;
+				WHERE user_id = ?
 				""";
 
 		try {
@@ -76,11 +79,12 @@ public class AdminUserDAO {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				adminUser.setUserId(rs.getInt("user_id"));
-				adminUser.setUserName(rs.getString("user_name"));
-				adminUser.setUserJob(rs.getString("job_category_super") + ">" + rs.getString("job_category_sub"));
-				adminUser.setUserStatus(AdminUserStatus.valueOf(rs.getString("user_status")));
-				adminUser.setUserJoinDate("user_join_date");
+				au.setUserId(rs.getInt("user_id"));
+				au.setUserName(rs.getString("user_name"));
+				au.setUserEmail(rs.getString("user_email"));
+				au.setUserJob(rs.getString("job_category_super") + ">" + rs.getString("job_category_sub"));
+				au.setUserStatus(AdminUserStatus.valueOf(rs.getString("user_status")));
+				au.setUserJoinDate(rs.getString("user_join_date"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -94,7 +98,7 @@ public class AdminUserDAO {
 			}
 		}
 
-		return adminUser;
+		return au;
 	}
 
 	public int updateUserStatus(int userId, AdminUserStatus status) {

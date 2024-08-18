@@ -33,16 +33,28 @@ public class AdminTopicDAO {
 	public List<AdminTopic> selectAllTopics() {
 		List<AdminTopic> adminTopics = new ArrayList<AdminTopic>();
 		this.sql = """
-				SELECT post_id, topic_category_id, topic_category_name, post_title, post_date, user_name, post_status
+				SELECT post_id, topic_category_name, post_title, to_char(post_date, 'YYYY-MM-DD') post_date, user_name, post_status
 				FROM SEMI_TOPIC st
 				JOIN SEMI_TOPIC_CATEGORY stc ON st.CATE_NO = stc.TOPIC_CATEGORY_ID
 				JOIN SEMI_USER su ON st.USER_ID = su.USER_ID
+				WHERE job_yn = 'n'
 				""";
 
 		try {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				AdminTopic at = new AdminTopic();
+
+				at.setPostId(rs.getInt("post_id"));
+				at.setPostCategoryName(rs.getString("topic_category_name"));
+				at.setPostTitle(rs.getString("post_title"));
+				at.setPostCreatedDate(rs.getString("post_date"));
+				at.setPostUserName(rs.getString("user_name"));
+				at.setPostStatus(rs.getString("post_status"));
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
