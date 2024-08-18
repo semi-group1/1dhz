@@ -3,6 +3,7 @@ package semi.model;
 public class AdminUser {
 	private int userId;
 	private String userName;
+	private String userEmail;
 	private String userJob;
 	private AdminUserStatus userStatus;
 	private String userJoinDate;
@@ -72,6 +73,14 @@ public class AdminUser {
 
 	public void setUserReportedCount(int userReportedCount) {
 		this.userReportedCount = userReportedCount;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 }

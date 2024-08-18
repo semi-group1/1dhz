@@ -3,7 +3,7 @@ package semi.model;
 public class AdminTopic {
 	private int postId;
 	private int postCategoryId;
-	private int postCategoryName;
+	private String postCategoryName;
 	private String postTitle;
 	private String postCreatedDate;
 	private String postModifiedDate;
@@ -27,11 +27,11 @@ public class AdminTopic {
 		this.postCategoryId = postCategoryId;
 	}
 
-	public int getPostCategoryName() {
+	public String getPostCategoryName() {
 		return postCategoryName;
 	}
 
-	public void setPostCategoryName(int postCategoryName) {
+	public void setPostCategoryName(String postCategoryName) {
 		this.postCategoryName = postCategoryName;
 	}
 
@@ -81,5 +81,9 @@ public class AdminTopic {
 
 	public void setPostStatus(AdminPostStatus postStatus) {
 		this.postStatus = postStatus;
+	}
+
+	public void setPostStatus(String string) {
+		this.postStatus = AdminPostStatus.valueOf(string);
 	}
 }
