@@ -1,13 +1,14 @@
 package semi.model;
 
-public class AdminUserReport {
+public class AdminReport {
 	private int repordId;
 	private String reportType;
 	private int reportTargetId;
 	private int reportUserId;
+	private String reportUserName;
 	private String reportDesc;
 	private String reportedDate;
-	private AdminUserReportStatus reportStatus;
+	private AdminReportStatus reportStatus;
 
 	public int getRepordId() {
 		return repordId;
@@ -57,12 +58,19 @@ public class AdminUserReport {
 		this.reportedDate = reportedDate;
 	}
 
-	public AdminUserReportStatus getReportStatus() {
+	public AdminReportStatus getReportStatus() {
 		return reportStatus;
 	}
 
-	public void setReportStatus(AdminUserReportStatus reportStatus) {
+	public void setReportStatus(AdminReportStatus reportStatus) {
 		this.reportStatus = reportStatus;
 	}
 
+	public String getReportUserName() {
+		return reportUserName;
+	}
+
+	public void setReportUserName(String reportUserName) {
+		this.reportUserName = reportUserName;
+	}
 }
