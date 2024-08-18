@@ -7,10 +7,15 @@ import java.sql.Statement;
 import java.util.*;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import semi.model.*;
 
+@Repository
 public class AdminTopicDAO {
+
+	@Autowired
 	private DataSource ds;
 	private Connection conn;
 	private Statement stmt;

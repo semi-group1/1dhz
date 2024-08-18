@@ -9,10 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import semi.model.*;
 
+@Repository
 public class AdminReportDAO {
+
+	@Autowired
 	private DataSource ds;
 	private Connection conn;
 	private Statement stmt;

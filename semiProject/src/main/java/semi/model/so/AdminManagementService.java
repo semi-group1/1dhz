@@ -1,12 +1,15 @@
-package semi.model;
+package semi.model.so;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import semi.model.dao.*;
+import semi.model.*;
 
+@Service
 public class AdminManagementService {
 	@Autowired
 	AdminUserDAO adminUserDAO;
@@ -14,6 +17,9 @@ public class AdminManagementService {
 	AdminTopicDAO adminTopicDAO;
 	@Autowired
 	AdminReportDAO adminReportDAO;
+
+	public AdminManagementService() {
+	}
 
 	public List<AdminUser> selectAllUserInfos() {
 		return adminUserDAO.selectAllUserInfos();
