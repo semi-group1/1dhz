@@ -121,7 +121,7 @@ public class AdminUserDAO {
 		return rowCount;
 	}
 
-	public int insertUserInActive(int userId, String desc, int length) {
+	public int insertUserInactive(int userId, String desc, int length) {
 		int rowCount = 0;
 		this.sql = """
 				insert into semi_user_inactive
@@ -148,7 +148,7 @@ public class AdminUserDAO {
 		return rowCount;
 	}
 
-	public int isUserInActive(int userId) {
+	public int isUserInactive(int userId) {
 		int count = 0;
 		this.sql = """
 				SELECT COUNT(*) AS user_count

@@ -56,6 +56,57 @@ public class AdminTopicDAO {
 
 	public int updatePostStatus(int postId, AdminPostStatus status) {
 		int rowCount = 0;
+		this.sql = """
+				update semi_post
+				set post_status = ?
+				where post_id = ?
+				""";
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, status.toString());
+			pstmt.setInt(2, postId);
+			rowCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return rowCount;
+	}
+
+	public int insertPostInactive(int postId, String desc) {
+		int rowCount = 0;
+		this.sql = """
+				insert into semi_post_inactive
+				values(?, ?, sysdate)
+				""";
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postId);
+			pstmt.setString(2, desc);
+			rowCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
 		return rowCount;
 	}

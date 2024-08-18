@@ -27,7 +27,7 @@ public class AdminReportDAO {
 		this.ds = ds;
 	}
 
-	public List<AdminReport> selectReportsByType(AdminReportType adminReportType) {
+	public List<AdminReport> selectReportsByType(AdminReportType type) {
 		List<AdminReport> adminReports = new ArrayList<AdminReport>();
 		this.sql = """
 				SELECT  report_id, report_type, report_target_id, report_user_id, user_name, report_desc, to_char(reported_date, 'YYYY-MM-DD') reported_date
@@ -38,7 +38,7 @@ public class AdminReportDAO {
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, adminReportType.toString());
+			pstmt.setString(1, type.toString());
 			rs = pstmt.executeQuery();
 		} catch (Exception e) {
 			e.printStackTrace();
