@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지 - 회원 정보 상세 보기</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <div id="container">
+        <div id="top">
+            <span id="logo-admin">ADMIN PAGE</span>
+        </div>
+        <div id="bottom">
+            <div id="left">
+                <div class="admin-menu" id="members">
+                    <p class="admin-menu-title">MEMBERS</p>
+                    <p>전체 회원 조회</p>
+                </div>
+                <div class="admin-menu" id="topics">
+                    <p class="admin-menu-title">TOPICS</p>
+                    <p>전체 게시판 조회</p>
+                    <p>일반 토픽별 조회</p>
+                    <p>직무별 조회</p>
+                </div>
+                <div class="admin-menu" id="reports">
+                    <p class="admin-menu-title">REPORTS</p>
+                    <p>게시글별 접수내역</p>
+                    <p>회원별 접수내역</p>
+                    <p>댓글별 접수내역</p>
+                </div>
+            </div>
+            <div id="right">
+                <h2>회원 정보</h2>
+                <table class="admin-board">
+                    <tr>
+                        <th>회원 번호</th>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <th>닉네임</th>
+                        <td>손흥민</td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td>hmson@naver.com</td>
+                    </tr>
+                    <tr>
+                        <th>직무</th>
+                        <td>기타 > 스포츠 선수</td>
+                    </tr>
+                    <tr>
+                        <th>상태</th>
+                        <td>일반 회원</td>
+                    </tr>
+                    <tr>
+                        <th>가입일</th>
+                        <td>2024. 08. 13</td>
+                    </tr>
+                    <tr>
+                        <th>신고 누적 횟수</th>
+                        <td><button>상세보기</button></td>
+                    </tr>
+                </table>
+                <hr>
+                <h2>작성 게시글 목록</h2>
+                <table class="admin-board">
+                    <thead>
+                        <tr>
+                            <th>게시글 번호</th>
+                            <th>제목</th>
+                            <th>추천</th>
+                            <th>댓글</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>스프링 너무 어렵네요.</td>
+                            <td>10</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>스프링 너무 어렵네요.</td>
+                            <td>10</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>스프링 너무 어렵네요.</td>
+                            <td>10</td>
+                            <td>10</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="admin-board-page">
+                    <li>이전</li>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>다음</li>
+                </ul>
+                </table>
+                <hr>
+                <h2>작성 댓글 목록</h2>
+                <table class="admin-board">
+                    <thead>
+                        <tr>
+                            <th>댓글 번호</th>
+                            <th>내용</th>
+                            <th>원게시글</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>저도요.</td>
+                            <td><a href="">토픽>개발>스프링 너무 어렵네요.</a></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>저도요.</td>
+                            <td><a href="">토픽>개발>스프링 너무 어렵네요.</a></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>저도요.</td>
+                            <td><a href="">토픽>개발>스프링 너무 어렵네요.</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="admin-board-page">
+                    <li>이전</li>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>다음</li>
+                </ul>
+                <hr>
+                <div>
+                    <button>목록으로 돌아가기</button>
+                    <button>회원 정지</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
