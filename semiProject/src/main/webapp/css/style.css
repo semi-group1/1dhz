@@ -1,0 +1,39 @@
+#container {
+    width: 1280px;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.search-input:focus {
+    border-color: #6f42c1; 
+    box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25); 
+}
+
+.footer-logo img {
+    height: 40px;
+}
+
+header.bg-dark {
+    background-color: #ffffff !important; 
+    border-color: #ccc; 
+}
+
+footer.bg-dark {
+    background-color: #5e37a6 !important; 
+    border-color: #ccc; 
+}
+
+#write-btn, #login-btn {
+    background-color: #6f42c1 !important; 
+    border-color: #6f42c1 !important; 
+    color: #ffffff !important; 
+}
+
+#write-btn:hover, #login-btn:hover {
+    background-color: #58339d !important; 
+    border-color: #58339d!important;
+}
