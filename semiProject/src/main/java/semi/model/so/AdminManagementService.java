@@ -42,7 +42,7 @@ public class AdminManagementService {
 		boolean result = false;
 
 		if (adminUserDAO.isUserInactive(userId) == 1) {
-			return result;
+			return false;
 		}
 
 		if (adminUserDAO.insertUserInactive(userId, desc, length) == 1

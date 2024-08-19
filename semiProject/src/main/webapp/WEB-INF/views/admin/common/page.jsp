@@ -55,6 +55,9 @@
 				<c:when test='${command eq "userInfo" }'>
 					<%@ include file="../user/info.jsp"%>
 				</c:when>
+				<c:when test='${command eq "inactivate" }'>
+					<%@ include file="../user/inactivate.jsp"%>
+				</c:when>
 				<c:when test='${command eq "topicListAll" }'>
 					<%@ include file="../topic/all.jsp"%>
 				</c:when>

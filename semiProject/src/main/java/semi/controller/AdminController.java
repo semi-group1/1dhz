@@ -3,10 +3,13 @@ package semi.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import semi.model.so.*;
+import semi.model.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -34,6 +37,19 @@ public class AdminController {
 		model.addAttribute("userPosts", adminManagementService.selectAllUserPosts(userId));
 		model.addAttribute("userComments", adminManagementService.selectAllUserComments(userId));
 
+		return view;
+	}
+
+	@GetMapping("/user/inactivate")
+	public String showInactiveWindow(Model model, @RequestParam int userId) {
+		model.addAttribute("command", "inactivate");
+		model.addAttribute("userInfo", adminManagementService.selectUserInfo(userId));
+		return view;
+	}
+
+	@PostMapping("/user/inactivate")
+	public String setUserIactivate(Model model, AdminUserInactive form) {
+		System.out.println(form);
 		return view;
 	}
 

@@ -108,7 +108,8 @@
 	</ul>
 	<hr>
 	<div>
-		<button id="historyBack">이전 페이지로 돌아가기</button>
-		<button>회원 정지</button>
+		<button class="historyBack">이전 페이지로 돌아가기</button>
+		<button class="inactivateBtn" data-id="${userInfo.userId }">회원
+			정지</button>
 	</div>
 </div>
