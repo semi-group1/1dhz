@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
@@ -117,15 +118,15 @@
     <div id="container">
         <div class="left">
             <div class="speech-bubble">
-                <h1>자기소개 페이지 입니다.</h1>
+                <h1>${user.user_comment}</h1>
             </div>
             <div class="profile">
-                <img src="profile.jpg" alt="프로필이미지" class="profile_image"/>
-                <p>닉네임</p>
-                <p>직군 정보</p>
+                <img src="/semiProject/res/images/profile.jpg" alt="프로필이미지" class="profile_image"/>
+                <p>${user.user_name}</p>
+                <p>${user.user_job}</p>
                 <p>#태그1 #태그2</p>
                 <p>#태그3 #태그4</p>
-                <a href="./editInfo.html"><button class="info_edit_btn">정보 수정</button></a>
+                <a href="/semiProject/editInfo/${user.user_id}"><button class="info_edit_btn">정보 수정</button></a>
             </div>
         </div>
         
