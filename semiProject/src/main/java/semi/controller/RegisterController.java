@@ -1,13 +1,15 @@
 package semi.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class RegisterController {
 	
-	@RequestMapping("/register/signUpPage")
-	public String handleSignUp() {
-		return "register/signUpPage";
+	//회원가입페이지 이동
+	@GetMapping("/register/signUp")
+	public String handleSignUp(Model model) {
+		return "register/signUp";
 	}
 }
