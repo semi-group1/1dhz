@@ -38,19 +38,17 @@ public class AdminManagementService {
 	}
 
 	@Transactional
-	public boolean setUserInactive(int userId, String desc, int length) {
-		boolean result = false;
+	public boolean setUserInactive(AdminUserInactive form) {
+		int result = 0;
 
-		if (adminUserDAO.isUserInactive(userId) == 1) {
+		if (adminUserDAO.isUserInactive(form.getUserId()) > 0) {
 			return false;
 		}
 
-		if (adminUserDAO.insertUserInactive(userId, desc, length) == 1
-				&& adminUserDAO.updateUserStatus(userId, AdminUserStatus.inactive) == 1) {
-			result = true;
-		}
+		result = adminUserDAO.insertUserInactive(form)
+				* adminUserDAO.updateUserStatus(form.getUserId(), AdminUserStatus.inactive);
 
-		return result;
+		return result == 1;
 	}
 
 	public List<AdminTopic> selectAllTopics() {

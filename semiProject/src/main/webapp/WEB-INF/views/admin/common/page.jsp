@@ -22,7 +22,7 @@
 					<p class="admin-menu-title">MEMBERS</p>
 					<p>
 						<a href="${pageContext.request.contextPath}/admin/user/list">전체
-							회원 조회</a>zzz
+							회원 조회</a>
 					</p>
 				</div>
 				<div class="admin-menu" id="topics">
@@ -52,7 +52,8 @@
 				<c:when test='${command eq "userList" }'>
 					<%@ include file="../user/list.jsp"%>
 				</c:when>
-				<c:when test='${command eq "userInfo" }'>
+				<c:when
+					test='${command eq "userInfo" or command eq "setUserInacitve" }'>
 					<%@ include file="../user/info.jsp"%>
 				</c:when>
 				<c:when test='${command eq "inactivate" }'>

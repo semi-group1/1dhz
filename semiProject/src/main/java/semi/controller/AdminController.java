@@ -15,7 +15,7 @@ import semi.model.*;
 @RequestMapping("/admin")
 public class AdminController {
 	@Autowired
-	private AdminManagementService adminManagementService;
+	private AdminManagementService ams;
 	private String view;
 
 	public AdminController() {
@@ -25,7 +25,7 @@ public class AdminController {
 	@RequestMapping("/user/list")
 	public String getAllUserList(Model model) {
 		model.addAttribute("command", "userList");
-		model.addAttribute("list", adminManagementService.selectAllUserInfos());
+		model.addAttribute("list", ams.selectAllUserInfos());
 
 		return view;
 	}
@@ -33,9 +33,9 @@ public class AdminController {
 	@RequestMapping("/user/info")
 	public String getUserInfo(Model model, @RequestParam int userId) {
 		model.addAttribute("command", "userInfo");
-		model.addAttribute("userInfo", adminManagementService.selectUserInfo(userId));
-		model.addAttribute("userPosts", adminManagementService.selectAllUserPosts(userId));
-		model.addAttribute("userComments", adminManagementService.selectAllUserComments(userId));
+		model.addAttribute("userInfo", ams.selectUserInfo(userId));
+		model.addAttribute("userPosts", ams.selectAllUserPosts(userId));
+		model.addAttribute("userComments", ams.selectAllUserComments(userId));
 
 		return view;
 	}
@@ -43,20 +43,24 @@ public class AdminController {
 	@GetMapping("/user/inactivate")
 	public String showInactiveWindow(Model model, @RequestParam int userId) {
 		model.addAttribute("command", "inactivate");
-		model.addAttribute("userInfo", adminManagementService.selectUserInfo(userId));
+		model.addAttribute("userInfo", ams.selectUserInfo(userId));
 		return view;
 	}
 
 	@PostMapping("/user/inactivate")
 	public String setUserIactivate(Model model, AdminUserInactive form) {
-		System.out.println(form);
-		return view;
+		if (ams.setUserInactive(form)) {
+			System.out.println("회원이 비활성화 되었습니다.");
+		} else {
+			System.out.println("회원이 비활성화 되지 않았습니다.");
+		}
+		return "redirect: info?userId=" + form.getUserId();
 	}
 
 	@RequestMapping("/topic/list/all")
 	public String getAllPostList(Model model) {
 		model.addAttribute("command", "topicListAll");
-		model.addAttribute("list", adminManagementService.selectAllTopics());
+		model.addAttribute("list", ams.selectAllTopics());
 
 		return view;
 	}
@@ -64,7 +68,7 @@ public class AdminController {
 	@RequestMapping("/topic/list/general")
 	public String getGeneralTopics(Model model) {
 		model.addAttribute("command", "topicListGeneral");
-		model.addAttribute("list", adminManagementService.selectGeneralTopics());
+		model.addAttribute("list", ams.selectGeneralTopics());
 
 		return view;
 	}
@@ -72,7 +76,7 @@ public class AdminController {
 	@RequestMapping("/topic/list/job")
 	public String getJobTopics(Model model) {
 		model.addAttribute("command", "topicListJob");
-		model.addAttribute("list", adminManagementService.selectJobTopics());
+		model.addAttribute("list", ams.selectJobTopics());
 
 		return view;
 	}

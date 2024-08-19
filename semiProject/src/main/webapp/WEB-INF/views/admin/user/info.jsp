@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:if test="${not empty result}">
+	<script>
+		<c:choose>
+		<c:when test="${result eq true }">
+		alert('회원이 활동 정지 상태가 되었습니다.');
+		</c:when>
+		<c:otherwise>
+		alert('회원이 활동 정지 상태가 되지 않았습니다.');
+		</c:otherwise>
+		</c:choose>
+	</script>
+</c:if>
 <div id="right">
 	<h2>회원 정보</h2>
 	<table class="admin-board">

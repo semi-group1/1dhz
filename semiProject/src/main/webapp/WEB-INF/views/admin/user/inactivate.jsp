@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div id="right">
 	<h1>회원 정지</h1>
-	<form action="" method="POST">
+	<form action="inactivate" method="POST">
 		<input type="hidden" name="userId" value="${userInfo.userId }">
 		<table class="admin-board inactivate">
 			<tr>

@@ -1,6 +1,7 @@
 select * from semi_job_category;
 select * from semi_user;
 select * from semi_topic;
+select * from semi_user_inactive;
 
 INSERT INTO SEMI_USER(USER_ID, USER_NAME, USER_EMAIL, USER_PW, USER_JOB)
 VALUES(0, '테스트 유저', 'test@email.com', '1234', 0);
@@ -14,3 +15,13 @@ values(0, 0, '테스트 게시글 제목', '테스트 게시글 내용', default
 
 insert into semi_topic
 values(0, 99999, '직무 테스트 게시글 제목', '직무 테스트 게시글 내용', default, default, 'test_tag', 0, default, 'y');
+
+SELECT COUNT(*) AS user_count
+FROM SEMI_USER_INACTIVE sui
+WHERE sui.INACTIVE_USER_ID = 0 AND SYSDATE BETWEEN sui.INACTIVE_START_DATE AND sui.INACTIVE_END_DATE
+
+
+delete from semi_user_inactive;
+
+insert into semi_user_inactive
+values(0, '테스트', sysdate, sysdate + 3);

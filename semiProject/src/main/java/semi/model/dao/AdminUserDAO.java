@@ -222,7 +222,7 @@ public class AdminUserDAO {
 		return rowCount;
 	}
 
-	public int insertUserInactive(int userId, String desc, int length) {
+	public int insertUserInactive(AdminUserInactive form) {
 		int rowCount = 0;
 		this.sql = """
 				insert into semi_user_inactive
@@ -232,9 +232,11 @@ public class AdminUserDAO {
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, userId);
-			pstmt.setString(2, desc);
-			pstmt.setInt(3, length);
+			pstmt.setInt(1, form.getUserId());
+			pstmt.setString(2, form.getDesc());
+			pstmt.setInt(3, form.getLength());
+
+			rowCount = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
