@@ -31,7 +31,47 @@ public class AdminTopicDAO {
 	}
 
 	public List<AdminTopic> selectAllTopics() {
-		List<AdminTopic> adminTopics = new ArrayList<AdminTopic>();
+		List<AdminTopic> atList = new ArrayList<AdminTopic>();
+		this.sql = """
+				SELECT post_id, post_title, to_char(post_date, 'YYYY-MM-DD') post_date, user_name, post_status
+				FROM SEMI_TOPIC st
+				JOIN SEMI_USER su ON st.USER_ID = su.USER_ID
+				""";
+
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				AdminTopic at = new AdminTopic();
+
+				at.setPostId(rs.getInt("post_id"));
+				at.setPostTitle(rs.getString("post_title"));
+				at.setPostCreatedDate(rs.getString("post_date"));
+				at.setPostUserName(rs.getString("user_name"));
+				at.setPostStatus(rs.getString("post_status"));
+
+				atList.add(at);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return atList;
+	}
+
+	public List<AdminTopic> selectGeneralTopics() {
+		List<AdminTopic> atList = new ArrayList<AdminTopic>();
 		this.sql = """
 				SELECT post_id, topic_category_name, post_title, to_char(post_date, 'YYYY-MM-DD') post_date, user_name, post_status
 				FROM SEMI_TOPIC st
@@ -54,6 +94,8 @@ public class AdminTopicDAO {
 				at.setPostCreatedDate(rs.getString("post_date"));
 				at.setPostUserName(rs.getString("user_name"));
 				at.setPostStatus(rs.getString("post_status"));
+
+				atList.add(at);
 			}
 
 		} catch (Exception e) {
@@ -68,7 +110,50 @@ public class AdminTopicDAO {
 			}
 		}
 
-		return adminTopics;
+		return atList;
+	}
+
+	public List<AdminTopic> selectJobTopics() {
+		List<AdminTopic> atList = new ArrayList<AdminTopic>();
+		this.sql = """
+				SELECT post_id, job_category_super, job_category_sub, post_title, to_char(post_date, 'YYYY-MM-DD') post_date, user_name, post_status
+				FROM SEMI_TOPIC st
+				JOIN SEMI_JOB_CATEGORY sjc ON st.CATE_NO = sjc.JOB_CATEGORY_ID
+				JOIN SEMI_USER su ON st.USER_ID = su.USER_ID
+				WHERE job_yn = 'y'
+				""";
+
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				AdminTopic at = new AdminTopic();
+
+				at.setPostId(rs.getInt("post_id"));
+				at.setPostCategoryName(rs.getString("job_category_super") + " > " + rs.getString("job_category_sub"));
+				at.setPostTitle(rs.getString("post_title"));
+				at.setPostCreatedDate(rs.getString("post_date"));
+				at.setPostUserName(rs.getString("user_name"));
+				at.setPostStatus(rs.getString("post_status"));
+
+				atList.add(at);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return atList;
 	}
 
 	public int updatePostStatus(int postId, AdminPostStatus status) {

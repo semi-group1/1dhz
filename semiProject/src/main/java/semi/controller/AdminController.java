@@ -37,10 +37,26 @@ public class AdminController {
 		return view;
 	}
 
-	@RequestMapping("/post/list")
+	@RequestMapping("/topic/list/all")
 	public String getAllPostList(Model model) {
-		model.addAttribute("command", "pageList");
+		model.addAttribute("command", "topicListAll");
 		model.addAttribute("list", adminManagementService.selectAllTopics());
+
+		return view;
+	}
+
+	@RequestMapping("/topic/list/general")
+	public String getGeneralTopics(Model model) {
+		model.addAttribute("command", "topicListGeneral");
+		model.addAttribute("list", adminManagementService.selectGeneralTopics());
+
+		return view;
+	}
+
+	@RequestMapping("/topic/list/job")
+	public String getJobTopics(Model model) {
+		model.addAttribute("command", "topicListJob");
+		model.addAttribute("list", adminManagementService.selectJobTopics());
 
 		return view;
 	}

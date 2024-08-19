@@ -27,9 +27,19 @@
 				</div>
 				<div class="admin-menu" id="topics">
 					<p class="admin-menu-title">TOPICS</p>
-					<p>전체 게시판 조회</p>
-					<p>일반 토픽별 조회</p>
-					<p>직무별 조회</p>
+					<p>
+						<a href="${pageContext.request.contextPath }/admin/topic/list/all">전체
+							게시판 조회</a>
+					</p>
+					<p>
+						<a
+							href="${pageContext.request.contextPath }/admin/topic/list/general">일반
+							토픽별 조회</a>
+					</p>
+					<p>
+						<a href="${pageContext.request.contextPath }/admin/topic/list/job">직무별
+							조회</a>
+					</p>
 				</div>
 				<div class="admin-menu" id="reports">
 					<p class="admin-menu-title">REPORTS</p>
@@ -44,6 +54,15 @@
 				</c:when>
 				<c:when test='${command eq "userInfo" }'>
 					<%@ include file="../user/info.jsp"%>
+				</c:when>
+				<c:when test='${command eq "topicListAll" }'>
+					<%@ include file="../topic/all.jsp"%>
+				</c:when>
+				<c:when test='${command eq "topicListGeneral" }'>
+					<%@ include file="../topic/general.jsp"%>
+				</c:when>
+				<c:when test='${command eq "topicListJob" }'>
+					<%@ include file="../topic/job.jsp"%>
 				</c:when>
 			</c:choose>
 

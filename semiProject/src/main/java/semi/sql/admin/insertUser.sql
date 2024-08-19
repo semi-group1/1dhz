@@ -11,3 +11,6 @@ WHERE user_id = 0;
 
 insert into semi_topic
 values(0, 0, '테스트 게시글 제목', '테스트 게시글 내용', default, default, 'test_tag', 0, default, default);
+
+insert into semi_topic
+values(0, 99999, '직무 테스트 게시글 제목', '직무 테스트 게시글 내용', default, default, 'test_tag', 0, default, 'y');

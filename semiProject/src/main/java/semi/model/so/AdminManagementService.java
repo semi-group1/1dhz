@@ -57,6 +57,14 @@ public class AdminManagementService {
 		return adminTopicDAO.selectAllTopics();
 	}
 
+	public List<AdminTopic> selectGeneralTopics() {
+		return adminTopicDAO.selectGeneralTopics();
+	}
+
+	public List<AdminTopic> selectJobTopics() {
+		return adminTopicDAO.selectJobTopics();
+	}
+
 	@Transactional
 	public boolean setPostInactive(int postId, String desc) {
 		boolean result = false;
