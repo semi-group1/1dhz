@@ -47,7 +47,7 @@
 			<c:forEach items="${userPosts }" var="post" varStatus="status">
 				<tr>
 					<td>${post.postId }</td>
-					<td>${post.postTitle }</td>
+					<td><a href="#">${post.postTitle }</a></td>
 					<td>${post.postComments }</td>
 				</tr>
 			</c:forEach>
@@ -97,7 +97,7 @@
 	</ul>
 	<hr>
 	<div>
-		<button>목록으로 돌아가기</button>
+		<button id="historyBack">이전 페이지로 돌아가기</button>
 		<button>회원 정지</button>
 	</div>
 </div>
