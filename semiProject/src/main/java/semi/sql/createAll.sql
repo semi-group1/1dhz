@@ -108,6 +108,7 @@ create table semi_post_inactive(
         inactive_post_desc varchar2(300),
         inactive_date date default sysdate not null
 );
+
 drop table semi_chat;
 
 create table semi_chat (
@@ -115,9 +116,10 @@ create table semi_chat (
     sender_id number references semi_user(user_id),
     receiver_id number references semi_user(user_id),
     message varchar2(1000) not null,
-    sent_time date default sysdate,
+    sent_time timestamp default systimestamp,
     is_read number(1) default 0
 );
+
 
 drop table semi_comment;
 drop sequence seq_semi_comment_id;
