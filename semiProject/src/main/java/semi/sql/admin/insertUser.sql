@@ -9,8 +9,5 @@ SELECT user_id, user_name, user_email, job_category_super, job_category_sub, use
 FROM SEMI_USER su JOIN SEMI_JOB_CATEGORY sjc ON su.USER_JOB = sjc.JOB_CATEGORY_ID
 WHERE user_id = 0;
 
-ALTER TABLE SEMI_TOPIC ADD JOB_YN VARCHAR2(1) DEFAULT 'n' NOT NULL;
-ALTER TABLE SEMI_TOPIC ADD CONSTRAINT SEMI_TOPIC_CHECK CHECK (job_yn in ('y', 'n'));
-
 insert into semi_topic
 values(0, 0, '테스트 게시글 제목', '테스트 게시글 내용', default, default, 'test_tag', 0, default, default);
