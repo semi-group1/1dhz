@@ -33,6 +33,10 @@ public class AdminManagementService {
 		return adminUserDAO.selectAllUserPosts(userId);
 	}
 
+	public List<AdminComment> selectAllUserComments(int userId) {
+		return adminUserDAO.selectAllUserComments(userId);
+	}
+
 	@Transactional
 	public boolean setUserInactive(int userId, String desc, int length) {
 		boolean result = false;

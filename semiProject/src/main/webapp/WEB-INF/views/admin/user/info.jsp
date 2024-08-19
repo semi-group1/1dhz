@@ -44,13 +44,22 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${userPosts }" var="post" varStatus="status">
-				<tr>
-					<td>${post.postId }</td>
-					<td><a href="#">${post.postTitle }</a></td>
-					<td>${post.postComments }</td>
-				</tr>
-			</c:forEach>
+			<c:choose>
+				<c:when test="${empty userPosts }">
+					<tr>
+						<td colspan="3">작성된 게시글이 없습니다.</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${userPosts }" var="post" varStatus="status">
+						<tr>
+							<td>${post.postId }</td>
+							<td><a href="#">${post.postTitle }</a></td>
+							<td>${post.postComments }</td>
+						</tr>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
 		</tbody>
 	</table>
 	<ul class="admin-board-page">
@@ -71,21 +80,23 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>1</td>
-				<td>저도요.</td>
-				<td><a href="">토픽>개발>스프링 너무 어렵네요.</a></td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>저도요.</td>
-				<td><a href="">토픽>개발>스프링 너무 어렵네요.</a></td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>저도요.</td>
-				<td><a href="">토픽>개발>스프링 너무 어렵네요.</a></td>
-			</tr>
+			<c:choose>
+				<c:when test="${empty userComments }">
+					<tr>
+						<td colspan="3">작성된 댓글이 없습니다.</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${userComments }" var="comment"
+						varStatus="status">
+						<tr>
+							<td>${comment.commentId }</td>
+							<td>${comment.commentText }</td>
+							<td><a href="#">${comment.postTitle }</a></td>
+						</tr>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
 		</tbody>
 	</table>
 	<ul class="admin-board-page">

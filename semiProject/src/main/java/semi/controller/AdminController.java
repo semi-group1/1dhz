@@ -32,6 +32,7 @@ public class AdminController {
 		model.addAttribute("command", "userInfo");
 		model.addAttribute("userInfo", adminManagementService.selectUserInfo(userId));
 		model.addAttribute("userPosts", adminManagementService.selectAllUserPosts(userId));
+		model.addAttribute("userComments", adminManagementService.selectAllUserComments(userId));
 
 		return view;
 	}

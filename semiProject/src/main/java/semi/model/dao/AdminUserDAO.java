@@ -144,6 +144,55 @@ public class AdminUserDAO {
 		return atList;
 	}
 
+	public List<AdminComment> selectAllUserComments(int userId) {
+		List<AdminComment> acList = new ArrayList<AdminComment>();
+		AdminComment ac;
+		this.sql = """
+				SELECT
+					comment_id,
+					sc.post_id,
+					post_title,
+					to_char(created_date, 'YYYY-MM-DD') created_date,
+					comment_text
+				FROM
+					SEMI_COMMENT sc
+				JOIN SEMI_TOPIC st ON
+					sc.POST_ID = st.POST_ID
+				WHERE sc.user_id = ?
+				""";
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ac = new AdminComment();
+
+				ac.setCommentId(rs.getInt("comment_id"));
+				ac.setPostId(rs.getInt("post_id"));
+				ac.setPostTitle(rs.getString("post_title"));
+				ac.setCreatedDate(rs.getString("created_date"));
+				ac.setCommentText(rs.getString("comment_text"));
+
+				acList.add(ac);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return acList;
+	}
+
 	public int updateUserStatus(int userId, AdminUserStatus status) {
 		int rowCount = 0;
 		this.sql = """
