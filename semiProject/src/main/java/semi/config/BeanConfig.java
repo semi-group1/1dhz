@@ -2,10 +2,15 @@ package semi.config;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
-import semi.controller.*;
+import semi.controller.ChatController;
+import semi.controller.HelloController;
+import semi.model.ChatModel;
 import semi.model.dao.HelloDao;
+import semi.service.ChatService;
 
 @Configuration
 @PropertySource("classpath:/properties/db.properties")
@@ -45,5 +50,20 @@ public class BeanConfig {
 	@Bean
 	public HelloDao helloDao() {
 		return new HelloDao(this.dataSource());
+	}
+
+	@Bean
+	public ChatModel chatModel() {
+		return new ChatModel();
+	}
+
+	@Bean
+	public ChatService chatService(ChatModel chatModel) {
+		return new ChatService(chatModel);
+	}
+
+	@Bean
+	public ChatController chatController(ChatService chatService) {
+		return new ChatController(chatService);
 	}
 }
