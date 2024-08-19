@@ -119,7 +119,7 @@
                 <h1>자기소개 페이지 입니다.</h1>
             </div>
             <div class="profile">
-                <img src="./images/profile.jpg" alt="프로필이미지" class="profile_image"/>
+                <img src="res/images/profile.jpg" alt="프로필이미지" class="profile_image"/>
                 <p>닉네임</p>
                 <p>직군 정보</p>
                 <p>#태그1 #태그2</p>
