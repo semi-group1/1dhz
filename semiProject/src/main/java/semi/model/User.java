@@ -16,6 +16,9 @@ public class User {
 	private Date user_out_date;
 	private String user_role;
 	
+	public void User() {
+	}
+	
 	public int getUser_id() {
 		return user_id;
 	}

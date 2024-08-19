@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -67,10 +69,10 @@
     <body>
         <div id="container">
             <div class="title">회원 정보 수정</div>
-            <form class="editInfo_form" action="#" method="post">
+            <form class="editInfo_form" action="/semiProject/editInfoProcess" method="post">
                 <p>
                     <label for="email">이메일</label><br />
-                    <input type="text" name="email" id="email" />
+                    <input type="text" name="email" id="email" value="${user.user_email}" />
                     <a href="#"><button id="auth_btn">이메일 인증</button></a>
                 </p>
                 <p>
@@ -82,8 +84,8 @@
                     <input type="password" name="passwdCheck" id="passwdCheck" />
                 </p>
                 <p>
-                    <label for="nickname">닉네임</label><br />
-                    <input type="text" name="nickname" id="nickname" />
+                    <label for="name">닉네임</label><br />
+                    <input type="text" name="name" id="name" value="${user.user_name }" />
                 </p>
                 <p>
                     <label>직군 정보</label><br />
@@ -184,11 +186,11 @@
                 </p>
                 <p>
                     <label for="comment">한 줄 소개</label><br />
-                    <input type="text" max="15" name="comment" id="comment" />
+                    <input type="text" max="15" name="comment" id="comment" value="${user.user_comment }" />
                 </p>
                 <p>
-                    <button id="cancel_btn">취소</button>
-                    <button id="complete_btn">수정 완료</button>
+                	<a href="#"><button id="cancel_btn">취소</button></a>
+                	<button id="complete_btn">수정 완료</button></a>
                 </p>
             </form>
         </div>

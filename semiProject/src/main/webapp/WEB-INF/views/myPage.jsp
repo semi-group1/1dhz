@@ -133,61 +133,13 @@
         <div class="right">
             <div class="wrote_post_title">작성한 게시글</div>
             <div class="wrote_post">
-                <a href="#"><div class="wrote_post_item">
-                    <span id="category">[분류1]</span>
-                    <span id="title">게시글 제목1</span>
-                    <span id="date">2024-08-14</span>
-                </div></a>
-                <a href="#"><div class="wrote_post_item">
-                    <span id="category">[분류2]</span>
-                    <span id="title">게시글 제목2</span>
-                    <span id="date">2024-08-13</span>
-                </div></a>
-                <a href="#"><div class="wrote_post_item">
-                    <span id="category">[분류3]</span>
-                    <span id="title">게시글 제목3</span>
-                    <span id="date">2024-08-12</span>
-                </div></a>
-                <a href="#"><div class="wrote_post_item">
-                    <span id="category">[분류4]</span>
-                    <span id="title">게시글 제목4</span>
-                    <span id="date">2024-08-11</span>
-                </div></a>
-                <a href="#"><div class="wrote_post_item">
-                    <span id="category">[분류5]</span>
-                    <span id="title">게시글 제목5</span>
-                    <span id="date">2024-08-10</span>
-                </div></a>
-                <a href="#"><div class="wrote_post_item">
-                    <span id="category">[분류6]</span>
-                    <span id="title">게시글 제목6</span>
-                    <span id="date">2024-08-09</span>
-                </div></a>
-                <a href="#"><div class="wrote_post_item">
-                    <span id="category">[분류7]</span>
-                    <span id="title">게시글 제목7</span>
-                    <span id="date">2024-08-08</span>
-                </div></a>
-                <a href="#"><div class="wrote_post_item">
-                    <span id="category">[분류8]</span>
-                    <span id="title">게시글 제목8</span>
-                    <span id="date">2024-08-07</span>
-                </div></a>
-                <a href="#"><div class="wrote_post_item">
-                    <span id="category">[분류9]</span>
-                    <span id="title">게시글 제목9</span>
-                    <span id="date">2024-08-06</span>
-                </div></a>
-                <a href="#"><div class="wrote_post_item">
-                    <span id="category">[분류10]</span>
-                    <span id="title">게시글 제목10</span>
-                    <span id="date">2024-08-05</span>
-                </div></a>
-                <a href="#"><div class="wrote_post_item">
-                    <span id="category">[분류10]</span>
-                    <span id="title">게시글 제목10</span>
-                    <span id="date">2024-08-05</span>
-                </div></a>
+               <c:forEach items="${user_post}" var="up">
+					<a href="#"><div class="wrote_post_item">
+	                    <span id="category">[${up.job_category_super}]</span>
+	                    <span id="title">${up.post_title}</span>
+	                    <span id="date">${up.post_date}</span>
+	                </div></a>
+				</c:forEach>
             </div>
         </div>
     </div>

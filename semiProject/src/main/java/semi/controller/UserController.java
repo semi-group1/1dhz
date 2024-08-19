@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import semi.model.EditInfoForm;
 import semi.model.dao.UserDao;
 
 @Controller
@@ -18,6 +19,7 @@ public class UserController {
 	@RequestMapping("/myPage/{userId}")
 	public String myPage(@PathVariable("userId") int userId, Model model) {
 		model.addAttribute("user", userdao.selectOneUser(userId));
+		model.addAttribute("user_post", userdao.selectAllUserPost(userId));
 		
 		return "myPage";
 	}
@@ -27,5 +29,12 @@ public class UserController {
 		model.addAttribute("user", userdao.selectOneUser(userId));
 		
 		return "editInfo";
+	}
+	
+	@RequestMapping("/editInfoProcess")
+	public String editInfoProcess(@RequestBody EditInfoForm info, Model model) {
+		model.addAttribute("editForm", info);
+		
+		return "editInfoProcess";
 	}
 }
