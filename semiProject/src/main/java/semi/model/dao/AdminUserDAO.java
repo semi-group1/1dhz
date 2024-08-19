@@ -222,7 +222,7 @@ public class AdminUserDAO {
 		return rowCount;
 	}
 
-	public int insertUserInactive(AdminUserInactive form) {
+	public int insertUserInactive(AdminInactive form) {
 		int rowCount = 0;
 		this.sql = """
 				insert into semi_user_inactive

@@ -18,7 +18,7 @@
 					<td>${item.postId }</td>
 					<td><a href="#" target="_blank">${item.postTitle }</a></td>
 					<td>${item.postUserName }</td>
-					<td><button type="button" class="admin-setTopicInactive-btn"
+					<td><button type="button" class="inactivateBtn post"
 							data-id="${item.postId }">비활성화</button></td>
 				</tr>
 			</c:forEach>

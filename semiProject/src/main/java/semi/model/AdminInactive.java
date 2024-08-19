@@ -1,11 +1,13 @@
 package semi.model;
 
-public class AdminUserInactive {
+public class AdminInactive {
 	private int userId;
+	private int postId;
+	private String type;
 	private String desc;
 	private int length;
 
-	public AdminUserInactive() {
+	public AdminInactive() {
 	}
 
 	public String getDesc() {
@@ -32,8 +34,19 @@ public class AdminUserInactive {
 		this.userId = userId;
 	}
 
-	@Override
-	public String toString() {
-		return userId + "/" + desc + "/" + length;
+	public int getPostId() {
+		return postId;
+	}
+
+	public void setPostId(int postId) {
+		this.postId = postId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

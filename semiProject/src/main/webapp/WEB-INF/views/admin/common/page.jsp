@@ -28,16 +28,16 @@
 				<div class="admin-menu" id="topics">
 					<p class="admin-menu-title">TOPICS</p>
 					<p>
-						<a href="${pageContext.request.contextPath }/admin/topic/list/all">전체
+						<a href="${pageContext.request.contextPath }/admin/topic/listAll">전체
 							게시판 조회</a>
 					</p>
 					<p>
 						<a
-							href="${pageContext.request.contextPath }/admin/topic/list/general">일반
+							href="${pageContext.request.contextPath }/admin/topic/listGeneral">일반
 							토픽별 조회</a>
 					</p>
 					<p>
-						<a href="${pageContext.request.contextPath }/admin/topic/list/job">직무별
+						<a href="${pageContext.request.contextPath }/admin/topic/listJob">직무별
 							조회</a>
 					</p>
 				</div>
@@ -56,7 +56,7 @@
 					test='${command eq "userInfo" or command eq "setUserInacitve" }'>
 					<%@ include file="../user/info.jsp"%>
 				</c:when>
-				<c:when test='${command eq "inactivate" }'>
+				<c:when test='${command eq "inactivateUser" }'>
 					<%@ include file="../user/inactivate.jsp"%>
 				</c:when>
 				<c:when test='${command eq "topicListAll" }'>
@@ -67,6 +67,9 @@
 				</c:when>
 				<c:when test='${command eq "topicListJob" }'>
 					<%@ include file="../topic/job.jsp"%>
+				</c:when>
+				<c:when test='${command eq "inactivatePost" }'>
+					<%@ include file="../topic/inactivate.jsp"%>
 				</c:when>
 			</c:choose>
 

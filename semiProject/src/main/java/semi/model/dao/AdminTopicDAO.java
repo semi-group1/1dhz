@@ -159,7 +159,7 @@ public class AdminTopicDAO {
 	public int updatePostStatus(int postId, AdminPostStatus status) {
 		int rowCount = 0;
 		this.sql = """
-				update semi_post
+				update semi_topic
 				set post_status = ?
 				where post_id = ?
 				""";
@@ -169,6 +169,7 @@ public class AdminTopicDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, status.toString());
 			pstmt.setInt(2, postId);
+
 			rowCount = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -185,18 +186,20 @@ public class AdminTopicDAO {
 		return rowCount;
 	}
 
-	public int insertPostInactive(int postId, String desc) {
+	public int insertPostInactive(AdminInactive form) {
 		int rowCount = 0;
 		this.sql = """
 				insert into semi_post_inactive
-				values(?, ?, sysdate)
+				values(?, ?, ?, sysdate)
 				""";
 
 		try {
 			conn = ds.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, postId);
-			pstmt.setString(2, desc);
+			pstmt.setInt(1, form.getPostId());
+			pstmt.setString(2, form.getType());
+			pstmt.setString(3, form.getDesc());
+
 			rowCount = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -218,7 +221,7 @@ public class AdminTopicDAO {
 		this.sql = """
 				SELECT COUNT(*) AS post_count
 				FROM SEMI_POST_INACTIVE spi
-				WHERE spi.INACTIVE_POST_ID =?;
+				WHERE spi.INACTIVE_POST_ID =?
 				""";
 
 		try {

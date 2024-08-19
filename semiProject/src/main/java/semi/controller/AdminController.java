@@ -41,14 +41,14 @@ public class AdminController {
 	}
 
 	@GetMapping("/user/inactivate")
-	public String showInactiveWindow(Model model, @RequestParam int userId) {
-		model.addAttribute("command", "inactivate");
+	public String showUserInactiveWindow(Model model, @RequestParam int userId) {
+		model.addAttribute("command", "inactivateUser");
 		model.addAttribute("userInfo", ams.selectUserInfo(userId));
 		return view;
 	}
 
 	@PostMapping("/user/inactivate")
-	public String setUserIactivate(Model model, AdminUserInactive form) {
+	public String setUserInactive(Model model, AdminInactive form) {
 		if (ams.setUserInactive(form)) {
 			System.out.println("회원이 비활성화 되었습니다.");
 		} else {
@@ -57,7 +57,7 @@ public class AdminController {
 		return "redirect: info?userId=" + form.getUserId();
 	}
 
-	@RequestMapping("/topic/list/all")
+	@RequestMapping("/topic/listAll")
 	public String getAllPostList(Model model) {
 		model.addAttribute("command", "topicListAll");
 		model.addAttribute("list", ams.selectAllTopics());
@@ -65,7 +65,7 @@ public class AdminController {
 		return view;
 	}
 
-	@RequestMapping("/topic/list/general")
+	@RequestMapping("/topic/listGeneral")
 	public String getGeneralTopics(Model model) {
 		model.addAttribute("command", "topicListGeneral");
 		model.addAttribute("list", ams.selectGeneralTopics());
@@ -73,11 +73,29 @@ public class AdminController {
 		return view;
 	}
 
-	@RequestMapping("/topic/list/job")
+	@RequestMapping("/topic/listJob")
 	public String getJobTopics(Model model) {
 		model.addAttribute("command", "topicListJob");
 		model.addAttribute("list", ams.selectJobTopics());
 
 		return view;
+	}
+
+	@GetMapping("/topic/inactivate")
+	public String showPostInactiveWindow(Model model, @RequestParam int postId) {
+		model.addAttribute("command", "inactivatePost");
+		model.addAttribute("postId", postId);
+		return view;
+	}
+
+	@PostMapping("/topic/inactivate")
+	public String setPostInactive(Model model, AdminInactive form) {
+		System.out.println(form.getPostId() + " / " + form.getType() + form.getDesc());
+		if (ams.setPostInactive(form)) {
+			System.out.println("게시글이 비활성화 되었습니다.");
+		} else {
+			System.out.println("게시글이 비활성화 되지 않았습니다.");
+		}
+		return "redirect: listAll";
 	}
 }

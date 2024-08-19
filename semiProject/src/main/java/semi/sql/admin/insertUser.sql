@@ -2,6 +2,7 @@ select * from semi_job_category;
 select * from semi_user;
 select * from semi_topic;
 select * from semi_user_inactive;
+select * from semi_post_inactive;
 
 INSERT INTO SEMI_USER(USER_ID, USER_NAME, USER_EMAIL, USER_PW, USER_JOB)
 VALUES(0, '테스트 유저', 'test@email.com', '1234', 0);
@@ -22,6 +23,7 @@ WHERE sui.INACTIVE_USER_ID = 0 AND SYSDATE BETWEEN sui.INACTIVE_START_DATE AND s
 
 
 delete from semi_user_inactive;
+delete from semi_post_inactive;
 
 insert into semi_user_inactive
 values(0, '테스트', sysdate, sysdate + 3);

@@ -38,7 +38,7 @@ public class AdminManagementService {
 	}
 
 	@Transactional
-	public boolean setUserInactive(AdminUserInactive form) {
+	public boolean setUserInactive(AdminInactive form) {
 		int result = 0;
 
 		if (adminUserDAO.isUserInactive(form.getUserId()) > 0) {
@@ -64,19 +64,17 @@ public class AdminManagementService {
 	}
 
 	@Transactional
-	public boolean setPostInactive(int postId, String desc) {
-		boolean result = false;
+	public boolean setPostInactive(AdminInactive form) {
+		int result = 0;
 
-		if (adminTopicDAO.isPostInactive(postId) == 1) {
+		if (adminTopicDAO.isPostInactive(form.getPostId()) > 0) {
 			return false;
 		}
 
-		if (adminTopicDAO.insertPostInactive(postId, desc) == 1
-				&& adminTopicDAO.updatePostStatus(postId, AdminPostStatus.inactive) == 1) {
-			result = true;
-		}
+		result = adminTopicDAO.insertPostInactive(form)
+				* adminTopicDAO.updatePostStatus(form.getPostId(), AdminPostStatus.inactive);
 
-		return result;
+		return result == 1;
 	}
 
 	public List<AdminReport> selectReportsByType(String type) {
