@@ -98,4 +98,25 @@ public class AdminController {
 		}
 		return "redirect: listAll";
 	}
+
+	@RequestMapping("/report/post")
+	public String getPostReports(Model model) {
+		model.addAttribute("command", "postReports");
+		model.addAttribute("list", ams.selectReportsByType("post"));
+		return view;
+	}
+
+	@RequestMapping("/report/user")
+	public String getUserReports(Model model) {
+		model.addAttribute("command", "userReports");
+		model.addAttribute("list", ams.selectReportsByType("post"));
+		return view;
+	}
+
+	@RequestMapping("/report/comment")
+	public String getCommentReports(Model model) {
+		model.addAttribute("command", "commentReports");
+		model.addAttribute("list", ams.selectReportsByType("post"));
+		return view;
+	}
 }

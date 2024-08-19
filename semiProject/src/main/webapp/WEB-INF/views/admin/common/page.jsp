@@ -43,9 +43,18 @@
 				</div>
 				<div class="admin-menu" id="reports">
 					<p class="admin-menu-title">REPORTS</p>
-					<p>게시글별 접수내역</p>
-					<p>회원별 접수내역</p>
-					<p>댓글별 접수내역</p>
+					<p>
+						<a href="${pageContext.request.contextPath }/admin/report/post">게시글
+							접수내역</a>
+					</p>
+					<p>
+						<a href="${pageContext.request.contextPath }/admin/report/user">회원
+							접수내역</a>
+					</p>
+					<p>
+						<a href="${pageContext.request.contextPath }/admin/report/comment">댓글
+							접수내역</a>
+					</p>
 				</div>
 			</div>
 			<c:choose>
@@ -70,6 +79,9 @@
 				</c:when>
 				<c:when test='${command eq "inactivatePost" }'>
 					<%@ include file="../topic/inactivate.jsp"%>
+				</c:when>
+				<c:when test='${command eq "postReports" }'>
+					<%@ include file="../report/post.jsp"%>
 				</c:when>
 			</c:choose>
 

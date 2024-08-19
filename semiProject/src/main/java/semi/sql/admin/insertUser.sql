@@ -27,3 +27,8 @@ delete from semi_post_inactive;
 
 insert into semi_user_inactive
 values(0, '테스트', sysdate, sysdate + 3);
+
+select * from semi_report;
+
+insert into semi_report
+values(0, 'post', 0, 0, '욕설', sysdate, default);

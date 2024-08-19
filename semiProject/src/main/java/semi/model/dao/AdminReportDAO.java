@@ -32,6 +32,63 @@ public class AdminReportDAO {
 		this.ds = ds;
 	}
 
+	public List<AdminReport> selectPostReports() {
+		List<AdminReport> arList = new ArrayList<AdminReport>();
+		AdminReport ar = null;
+		this.sql = """
+				SELECT
+					report_id, post_id, post_title, post_user_name, user_name AS report_user_name, report_desc, report_status
+				FROM
+					SEMI_REPORT sr
+				JOIN (
+					SELECT
+						post_id,
+						post_title,
+						user_name AS post_user_name
+					FROM
+						SEMI_TOPIC st
+					JOIN SEMI_USER su2 ON
+						st.user_id = su2.USER_ID
+						) st2 ON
+					sr.REPORT_TARGET_ID = st2.POST_ID
+				JOIN SEMI_USER su ON
+					sr.REPORT_USER_ID = su.USER_ID
+				WHERE sr.REPORT_TYPE = 'post'
+					""";
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ar = new AdminReport();
+
+				ar.setReportId(rs.getInt("report_id"));
+				ar.setReportTargetId(rs.getInt("post_id"));
+				ar.setReportedTitle(rs.getString("post_title"));
+				ar.setReportedUsername(rs.getString("post_user_name"));
+				ar.setReportUserName(rs.getString("report_user_name"));
+				ar.setReportDesc(rs.getString("report_desc"));
+				ar.setReportStatus(AdminReportStatus.valueOf(rs.getString("report_status")));
+
+				arList.add(ar);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return arList;
+	}
+
 	public List<AdminReport> selectReportsByType(AdminReportType type) {
 		List<AdminReport> adminReports = new ArrayList<AdminReport>();
 		this.sql = """

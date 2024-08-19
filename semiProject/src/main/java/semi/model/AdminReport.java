@@ -1,21 +1,23 @@
 package semi.model;
 
 public class AdminReport {
-	private int repordId;
+	private int reportId;
 	private String reportType;
 	private int reportTargetId;
+	private String reportedTitle;
+	private String reportedUsername;
 	private int reportUserId;
 	private String reportUserName;
 	private String reportDesc;
 	private String reportedDate;
 	private AdminReportStatus reportStatus;
 
-	public int getRepordId() {
-		return repordId;
+	public int getReportId() {
+		return reportId;
 	}
 
-	public void setRepordId(int repordId) {
-		this.repordId = repordId;
+	public void setReportId(int repordId) {
+		this.reportId = repordId;
 	}
 
 	public String getReportType() {
@@ -73,4 +75,21 @@ public class AdminReport {
 	public void setReportUserName(String reportUserName) {
 		this.reportUserName = reportUserName;
 	}
+
+	public String getReportedTitle() {
+		return reportedTitle;
+	}
+
+	public String getReportedUsername() {
+		return reportedUsername;
+	}
+
+	public void setReportedTitle(String reportedTitle) {
+		this.reportedTitle = reportedTitle;
+	}
+
+	public void setReportedUsername(String reportedUsername) {
+		this.reportedUsername = reportedUsername;
+	}
+
 }

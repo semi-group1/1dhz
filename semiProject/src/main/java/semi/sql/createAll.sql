@@ -83,8 +83,8 @@ create table semi_report(
         report_user_id number not null references semi_user(user_id),
         report_desc varchar2(500char),
         reported_date date not null,
-        report_status varchar2(50char),
-        check(report_type in ('POST', 'USER', 'COMMENT') and report_status in ('IN PROGRESS', 'COMPLETED'))
+        report_status varchar2(50char) default 'inProgress',
+        check(report_type in ('post', 'user', 'comment') and report_status in ('inProgress', 'completed', 'denied'))
 );
 
 create sequence seq_semi_report_id

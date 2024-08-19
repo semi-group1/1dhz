@@ -79,21 +79,16 @@ public class AdminManagementService {
 
 	public List<AdminReport> selectReportsByType(String type) {
 		List<AdminReport> adminReports = null;
-		AdminReportType statusType = null;
 
 		switch (type) {
 		case "post":
-			statusType = AdminReportType.post;
+			adminReports = adminReportDAO.selectPostReports();
 			break;
 		case "user":
-			statusType = AdminReportType.user;
 			break;
 		case "comment":
-			statusType = AdminReportType.comment;
 			break;
 		}
-
-		adminReports = adminReportDAO.selectReportsByType(statusType);
 
 		return adminReports;
 	}
