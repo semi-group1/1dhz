@@ -22,7 +22,7 @@
 					<p class="admin-menu-title">MEMBERS</p>
 					<p>
 						<a href="${pageContext.request.contextPath}/admin/user/list">전체
-							회원 조회</a>
+							회원 조회</a>zzz
 					</p>
 				</div>
 				<div class="admin-menu" id="topics">
