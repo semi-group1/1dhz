@@ -101,6 +101,49 @@ public class AdminUserDAO {
 		return au;
 	}
 
+	public List<AdminTopic> selectAllUserPosts(int userId) {
+		List<AdminTopic> atList = new ArrayList<AdminTopic>();
+		AdminTopic at;
+		this.sql = """
+				SELECT post_id, post_title, to_char(post_date, 'YYYY-MM-DD') post_date, (select count(*) from semi_comment where post_id = ?) as post_comments
+				FROM SEMI_TOPIC st
+				JOIN SEMI_TOPIC_CATEGORY stc ON st.CATE_NO = stc.TOPIC_CATEGORY_ID
+				JOIN SEMI_USER su ON st.USER_ID = su.USER_ID
+				WHERE st.user_id = ?
+				""";
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userId);
+			pstmt.setInt(2, userId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				at = new AdminTopic();
+
+				at.setPostId(rs.getInt("post_id"));
+				at.setPostTitle(rs.getString("post_title"));
+				at.setPostCreatedDate(rs.getString("post_date"));
+				at.setPostComments(rs.getInt("post_comments"));
+
+				atList.add(at);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return atList;
+	}
+
 	public int updateUserStatus(int userId, AdminUserStatus status) {
 		int rowCount = 0;
 		this.sql = """

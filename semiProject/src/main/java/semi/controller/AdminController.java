@@ -31,6 +31,7 @@ public class AdminController {
 	public String getUserInfo(Model model, @RequestParam int userId) {
 		model.addAttribute("command", "userInfo");
 		model.addAttribute("userInfo", adminManagementService.selectUserInfo(userId));
+		model.addAttribute("userPosts", adminManagementService.selectAllUserPosts(userId));
 
 		return view;
 	}

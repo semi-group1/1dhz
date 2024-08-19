@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div id="right">
 	<h2>회원 정보</h2>
 	<table class="admin-board">
@@ -39,29 +40,17 @@
 			<tr>
 				<th>게시글 번호</th>
 				<th>제목</th>
-				<th>추천</th>
 				<th>댓글</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>1</td>
-				<td>스프링 너무 어렵네요.</td>
-				<td>10</td>
-				<td>10</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>스프링 너무 어렵네요.</td>
-				<td>10</td>
-				<td>10</td>
-			</tr>
-			<tr>
-				<td>3</td>
-				<td>스프링 너무 어렵네요.</td>
-				<td>10</td>
-				<td>10</td>
-			</tr>
+			<c:forEach items="${userPosts }" var="post" varStatus="status">
+				<tr>
+					<td>${post.postId }</td>
+					<td>${post.postTitle }</td>
+					<td>${post.postComments }</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 	<ul class="admin-board-page">

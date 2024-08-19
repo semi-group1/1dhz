@@ -10,6 +10,7 @@ public class AdminTopic {
 	private int postUserId;
 	private String postUserName;
 	private AdminPostStatus postStatus;
+	private int postComments;
 
 	public int getPostId() {
 		return postId;
@@ -85,5 +86,13 @@ public class AdminTopic {
 
 	public void setPostStatus(String string) {
 		this.postStatus = AdminPostStatus.valueOf(string);
+	}
+
+	public int getPostComments() {
+		return postComments;
+	}
+
+	public void setPostComments(int postComments) {
+		this.postComments = postComments;
 	}
 }

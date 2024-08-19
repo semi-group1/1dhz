@@ -29,6 +29,10 @@ public class AdminManagementService {
 		return adminUserDAO.selectUserInfo(userId);
 	}
 
+	public List<AdminTopic> selectAllUserPosts(int userId) {
+		return adminUserDAO.selectAllUserPosts(userId);
+	}
+
 	@Transactional
 	public boolean setUserInactive(int userId, String desc, int length) {
 		boolean result = false;
