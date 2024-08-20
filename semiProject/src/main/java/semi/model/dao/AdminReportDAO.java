@@ -78,6 +78,12 @@ public class AdminReportDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}
@@ -141,6 +147,12 @@ public class AdminReportDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}
@@ -205,6 +217,12 @@ public class AdminReportDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}
@@ -233,6 +251,12 @@ public class AdminReportDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}
@@ -264,6 +288,12 @@ public class AdminReportDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}
