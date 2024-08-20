@@ -22,6 +22,7 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
+			semi.config.AdminBeanConfig
 			semi.config.MvcConfig
 			semi.config.BeanConfig
 			semi.config.UserBeanConfig
