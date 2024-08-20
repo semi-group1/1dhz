@@ -69,4 +69,33 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	<ul class="admin-board-page">
+		<c:choose>
+			<c:when test="${empty categoryId }">
+				<c:if test="${page > 1 }">
+					<li><a href="listJob?page=${page-1 }">이전</a></li>
+				</c:if>
+				<c:forEach var="i" begin="1" end="${maxPage }">
+					<li><a href="listJob?page=${i }">${i }</a></li>
+				</c:forEach>
+				<c:if test="${page < maxPage}">
+					<li><a href="listJob?page=${page+1 }">다음</a></li>
+				</c:if>
+			</c:when>
+			<c:otherwise>
+				<c:if test="${page > 1 }">
+					<li><a
+						href="selectJobCategory?categoryId=${categoryId }&page=${page-1 }">이전</a></li>
+				</c:if>
+				<c:forEach var="i" begin="1" end="${maxPage }">
+					<li><a
+						href="selectJobCategory?categoryId=${categoryId }&page=${i }">${i }</a></li>
+				</c:forEach>
+				<c:if test="${page < maxPage}">
+					<li><a
+						href="selectJobCategory?categoryId=${categoryId }&page=${page+1 }">다음</a></li>
+				</c:if>
+			</c:otherwise>
+		</c:choose>
+	</ul>
 </div>

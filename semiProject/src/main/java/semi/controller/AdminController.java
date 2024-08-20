@@ -140,18 +140,28 @@ public class AdminController {
 	}
 
 	@RequestMapping("/topic/listJob")
-	public String getJobTopics(Model model) {
+	public String getJobTopics(Model model, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
 		model.addAttribute("command", "topicListJob");
-		model.addAttribute("list", ams.selectJobTopics());
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countJobTopics()));
+		model.addAttribute("list", ams.selectJobTopics(Integer.parseInt(page)));
 		model.addAttribute("categories", ams.selectJobCategories());
 
 		return view;
 	}
 
 	@RequestMapping("/topic/selectJobCategory")
-	public String getTopicsByJobCategory(Model model, int categoryId) {
+	public String getTopicsByJobCategory(Model model, int categoryId, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
 		model.addAttribute("command", "topicListJob");
-		model.addAttribute("list", ams.selectTopicByJobCateogry(categoryId));
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countByJobCategoryId(categoryId)));
+		model.addAttribute("list", ams.selectByJobCategoryId(Integer.parseInt(page), categoryId));
 		model.addAttribute("categories", ams.selectJobCategories());
 		model.addAttribute("categoryId", categoryId);
 
