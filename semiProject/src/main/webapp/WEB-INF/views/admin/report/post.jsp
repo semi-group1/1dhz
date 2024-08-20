@@ -22,14 +22,25 @@
 					<td>${item.reportedUsername }</td>
 					<td>${item.reportUserName }</td>
 					<td>${item.reportDesc }</td>
-					<td><form method="GET" action="/proceed">
-							<input type="hidden" name="reportId" value="${item.reportId }">
-							<select name="status">
-								<option value="inProgress">처리 중</option>
-								<option value="completed">처리 완료</option>
-								<option value="denied">거부됨</option>
-							</select> <input type="submit" value="처리">
-						</form></td>
+					<c:choose>
+						<c:when test="${item.reportStatus eq 'inProgress'}">
+							<td><form method="GET" action="changeStatus">
+									<input type="hidden" name="reportId" value="${item.reportId }">
+									<input type="hidden" name="reportType" value="post"> <select
+										name="status">
+										<option selected value="inProgress">처리 중</option>
+										<option value="completed">처리 완료</option>
+										<option value="denied">거부됨</option>
+									</select> <input type="submit" value="처리">
+								</form></td>
+						</c:when>
+						<c:otherwise>
+							<td><c:choose>
+									<c:when test="${item.reportStatus eq 'completed'}">처리완료</c:when>
+									<c:otherwise>거부됨</c:otherwise>
+								</c:choose></td>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 			</c:forEach>
 		</tbody>

@@ -119,4 +119,18 @@ public class AdminController {
 		model.addAttribute("list", ams.selectReportsByType("post"));
 		return view;
 	}
+
+	@RequestMapping("/report/changeStatus")
+	public String changeStatus(Model model, @RequestParam int reportId, @RequestParam String status,
+			@RequestParam String reportType) {
+		String redirectView = "redirect: ";
+
+		if (ams.updateReportStatus(reportId, status)) {
+			System.out.println("접수된 신고가 처리되었습니다.");
+		} else {
+			System.out.println("접수된 신고가 처리되지 않았습니다.");
+		}
+
+		return redirectView += reportType;
+	}
 }

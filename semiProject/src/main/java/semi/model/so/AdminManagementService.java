@@ -94,7 +94,6 @@ public class AdminManagementService {
 	}
 
 	public boolean updateReportStatus(int reportId, String status) {
-		boolean result = false;
 		AdminReportStatus statusType = null;
 
 		switch (status) {
@@ -109,10 +108,6 @@ public class AdminManagementService {
 			break;
 		}
 
-		if (adminReportDAO.updateReportStatus(reportId, statusType) == 1) {
-			result = true;
-		}
-
-		return result;
+		return adminReportDAO.updateReportStatus(reportId, statusType) == 1;
 	}
 }
