@@ -265,6 +265,190 @@ public class AdminTopicDAO {
 		return atList;
 	}
 
+	public int countGeneralTopic() {
+		int rowNum = 0;
+		this.sql = """
+				select count(*) as count from semi_topic where job_yn = 'n'
+				""";
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				rowNum = rs.getInt("count");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return rowNum;
+	}
+
+	public List<AdminTopic> selectGeneralTopics(int startNum, int endNum) {
+		List<AdminTopic> atList = new ArrayList<AdminTopic>();
+		this.sql = """
+				SELECT post_id, topic_category_name, post_title, to_char(post_date, 'YYYY-MM-DD') post_date, user_name, post_status
+				FROM SEMI_TOPIC st
+				JOIN SEMI_TOPIC_CATEGORY stc ON st.CATE_NO = stc.TOPIC_CATEGORY_ID
+				JOIN SEMI_USER su ON st.USER_ID = su.USER_ID
+				WHERE job_yn = 'n'
+				order by post_id
+				""";
+		this.setPaging();
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startNum);
+			pstmt.setInt(2, endNum);
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				AdminTopic at = new AdminTopic();
+
+				at.setPostId(rs.getInt("post_id"));
+				at.setPostCategoryName(rs.getString("topic_category_name"));
+				at.setPostTitle(rs.getString("post_title"));
+				at.setPostCreatedDate(rs.getString("post_date"));
+				at.setPostUserName(rs.getString("user_name"));
+				at.setPostStatus(rs.getString("post_status"));
+
+				atList.add(at);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return atList;
+	}
+
+	public int countByCategoryId(int categoryId) {
+		int rowNum = 0;
+		this.sql = """
+				select count(*) as count
+				FROM SEMI_TOPIC st
+				JOIN SEMI_TOPIC_CATEGORY stc ON st.CATE_NO = stc.TOPIC_CATEGORY_ID
+				WHERE job_yn = 'n' and topic_category_id = ?
+				""";
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryId);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				rowNum = rs.getInt("count");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return rowNum;
+	}
+
+	public List<AdminTopic> selectByCategoryId(int categoryId, int startNum, int endNum) {
+		List<AdminTopic> atList = new ArrayList<AdminTopic>();
+		this.sql = """
+				SELECT post_id, topic_category_name, post_title, to_char(post_date, 'YYYY-MM-DD') post_date, user_name, post_status
+				FROM SEMI_TOPIC st
+				JOIN SEMI_TOPIC_CATEGORY stc ON st.CATE_NO = stc.TOPIC_CATEGORY_ID
+				JOIN SEMI_USER su ON st.USER_ID = su.USER_ID
+				WHERE job_yn = 'n' and topic_category_id = ?
+				ORDER BY post_id
+				""";
+
+		this.setPaging();
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryId);
+			pstmt.setInt(2, startNum);
+			pstmt.setInt(3, endNum);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				AdminTopic at = new AdminTopic();
+
+				at.setPostId(rs.getInt("post_id"));
+				at.setPostCategoryName(rs.getString("topic_category_name"));
+				at.setPostTitle(rs.getString("post_title"));
+				at.setPostCreatedDate(rs.getString("post_date"));
+				at.setPostUserName(rs.getString("user_name"));
+				at.setPostStatus(rs.getString("post_status"));
+
+				atList.add(at);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return atList;
+	}
+
 	public List<AdminTopic> selectByCategoryId(int categoryId) {
 		List<AdminTopic> atList = new ArrayList<AdminTopic>();
 		this.sql = """

@@ -105,24 +105,34 @@ public class AdminController {
 		model.addAttribute("command", "topicListAll");
 		model.addAttribute("page", page);
 		model.addAttribute("maxPage", ams.getMaxPage(ams.countAllTopic()));
-		model.addAttribute("list", ams.selectAllTopics());
+		model.addAttribute("list", ams.selectAllTopics(Integer.parseInt(page)));
 
 		return view;
 	}
 
 	@RequestMapping("/topic/listGeneral")
-	public String getGeneralTopics(Model model) {
+	public String getGeneralTopics(Model model, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
 		model.addAttribute("command", "topicListGeneral");
-		model.addAttribute("list", ams.selectGeneralTopics());
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countGeneralTopic()));
+		model.addAttribute("list", ams.selectGeneralTopics(Integer.parseInt(page)));
 		model.addAttribute("categories", ams.selectGeneralCategories());
 
 		return view;
 	}
 
 	@RequestMapping("/topic/selectCategory")
-	public String getTopicsByCategory(Model model, int categoryId) {
+	public String getTopicsByCategory(Model model, int categoryId, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
 		model.addAttribute("command", "topicListGeneral");
-		model.addAttribute("list", ams.selectTopicsByCateogry(categoryId));
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countByCategoryId(categoryId)));
+		model.addAttribute("list", ams.selectTopicsByCategory(Integer.parseInt(page), categoryId));
 		model.addAttribute("categories", ams.selectGeneralCategories());
 		model.addAttribute("categoryId", categoryId);
 

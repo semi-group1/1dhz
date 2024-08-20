@@ -111,8 +111,24 @@ public class AdminManagementService {
 		return adminTopicDAO.selectByCategoryId(categoryId);
 	}
 
+	public int countByCategoryId(int categoryId) {
+		return adminTopicDAO.countByCategoryId(categoryId);
+	}
+
+	public List<AdminTopic> selectTopicsByCategory(int page, int categoryId) {
+		return adminTopicDAO.selectByCategoryId(categoryId, this.getStartNum(page), this.getEndNum(page));
+	}
+
 	public List<AdminTopic> selectGeneralTopics() {
 		return adminTopicDAO.selectGeneralTopics();
+	}
+
+	public int countGeneralTopic() {
+		return adminTopicDAO.countGeneralTopic();
+	}
+
+	public List<AdminTopic> selectGeneralTopics(int page) {
+		return adminTopicDAO.selectGeneralTopics(this.getStartNum(page), this.getEndNum(page));
 	}
 
 	public List<AdminTopic> selectTopicByJobCateogry(int categoryId) {
