@@ -98,8 +98,13 @@ public class AdminController {
 	}
 
 	@RequestMapping("/topic/listAll")
-	public String getAllPostList(Model model) {
+	public String getAllPostList(Model model, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
 		model.addAttribute("command", "topicListAll");
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countAllTopic()));
 		model.addAttribute("list", ams.selectAllTopics());
 
 		return view;

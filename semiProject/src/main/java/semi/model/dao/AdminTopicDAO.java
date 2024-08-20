@@ -30,6 +30,16 @@ public class AdminTopicDAO {
 		this.ds = ds;
 	}
 
+	public void setPaging() {
+		this.sql = """
+				select *
+				from (select rownum as rn, t.* from (
+				""" + this.sql + """
+				) t)
+				where rn between ? and ?
+				""";
+	}
+
 	public List<AdminTopic> selectAllTopics() {
 		List<AdminTopic> atList = new ArrayList<AdminTopic>();
 		this.sql = """
@@ -42,6 +52,90 @@ public class AdminTopicDAO {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				AdminTopic at = new AdminTopic();
+
+				at.setPostId(rs.getInt("post_id"));
+				at.setPostTitle(rs.getString("post_title"));
+				at.setPostCreatedDate(rs.getString("post_date"));
+				at.setPostUserName(rs.getString("user_name"));
+				at.setPostStatus(rs.getString("post_status"));
+
+				atList.add(at);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return atList;
+	}
+
+	public int countAllTopic() {
+		int rowNum = 0;
+		this.sql = """
+				select count(*) as count
+				from semi_topic
+				""";
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				rowNum = rs.getInt("count");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return rowNum;
+	}
+
+	public List<AdminTopic> selectAllTopics(int startNum, int endNum) {
+		List<AdminTopic> atList = new ArrayList<AdminTopic>();
+		this.sql = """
+				SELECT post_id, post_title, to_char(post_date, 'YYYY-MM-DD') post_date, user_name, post_status
+				FROM SEMI_TOPIC st
+				JOIN SEMI_USER su ON st.USER_ID = su.USER_ID
+				""";
+		this.setPaging();
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startNum);
+			pstmt.setInt(2, endNum);
+			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				AdminTopic at = new AdminTopic();

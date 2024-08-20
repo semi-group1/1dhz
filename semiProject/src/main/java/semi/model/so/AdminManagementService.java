@@ -95,6 +95,14 @@ public class AdminManagementService {
 		return adminTopicDAO.selectAllTopics();
 	}
 
+	public List<AdminTopic> selectAllTopics(int page) {
+		return adminTopicDAO.selectAllTopics(this.getStartNum(page), this.getEndNum(page));
+	}
+
+	public int countAllTopic() {
+		return adminTopicDAO.countAllTopic();
+	}
+
 	public List<AdminCategory> selectGeneralCategories() {
 		return adminTopicDAO.selectGeneralCategories();
 	}
