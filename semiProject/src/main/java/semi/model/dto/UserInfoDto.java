@@ -1,6 +1,7 @@
-package semi.model;
+package semi.model.dto;
 
-public class EditInfoForm {
+public class UserInfoDto {
+	private int id;
 	private String email;
 	private String passwd;
 	private String passwdCheck;
@@ -8,6 +9,12 @@ public class EditInfoForm {
 	private String sup_job;
 	private String sub_job;
 	private String comment;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getEmail() {
 		return email;
 	}

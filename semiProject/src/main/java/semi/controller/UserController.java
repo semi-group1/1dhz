@@ -7,8 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import semi.model.EditInfoForm;
 import semi.model.dao.UserDao;
+import semi.model.dto.UserInfoDto;
+import semi.model.so.EditInfoValidation;
 
 @Controller
 public class UserController {
@@ -31,10 +32,21 @@ public class UserController {
 		return "editInfo";
 	}
 	
-	@RequestMapping("/editInfoProcess")
-	public String editInfoProcess(@RequestBody EditInfoForm info, Model model) {
-		model.addAttribute("editForm", info);
+	@RequestMapping(value="/editInfo/editInfoProcess", method=RequestMethod.POST)
+	public String editInfoValidation(Model model, UserInfoDto dto) {
+		EditInfoValidation validation = new EditInfoValidation();
+		boolean isValidate = validation.validation(dto); 
 		
-		return "editInfoProcess";
+		if(isValidate) {
+			model.addAttribute("user", userdao.selectOneUser(dto.getId()));
+			model.addAttribute("user_post", userdao.selectAllUserPost(dto.getId()));
+			return "myPage";
+		}else {
+			model.addAttribute("user", userdao.selectOneUser(dto.getId()));
+			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
+			return "editInfo";
+		}
+		
 	}
+	
 }

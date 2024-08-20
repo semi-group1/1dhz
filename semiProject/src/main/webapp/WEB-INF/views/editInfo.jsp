@@ -63,29 +63,38 @@
                 border: 1px solid #333;
                 margin-left: 100px;
             }
+            
+            #alert{
+            	font-size: 25px;
+            	color: lightcoral;
+            	margin-left: 10px;
+            }
 
         </style>
+
     </head>
     <body>
         <div id="container">
             <div class="title">회원 정보 수정</div>
-            <form class="editInfo_form" action="/semiProject/editInfoProcess" method="post">
+            <form class="editInfo_form" action="editInfoProcess" method="POST">
+            	<input type="hidden" name="id" id="id" value="${user.user_id}" />
                 <p>
                     <label for="email">이메일</label><br />
-                    <input type="text" name="email" id="email" value="${user.user_email}" />
+                    <input type="text" name="email" id="email" value="${user.user_email}" required />
                     <a href="#"><button id="auth_btn">이메일 인증</button></a>
                 </p>
                 <p>
                     <label for="passwd">비밀번호</label><br />
-                    <input type="password" name="passwd" id="passwd" />
+                    <input type="password" name="passwd" id="passwd" required />
+                    <span id="alert">${msg}</span>
                 </p>
                 <p>
                     <label for="passwdCheck">비밀번호 확인</label><br />
-                    <input type="password" name="passwdCheck" id="passwdCheck" />
+                    <input type="password" name="passwdCheck" id="passwdCheck" required />
                 </p>
                 <p>
                     <label for="name">닉네임</label><br />
-                    <input type="text" name="name" id="name" value="${user.user_name }" />
+                    <input type="text" name="name" id="name" value="${user.user_name }" required />
                 </p>
                 <p>
                     <label>직군 정보</label><br />
@@ -186,11 +195,11 @@
                 </p>
                 <p>
                     <label for="comment">한 줄 소개</label><br />
-                    <input type="text" max="15" name="comment" id="comment" value="${user.user_comment }" />
+                    <input type="text" max="15" name="comment" id="comment" value="${user.user_comment }" required />
                 </p>
                 <p>
-                	<a href="#"><button id="cancel_btn">취소</button></a>
-                	<button id="complete_btn">수정 완료</button></a>
+                	<a href="/semiProject/myPage/${user.user_id}"><button type="button" id="cancel_btn">취소</button></a>
+                	<button type="submit" id="complete_btn">수정 완료</button>
                 </p>
             </form>
         </div>

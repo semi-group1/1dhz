@@ -48,6 +48,4 @@ public class UserBeanConfig {
 		return new UserDao(this.dataSource());
 	}
 	
-	
-	
 }

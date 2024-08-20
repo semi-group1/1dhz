@@ -121,4 +121,28 @@ public class UserDao {
 		
 		return upList;
 	}
+	
+	public void UpdateUserInfo() {
+		this.sql = "select * from semi_user order by user_id";
+
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
+	}
 }
