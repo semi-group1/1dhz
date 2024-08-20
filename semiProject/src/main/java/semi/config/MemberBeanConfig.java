@@ -1,6 +1,9 @@
 package semi.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
@@ -10,8 +13,7 @@ import semi.model.dao.MemberDao;
 
 @Configuration
 @PropertySource("classpath:/properties/db.properties")
-@ComponentScan(basePackages = {"semi"})
-public class MemberConfig {
+public class MemberBeanConfig {
 	@Value("${db.orcacle.driver}")
 	private String driver;
 	@Value("${db.orcacle.url}")
@@ -37,26 +39,18 @@ public class MemberConfig {
 		
 		return ds;
 	}
-	
-	
-//	@Bean
-//	public LoginController loginController() {
-//		return new LoginController();
-//	}
-//	
-//	@Bean
-//	public RegisterController registerControoler() {
-//		return new RegisterController();
-//	}
+
+	@Bean
+	public MemberDao memberDao() {
+		return new MemberDao();
+	}
+
 	
 	@Bean
 	public MemberController memberController() {
 		return new MemberController();
 	}
 	
-	@Bean
-	public MemberDao memberDao() {
-		return new MemberDao();
-	}
+	
 	
 }

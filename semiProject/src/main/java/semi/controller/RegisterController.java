@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class RegisterController {
 	
 	//회원가입페이지 이동
-	@GetMapping("/register/signUp")
+	@GetMapping("/register/registerPage")
 	public String handleSignUp(Model model) {
-		return "register/signUp";
+		return "register/registerPage";
 	}
 }

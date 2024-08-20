@@ -1,46 +1,31 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    errorPage = "joinFail.jsp"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
-<%
-// 서버 측에서 처리할 로직
-String signupPageUrl = "signUpPage.jsp";
-String buttonHtml = "<a href='" + signupPageUrl + "' class='signup-button'>처음오셨나요?</a>";
-%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<link href="<c:url value="./layout/login.css"/>" rel="stylesheet" />
-    <meta charset="UTF-8">
-    <title>로그인 페이지</title>
+<meta charset="UTF-8">
+<title>로그인</title>
+<style>
+        /* 메인 컨테이너 스타일 */
+        .container {
+            width: 1280px;  /* 너비를 1280px로 고정 */
+            margin: 0 auto; /* 화면 가운데 정렬 */
+            padding: 20px;  /* 내부 여백 */
+            background-color: #f4f4f4; /* 배경 색상 */
+            border: 1px solid #ccc; /* 외곽선 */
+        }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="login-form">
-            <h2>로그인</h2>
-            <form action="LoginProcess" method = "POST">
-                <div class="form-group">
-                    <label for="email">이메일</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">비밀번호</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit" class="login-button" onClick="">로그인</button>
-            </form>
-            <hr />
-            <p><font color="red">{loginfailMsg}</p>
-            
-            <div class="signup-text">
-                <hr />
-                <!-- 여기에서 JSP 표현식을 사용하여 버튼 HTML을 출력 -->
-                <!-- 처음오셨나요? 버튼 -->
-                <%= buttonHtml %>
-            </div>
-        </div>
-    </div>
+<h2>로그인</h2>
+	
+	<div class="container">
+	<form action="loginProcess.jsp" method="post">
+	<label for="email">이메일:</label>
+	<input type="email" id="email" name="email" required><br><br>
+	<label for="password">비밀번호:</label>
+	<input type="password" id="password" name="password" required><br><br>
+	<input type="submit" value="로그인"> </form> <br>
+	<a href="register.jsp">회원가입</a>
+	</div>
 </body>
 </html>
