@@ -126,12 +126,20 @@ public class UserDao {
 	public boolean UpdateUserInfo(UserInfoDto dto) {
 		boolean result = true;
 		
-		this.sql = "update semi_user set user_email="+ dto.getEmail() + ", user_pw=" + dto.getPasswd() + ", user_name=" + dto.getName() + ", user_comment=" + dto.getComment() + " where user_id=" + dto.getId();
+		this.sql = "update semi_user set user_email=?, user_pw=?, user_name=?, user_comment=? where user_id=?";
 		
 		try {
 			conn = ds.getConnection();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getEmail());
+			pstmt.setString(2, dto.getPasswd());
+			pstmt.setString(3, dto.getName());
+			pstmt.setString(4, dto.getComment());
+			pstmt.setInt(5, dto.getId());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

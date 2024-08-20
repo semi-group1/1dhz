@@ -40,7 +40,7 @@ public class UserController {
 		
 		if(isValidate) {
 			UpdateUserService service = new UpdateUserService();
-			boolean isSuccess = service.EditUserInfo(dto);
+			boolean isSuccess = service.EditUserInfo(userdao, dto);
 			
 			if(isSuccess) {
 				model.addAttribute("user", userdao.selectOneUser(dto.getId()));
