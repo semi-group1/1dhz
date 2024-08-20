@@ -1,58 +1,48 @@
 package semi.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import semi.model.dao.UserDao;
 import semi.model.dto.UserInfoDto;
-import semi.model.so.EditInfoValidation;
-import semi.model.so.UpdateUserService;
+import semi.model.so.UserService;
 
 @Controller
 public class UserController {
-
+	
 	@Autowired
-	UserDao userdao;
+	UserService us;
 	
 	@RequestMapping("/myPage/{userId}")
 	public String myPage(@PathVariable("userId") int userId, Model model) {
-		model.addAttribute("user", userdao.selectOneUser(userId));
-		model.addAttribute("user_post", userdao.selectAllUserPost(userId));
+		model.addAttribute("user", us.selectOneUser(userId));
+		model.addAttribute("user_post", us.selectAllUserPost(userId));
 		
 		return "myPage";
 	}
 	
 	@RequestMapping("/editInfo/{userId}")
 	public String editInfo(@PathVariable("userId") int userId, Model model) {
-		model.addAttribute("user", userdao.selectOneUser(userId));
+		model.addAttribute("user", us.selectOneUser(userId));
 		
 		return "editInfo";
 	}
 	
 	@RequestMapping(value="/editInfo/editInfoProcess", method=RequestMethod.POST)
-	public String editInfoValidation(Model model, UserInfoDto dto) {
-		EditInfoValidation validation = new EditInfoValidation();
-		boolean isValidate = validation.validation(dto); 
-		
-		if(isValidate) {
-			UpdateUserService service = new UpdateUserService();
-			boolean isSuccess = service.EditUserInfo(userdao, dto);
-			
-			if(isSuccess) {
-				model.addAttribute("user", userdao.selectOneUser(dto.getId()));
-				model.addAttribute("user_post", userdao.selectAllUserPost(dto.getId()));
+	public String editInfoValidation(Model model, UserInfoDto dto) {		
+		if(us.isEditValidate(dto)) {			
+			if(us.isEditSuccess(dto)) {
+				model.addAttribute("user", us.selectOneUser(dto.getId()));
+				model.addAttribute("user_post", us.selectAllUserPost(dto.getId()));
 				return "myPage";
 			}else {
-				model.addAttribute("user", userdao.selectOneUser(dto.getId()));
+				model.addAttribute("user", us.selectOneUser(dto.getId()));
 				model.addAttribute("msg", "데이터 수정 오류");
 				return "editInfo";
 			}
 		}else {
-			model.addAttribute("user", userdao.selectOneUser(dto.getId()));
+			model.addAttribute("user", us.selectOneUser(dto.getId()));
 			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
 			return "editInfo";
 		}

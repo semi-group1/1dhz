@@ -7,6 +7,7 @@ import org.springframework.context.annotation.*;
 import semi.controller.*;
 import semi.model.dao.HelloDao;
 import semi.model.dao.UserDao;
+import semi.model.so.UserService;
 
 @Configuration
 @PropertySource("classpath:/properties/db.properties")
@@ -41,6 +42,11 @@ public class UserBeanConfig {
 	@Bean
 	public UserController userController() {
 		return new UserController();
+	}
+	
+	@Bean
+	public UserService userService() {
+		return new UserService();
 	}
 	
 	@Bean
