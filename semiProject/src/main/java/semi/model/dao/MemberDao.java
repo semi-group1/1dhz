@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import semi.model.Member;
 import semi.model.Member_Login;
-import semi.model.Member_SignUp;
+import semi.model.Member_Register;
 
 @Repository
 public class MemberDao {
@@ -27,34 +27,67 @@ public class MemberDao {
         this.ds = ds;
     }
 
-    public Member selectOneUser(int id) {
-		this.sql = "select member_id, member_email, member_pw, where user_id=" + id;
-		Member member = new Member();
-		try {
-			conn = ds.getConnection();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql);
-
-			while (rs.next()) {
-				member.setMember_id(rs.getInt("member_id"));
-				member.setMember_email(rs.getString("member_email"));
-				member.setMember_pw(rs.getString("member_pw"));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (!conn.isClosed()) {
-					conn.close();
-				}
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-		
-		
-		return member;
-	}
+//    public Member selectOneUser(int id) {
+//		this.sql = "select member_id, member_email, member_pw, where user_id=" + id;
+//		Member member = new Member();
+//		try {
+//			conn = ds.getConnection();
+//			stmt = conn.createStatement();
+//			rs = stmt.executeQuery(sql);
+//
+//			while (rs.next()) {
+//				member.setUser_id(rs.getInt("user_id"));
+//				member.setUser_email(rs.getString("user_email"));
+//				member.setUser_pw(rs.getString("user_pw"));
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (!conn.isClosed()) {
+//					conn.close();
+//				}
+//			} catch (Exception e2) {
+//				e2.printStackTrace();
+//			}
+//		}
+//		
+//		
+//		return member;
+//	}
+//    
+//    public Member selectOneUser(int id) {
+//		this.sql = "select member_id, member_email, member_pw, where user_id=" + id;
+//		Member member = new Member();
+//		try {
+//			conn = ds.getConnection();
+//			stmt = conn.createStatement();
+//			rs = stmt.executeQuery(sql);
+//
+//			while (rs.next()) {
+//				member.setUser_id(rs.getInt("user_id"));
+//				member.setUser_email(rs.getString("user_email"));
+//				member.setUser_pw(rs.getString("user_pw"));
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (!conn.isClosed()) {
+//					conn.close();
+//				}
+//			} catch (Exception e2) {
+//				e2.printStackTrace();
+//			}
+//		}
+//		
+//		
+//		return member;
+//	}
+//    
+//    insert into T_MEMBER(email,pw) values(?,?)
+    
+    
 
 //	public List<User> selectAllUser() {
 //		this.sql = "select * from semi_user order by user_id";
@@ -90,8 +123,8 @@ public class MemberDao {
 //	}
 
     // 회원가입 처리 메소드
-    public boolean registerUser(Member_SignUp signUpForm) {
-        this.sql = "INSERT INTO semi_user (user_email, user_pw) VALUES (?, ?)";
+    public boolean registerUser(Member_Register signUpForm) {
+        this.sql = "INSERT INTO semi_user ( ,user_email, user_pw) VALUES (?, ?)";
 
         try {
             conn = ds.getConnection();

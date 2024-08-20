@@ -14,18 +14,51 @@
             border: 1px solid #ccc; /* 외곽선 */
         }
 </style>
+<script>
+fuction checkValueAndSumit() {
+	const userEmail = document.getElementById("email");
+	const emailValue = userEmail.value;
+	
+	const emailRegex = /^[A-Za-z0-9+_.-]+@(.+)$/;
+	
+	if(emailValue=="") {
+		alert("아이디를 입력해주세요.");
+		userEmail.focus();
+		return;
+	}
+	const userPw = document.getElementById("password");
+	const pwValue = userPw.value;
+	
+	const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
+	
+	
+	if (pwValue=="") {
+		alert("비밀번호를 입력해주세요.");
+		userPw.focus();
+		return;
+	}
+	
+	const frm = document.getElementById("frm");
+	frm.submit();
+
+	
+}
+</script>
+
+
 </head>
 <body>
 <h2>로그인</h2>
 	
 	<div class="container">
-	<form action="loginProcess.jsp" method="post">
+	<form id="frm" action="loginProcess" method="post">
 	<label for="email">이메일:</label>
-	<input type="email" id="email" name="email" required><br><br>
+	<input type="email" id="email" name="email" placeholder="이메일을 쓰세요." required><br><br>
 	<label for="password">비밀번호:</label>
 	<input type="password" id="password" name="password" required><br><br>
-	<input type="submit" value="로그인"> </form> <br>
-	<a href="register.jsp">회원가입</a>
+	<input type="submit" value="로그인" onclick="checkValueAndSubmit">
+	</form> <br>
+	<a href="${pageContext.request.contextPath}/register/registerPage">회원가입</a>
 	</div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <% String email = (String) session.getAttribute("email"); %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	String loginBtn = "loginPage.jsp";
 	String loginbutton = "<button class='login-button' onclick=\"window.location.href='" + loginBtn + "';\">로그인</button>";
@@ -23,12 +23,11 @@
 </head>
 <body>
 <div class="container">
-	<% if(email != null)
+	<%c:if(email != null)
 	{ %> <h2><%= email.split("@")[0] %>님, 어서오세요.</h2>
 	<a href="logOut.jsp">로그아웃</a> <% }
 	else { %> <h2>환영합니다</h2>
-	<a href="login.jsp">로그인</a> <% } %>
-	<%= loginbutton %>
+	<a href="${pageContext.request.contextPath}/login/loginPage">로그인</a> <% } %>
 </div>
 </body>
 </html>

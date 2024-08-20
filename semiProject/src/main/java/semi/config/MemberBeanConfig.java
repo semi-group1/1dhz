@@ -14,13 +14,13 @@ import semi.model.dao.MemberDao;
 @Configuration
 @PropertySource("classpath:/properties/db.properties")
 public class MemberBeanConfig {
-	@Value("${db.orcacle.driver}")
+	@Value("${db.oracle.driver}")
 	private String driver;
-	@Value("${db.orcacle.url}")
+	@Value("${db.oracle.url}")
 	private String url;
-	@Value("${db.orcacle.username}")
+	@Value("${db.oracle.username}")
 	private String username;
-	@Value("${db.orcacle.password}")
+	@Value("${db.oracle.password}")
 	private String password;
 	
 	@Bean
@@ -42,13 +42,23 @@ public class MemberBeanConfig {
 
 	@Bean
 	public MemberDao memberDao() {
-		return new MemberDao();
+		return new MemberDao(this.dataSource());
 	}
 
 	
+//	@Bean
+//	public MemberController1111 memberController() {
+//		return new MemberController1111();
+//	}
+	
 	@Bean
-	public MemberController memberController() {
-		return new MemberController();
+	public LoginController loginController() {
+		return new LoginController();
+	}
+	
+	@Bean
+	public RegisterController registerController() {
+		return new RegisterController();
 	}
 	
 	

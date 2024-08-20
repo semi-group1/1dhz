@@ -1,11 +1,11 @@
 package semi.model;
 
-public class Member_SignUp {
+public class Member_Register {
     private int user_id;
     private String user_email;
     private String user_pw;
     
-    public Member_SignUp() {
+    public Member_Register() {
     }
 
     public int getUser_id() {
