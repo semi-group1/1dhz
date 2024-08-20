@@ -57,7 +57,7 @@ body {
 #right {
 	display: flex;
 	flex-direction: column;
-	gap: 50px;
+	gap: 30px;
 	width: 75%;
 	padding: 50px;
 	box-sizing: border-box;
@@ -86,12 +86,63 @@ body {
 	background-color: gainsboro;
 }
 
+.admin-board caption {
+	padding: 20px;
+	font-size: large;
+}
+
 .admin-board-page {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	gap: 20px;
 	align-items: center;
 	justify-content: center;
 	list-style: none;
+}
+
+.admin-board-page a {
+	padding: 10px 15px;
+}
+
+#right a {
+	text-decoration: none;
+	color: black;
+	transition: 0.6s;
+}
+
+#right a:hover {
+	background: gainsboro;
+}
+
+#right button, #right input[type="submit"], #right input[type="button"]
+	{
+	height: 100%;
+	padding: 5px 15px;
+	box-sizing: border-box;
+	transition: 0.6s;
+	border: 1px solid gray;
+}
+
+#right button:hover, #right input[type="submit"]:hover, #right input[type="button"]:hover
+	{
+	background: darkgray;
+	font-weight: bold;
+}
+
+button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+	cursor: pointer;
+}
+
+.admin-search {
+	text-align: center;
+	margin: auto;
+}
+
+.admin-search>* {
+	height: 100%;
+	font-size: medium;
+	border: 1px solid gray;
+	padding: 5px 15px;
+	box-sizing: border-box;
+	transition: 0.3s;
 }

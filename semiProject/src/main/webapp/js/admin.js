@@ -47,7 +47,29 @@ function addUserFunctions() {
 	}
 }
 
+function changeTypeHandler(event) {
+	let keywordTag = document.querySelector('.admin-search #keyword');
+	keywordTag.value = '';
+	switch (event.target.value) {
+		case 'userId':
+			keywordTag.setAttribute('type', 'number');
+			break;
+		case 'userName':
+			keywordTag.setAttribute('type', 'text');
+			break;
+		case 'userEmail':
+			keywordTag.setAttribute('type', 'email');
+			break;
+	}
+}
+
 function init() {
+	let typeTag = document.querySelector('.admin-search select[name="type"]');
+
+	if (typeTag != null) {
+		typeTag.addEventListener('change', changeTypeHandler);
+	}
+
 	addUserFunctions();
 }
 
