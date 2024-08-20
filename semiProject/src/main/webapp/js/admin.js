@@ -20,7 +20,8 @@ function inactivateButtonClickHandler(event) {
 	window.location.href = url;
 }
 
-function backButtonClickHandler() {
+function backButtonClickHandler(event) {
+	event.preventDefault();
 	window.history.back();
 }
 

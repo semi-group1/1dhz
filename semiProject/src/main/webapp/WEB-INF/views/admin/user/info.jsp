@@ -93,8 +93,7 @@
 			</c:choose>
 		</tbody>
 	</table>
-	<hr>
-	<div>
+	<div class="text-align-right">
 		<button class="historyBack">이전 페이지로 돌아가기</button>
 		<button class="inactivateBtn" data-id="${userInfo.userId }">회원
 			정지</button>

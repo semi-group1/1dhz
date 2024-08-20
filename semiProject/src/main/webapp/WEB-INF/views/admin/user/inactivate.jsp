@@ -33,7 +33,9 @@
 				</select></td>
 			</tr>
 		</table>
-		<input type="submit" value="제출">
+		<div class="text-align-right margin-top-20px">
+			<button class="historyBack">이전 페이지로 돌아가기</button>
+			<input type="submit" value="제출">
+		</div>
 	</form>
-	<button class="historyBack">이전 페이지로 돌아가기</button>
 </div>

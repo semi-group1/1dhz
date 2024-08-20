@@ -14,52 +14,53 @@
 <body>
 	<div id="container">
 		<div id="top">
-			<span id="logo-admin">ADMIN PAGE</span>
+			<span id="logo-admin"><a
+				href="${pageContext.request.contextPath }/admin">ADMIN PAGE</a></span>
 		</div>
 		<div id="bottom">
 			<div id="left">
 				<div class="admin-menu" id="members">
-					<p class="admin-menu-title">MEMBERS</p>
-					<p>
+					<div class="admin-menu-title">MEMBERS</div>
+					<div class="admin-menu-element">
 						<a href="${pageContext.request.contextPath}/admin/user/list">전체
 							회원 조회</a>
-					</p>
-					<p>
+					</div>
+					<div class="admin-menu-element">
 						<a
 							href="${pageContext.request.contextPath}/admin/user/listInactive">활동
 							정지 회원 조회</a>
-					</p>
+					</div>
 				</div>
 				<div class="admin-menu" id="topics">
-					<p class="admin-menu-title">TOPICS</p>
-					<p>
+					<div class="admin-menu-title">TOPICS</div>
+					<div class="admin-menu-element">
 						<a href="${pageContext.request.contextPath }/admin/topic/listAll">전체
 							게시판 조회</a>
-					</p>
-					<p>
+					</div>
+					<div class="admin-menu-element">
 						<a
 							href="${pageContext.request.contextPath }/admin/topic/listGeneral">일반
 							토픽별 조회</a>
-					</p>
-					<p>
+					</div>
+					<div class="admin-menu-element">
 						<a href="${pageContext.request.contextPath }/admin/topic/listJob">직무별
 							조회</a>
-					</p>
+					</div>
 				</div>
 				<div class="admin-menu" id="reports">
-					<p class="admin-menu-title">REPORTS</p>
-					<p>
+					<div class="admin-menu-title">REPORTS</div>
+					<div class="admin-menu-element">
 						<a href="${pageContext.request.contextPath }/admin/report/post">게시글
 							접수내역</a>
-					</p>
-					<p>
+					</div>
+					<div class="admin-menu-element">
 						<a href="${pageContext.request.contextPath }/admin/report/user">회원
 							접수내역</a>
-					</p>
-					<p>
+					</div>
+					<div class="admin-menu-element">
 						<a href="${pageContext.request.contextPath }/admin/report/comment">댓글
 							접수내역</a>
-					</p>
+					</div>
 				</div>
 			</div>
 			<c:choose>

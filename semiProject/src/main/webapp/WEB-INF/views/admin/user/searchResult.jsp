@@ -23,6 +23,11 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:if test="${empty list }">
+				<tr>
+					<td colspan="4">검색 결과가 없습니다.</td>
+				</tr>
+			</c:if>
 			<c:forEach items="${list }" var="item" varStatus="status">
 				<tr>
 					<td>${item.userId }</td>

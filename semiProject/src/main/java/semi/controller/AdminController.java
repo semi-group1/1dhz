@@ -22,6 +22,11 @@ public class AdminController {
 		view = "admin/common/page";
 	}
 
+	@RequestMapping("")
+	public String setDefaultPage() {
+		return "redirect: admin/user/list";
+	}
+
 	@RequestMapping("/user/list")
 	public String getAllUserList(Model model, @RequestParam(required = false) String page) {
 		if (page == null) {

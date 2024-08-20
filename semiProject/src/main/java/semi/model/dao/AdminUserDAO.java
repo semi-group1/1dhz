@@ -232,9 +232,6 @@ public class AdminUserDAO {
 					order by user_id
 					""";
 			this.setPaging();
-
-			System.out.println(sql);
-
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, keyword);
 			pstmt.setInt(2, startNum);
@@ -329,7 +326,7 @@ public class AdminUserDAO {
 		int rowNum = 0;
 		this.sql = """
 				SELECT
-					count(*)
+					count(*) as count
 				FROM
 					SEMI_USER su
 				JOIN SEMI_USER_INACTIVE sui ON
