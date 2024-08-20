@@ -24,6 +24,11 @@
 						<a href="${pageContext.request.contextPath}/admin/user/list">전체
 							회원 조회</a>
 					</p>
+					<p>
+						<a
+							href="${pageContext.request.contextPath}/admin/user/listInactive">활동
+							정지 회원 조회</a>
+					</p>
 				</div>
 				<div class="admin-menu" id="topics">
 					<p class="admin-menu-title">TOPICS</p>
@@ -60,6 +65,9 @@
 			<c:choose>
 				<c:when test='${command eq "userList" }'>
 					<%@ include file="../user/list.jsp"%>
+				</c:when>
+				<c:when test='${command eq "userListInactive" }'>
+					<%@ include file="../user/listInactive.jsp"%>
 				</c:when>
 				<c:when
 					test='${command eq "userInfo" or command eq "setUserInacitve" }'>

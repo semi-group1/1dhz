@@ -30,6 +30,14 @@ public class AdminController {
 		return view;
 	}
 
+	@RequestMapping("/user/listInactive")
+	public String getInactiveUserList(Model model) {
+		model.addAttribute("command", "userListInactive");
+		model.addAttribute("list", ams.selectInactiveUsers());
+
+		return view;
+	}
+
 	@RequestMapping("/user/info")
 	public String getUserInfo(Model model, @RequestParam int userId) {
 		model.addAttribute("command", "userInfo");

@@ -25,6 +25,10 @@ public class AdminManagementService {
 		return adminUserDAO.selectAllUserInfos();
 	}
 
+	public List<AdminUser> selectInactiveUsers() {
+		return adminUserDAO.selectInactiveUsers();
+	}
+
 	public AdminUser selectUserInfo(int userId) {
 		return adminUserDAO.selectUserInfo(userId);
 	}

@@ -64,6 +64,54 @@ public class AdminUserDAO {
 		return adminUsers;
 	}
 
+	public List<AdminUser> selectInactiveUsers() {
+		List<AdminUser> adminUsers = new ArrayList<AdminUser>();
+		this.sql = """
+				SELECT
+					user_id,
+					user_name,
+					inactive_desc,
+					to_char(inactive_start_date, 'YYYY-MM-DD') as inactive_start_date,
+					to_char(inactive_end_date, 'YYYY-MM-DD') as inactive_end_date
+				FROM
+					SEMI_USER su
+				JOIN SEMI_USER_INACTIVE sui ON
+					su.USER_ID = sui.inactive_user_id
+				ORDER BY
+					inactive_start_date DESC
+				""";
+
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				AdminUser au = new AdminUser();
+
+				au.setUserId(rs.getInt("user_id"));
+				au.setUserName(rs.getString("user_name"));
+				au.setUserInactiveDesc(rs.getString("inactive_desc"));
+				au.setUserInactiveStartDate(rs.getString("inactive_start_date"));
+				au.setUserInactiveEndDate(rs.getString("inactive_end_date"));
+
+				adminUsers.add(au);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return adminUsers;
+	}
+
 	public AdminUser selectUserInfo(int userId) {
 		AdminUser au = new AdminUser();
 		this.sql = """

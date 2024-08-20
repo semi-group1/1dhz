@@ -10,6 +10,9 @@ public class AdminUser {
 	private String userOutDate;
 	private AdminUserRole userRole;
 	private int userReportedCount;
+	private String userInactiveDesc;
+	private String userInactiveStartDate;
+	private String userInactiveEndDate;
 
 	public int getUserId() {
 		return userId;
@@ -83,4 +86,27 @@ public class AdminUser {
 		this.userEmail = userEmail;
 	}
 
+	public void setUserInactiveEndDate(String userInactiveEndDate) {
+		this.userInactiveEndDate = userInactiveEndDate;
+	}
+
+	public void setUserInactiveStartDate(String userInactiveStartDate) {
+		this.userInactiveStartDate = userInactiveStartDate;
+	}
+
+	public String getUserInactiveEndDate() {
+		return userInactiveEndDate;
+	}
+
+	public String getUserInactiveStartDate() {
+		return userInactiveStartDate;
+	}
+
+	public String getUserInactiveDesc() {
+		return userInactiveDesc;
+	}
+
+	public void setUserInactiveDesc(String userInactiveDesc) {
+		this.userInactiveDesc = userInactiveDesc;
+	}
 }
