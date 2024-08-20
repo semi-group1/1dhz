@@ -85,8 +85,10 @@ public class AdminManagementService {
 			adminReports = adminReportDAO.selectPostReports();
 			break;
 		case "user":
+			adminReports = adminReportDAO.selectUserReports();
 			break;
 		case "comment":
+			adminReports = adminReportDAO.selectCommentReports();
 			break;
 		}
 

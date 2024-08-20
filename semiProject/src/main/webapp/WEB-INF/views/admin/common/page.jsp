@@ -83,6 +83,12 @@
 				<c:when test='${command eq "postReports" }'>
 					<%@ include file="../report/post.jsp"%>
 				</c:when>
+				<c:when test='${command eq "userReports" }'>
+					<%@ include file="../report/user.jsp"%>
+				</c:when>
+				<c:when test='${command eq "commentReports" }'>
+					<%@ include file="../report/comment.jsp"%>
+				</c:when>
 			</c:choose>
 
 		</div>

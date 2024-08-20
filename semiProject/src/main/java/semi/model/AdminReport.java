@@ -5,6 +5,7 @@ public class AdminReport {
 	private String reportType;
 	private int reportTargetId;
 	private String reportedTitle;
+	private String reportedCommentText;
 	private String reportedUsername;
 	private int reportUserId;
 	private String reportUserName;
@@ -90,6 +91,14 @@ public class AdminReport {
 
 	public void setReportedUsername(String reportedUsername) {
 		this.reportedUsername = reportedUsername;
+	}
+
+	public String getReportedCommentText() {
+		return reportedCommentText;
+	}
+
+	public void setReportedCommentText(String reportedCommentText) {
+		this.reportedCommentText = reportedCommentText;
 	}
 
 }

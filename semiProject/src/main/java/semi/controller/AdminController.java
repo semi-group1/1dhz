@@ -109,14 +109,14 @@ public class AdminController {
 	@RequestMapping("/report/user")
 	public String getUserReports(Model model) {
 		model.addAttribute("command", "userReports");
-		model.addAttribute("list", ams.selectReportsByType("post"));
+		model.addAttribute("list", ams.selectReportsByType("user"));
 		return view;
 	}
 
 	@RequestMapping("/report/comment")
 	public String getCommentReports(Model model) {
 		model.addAttribute("command", "commentReports");
-		model.addAttribute("list", ams.selectReportsByType("post"));
+		model.addAttribute("list", ams.selectReportsByType("comment"));
 		return view;
 	}
 
