@@ -1,4 +1,15 @@
+/* 전체 테이블 날리기 */
+drop table semi_chat;
+drop table semi_comment;
+drop table semi_post_inactive;
+drop table semi_user_inactive;
+drop table semi_report;
+drop table semi_topic;
+drop table semi_user;
 drop table semi_job_category;
+drop table semi_topic_category;
+
+
 drop sequence seq_semi_job_category_id;
 
 create table semi_job_category(
@@ -13,27 +24,18 @@ increment by 1
 nocache
 nocycle;
 
-/* 테스트 데이터 */
-insert into semi_job_category values(0, '테스트_대분류', '테스트_중분류');
-drop table semi_topic_category;
-drop sequence seq_semi_topic_category_id;
-
-
 create table semi_topic_category(
         topic_category_id number primary key,
         topic_category_name varchar2(30 char) unique not null
 );
+
+drop sequence seq_semi_topic_category_id;
 
 create sequence seq_semi_topic_category_id
 start with 1
 increment by 1
 nocache
 nocycle;
-
-/* 테스트 데이터 */
-insert into semi_topic_category values(0, '테스트_게시판');
-drop table semi_user;
-drop sequence seq_semi_user_id;
 
 create table semi_user(
     user_id number primary key,
@@ -47,15 +49,18 @@ create table semi_user(
     user_join_date date default sysdate not null,
     user_out_date date,
     user_role varchar2(5) default 'user' not null,
-    check (user_status in ('active', 'inactive', 'danger') and user_role in ('user', 'admin'))
+    check (user_status in ('active', 'inactive', 'deleted') and user_role in ('user', 'admin'))
 );
+
+drop sequence seq_semi_user_id;
 
 create sequence seq_semi_user_id
 start with 1
 increment by 1
 nocache
 nocycle;
-drop table semi_topic;
+
+drop sequence seq_topic_id;
 
 create table semi_topic(
         cate_no number not null,
@@ -73,7 +78,6 @@ increment by 1
 nocache
 nocycle;
 
-drop table semi_report;
 drop sequence seq_semi_report_id;
 
 create table semi_report(
@@ -92,7 +96,6 @@ start with 1
 increment by 1
 nocache
 nocycle;
-drop table semi_user_inactive;
 
 create table semi_user_inactive(
         inactive_user_id number references semi_user(user_id),
@@ -100,7 +103,6 @@ create table semi_user_inactive(
         inactive_start_date date default sysdate not null,
         inactive_end_date date not null
 );
-drop table semi_post_inactive;
 
 create table semi_post_inactive(
         inactive_post_id number references semi_topic(post_id),
@@ -109,7 +111,6 @@ create table semi_post_inactive(
         inactive_date date default sysdate not null
 );
 
-drop table semi_chat;
 
 create table semi_chat (
     chat_room_id number,
@@ -121,7 +122,6 @@ create table semi_chat (
 );
 
 
-drop table semi_comment;
 drop sequence seq_semi_comment_id;
 
 create table semi_comment (
