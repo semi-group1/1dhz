@@ -83,10 +83,11 @@ public class AdminController {
 	}
 
 	@RequestMapping("/topic/selectCategory")
-	public String getGeneralTopicsByCategory(Model model, int categoryId) {
+	public String getTopicsByCategory(Model model, int categoryId) {
 		model.addAttribute("command", "topicListGeneral");
 		model.addAttribute("list", ams.selectTopicsByCateogry(categoryId));
 		model.addAttribute("categories", ams.selectGeneralCategories());
+		model.addAttribute("categoryId", categoryId);
 
 		return view;
 	}
@@ -95,6 +96,17 @@ public class AdminController {
 	public String getJobTopics(Model model) {
 		model.addAttribute("command", "topicListJob");
 		model.addAttribute("list", ams.selectJobTopics());
+		model.addAttribute("categories", ams.selectJobCategories());
+
+		return view;
+	}
+
+	@RequestMapping("/topic/selectJobCategory")
+	public String getTopicsByJobCategory(Model model, int categoryId) {
+		model.addAttribute("command", "topicListJob");
+		model.addAttribute("list", ams.selectTopicByJobCateogry(categoryId));
+		model.addAttribute("categories", ams.selectJobCategories());
+		model.addAttribute("categoryId", categoryId);
 
 		return view;
 	}

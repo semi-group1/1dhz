@@ -2,7 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div id="right">
-	<h1>일반 토픽별 조회</h1>
+	<h1>
+		일반 토픽별 조회
+		<c:forEach items="${categories }" var="category">
+			<c:if test="${category.categoryId eq categoryId }"> > ${category.categoryName }
+			</c:if>
+		</c:forEach>
+		<c:if test="${empty categoryId }"> > 전체 보기
+			</c:if>
+	</h1>
 	<table class="admin-category">
 		<thead>
 			<tr>

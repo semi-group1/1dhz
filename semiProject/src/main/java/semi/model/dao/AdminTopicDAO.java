@@ -72,7 +72,6 @@ public class AdminTopicDAO {
 
 	public List<AdminCategory> selectGeneralCategories() {
 		List<AdminCategory> acList = new ArrayList<AdminCategory>();
-		AdminCategory ac = null;
 		this.sql = """
 				SELECT
 					TOPIC_CATEGORY_ID,
@@ -81,6 +80,7 @@ public class AdminTopicDAO {
 					SEMI_TOPIC_CATEGORY stc
 				ORDER BY TOPIC_CATEGORY_ID
 				""";
+		AdminCategory ac = null;
 
 		try {
 			conn = ds.getConnection();
@@ -195,6 +195,101 @@ public class AdminTopicDAO {
 		}
 
 		return atList;
+	}
+
+	public List<AdminTopic> selectByJobCategoryId(int categoryId) {
+		List<AdminTopic> atList = new ArrayList<AdminTopic>();
+		this.sql = """
+				SELECT post_id, job_category_super, job_category_sub, post_title, to_char(post_date, 'YYYY-MM-DD') post_date, user_name, post_status
+				FROM SEMI_TOPIC st
+				JOIN SEMI_JOB_CATEGORY sjc ON st.CATE_NO = sjc.JOB_CATEGORY_ID
+				JOIN SEMI_USER su ON st.USER_ID = su.USER_ID
+				WHERE job_yn = 'y' and job_category_id = ?
+				""";
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				AdminTopic at = new AdminTopic();
+
+				at.setPostId(rs.getInt("post_id"));
+				at.setPostCategoryName(rs.getString("job_category_super") + " > " + rs.getString("job_category_sub"));
+				at.setPostTitle(rs.getString("post_title"));
+				at.setPostCreatedDate(rs.getString("post_date"));
+				at.setPostUserName(rs.getString("user_name"));
+				at.setPostStatus(rs.getString("post_status"));
+
+				atList.add(at);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return atList;
+	}
+
+	public List<AdminCategory> selectJobCategories() {
+		List<AdminCategory> acList = new ArrayList<AdminCategory>();
+		this.sql = """
+				SELECT
+					job_category_id,
+					job_category_super
+				FROM
+					(
+					SELECT
+						job_category_id,
+						job_category_super,
+						ROW_NUMBER() OVER (PARTITION BY job_category_super
+					ORDER BY
+						JOB_CATEGORY_ID) AS rn
+					FROM
+						SEMI_JOB_CATEGORY sjc
+					ORDER BY
+						JOB_CATEGORY_ID
+						)
+				WHERE rn = 1
+				""";
+		AdminCategory ac = null;
+
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				ac = new AdminCategory();
+
+				ac.setCategoryId(rs.getInt("job_category_id"));
+				ac.setCategoryName(rs.getString("job_category_super"));
+
+				acList.add(ac);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return acList;
 	}
 
 	public List<AdminTopic> selectJobTopics() {

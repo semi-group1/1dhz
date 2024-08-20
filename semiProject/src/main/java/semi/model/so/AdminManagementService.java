@@ -71,6 +71,14 @@ public class AdminManagementService {
 		return adminTopicDAO.selectGeneralTopics();
 	}
 
+	public List<AdminTopic> selectTopicByJobCateogry(int categoryId) {
+		return adminTopicDAO.selectByJobCategoryId(categoryId);
+	}
+
+	public List<AdminCategory> selectJobCategories() {
+		return adminTopicDAO.selectJobCategories();
+	}
+
 	public List<AdminTopic> selectJobTopics() {
 		return adminTopicDAO.selectJobTopics();
 	}
