@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import semi.model.dao.UserDao;
 import semi.model.dto.UserInfoDto;
 import semi.model.so.EditInfoValidation;
+import semi.model.so.UpdateUserService;
 
 @Controller
 public class UserController {
@@ -38,15 +39,23 @@ public class UserController {
 		boolean isValidate = validation.validation(dto); 
 		
 		if(isValidate) {
-			model.addAttribute("user", userdao.selectOneUser(dto.getId()));
-			model.addAttribute("user_post", userdao.selectAllUserPost(dto.getId()));
-			return "myPage";
+			UpdateUserService service = new UpdateUserService();
+			boolean isSuccess = service.EditUserInfo(dto);
+			
+			if(isSuccess) {
+				model.addAttribute("user", userdao.selectOneUser(dto.getId()));
+				model.addAttribute("user_post", userdao.selectAllUserPost(dto.getId()));
+				return "myPage";
+			}else {
+				model.addAttribute("user", userdao.selectOneUser(dto.getId()));
+				model.addAttribute("msg", "데이터 수정 오류");
+				return "editInfo";
+			}
 		}else {
 			model.addAttribute("user", userdao.selectOneUser(dto.getId()));
 			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
 			return "editInfo";
 		}
-		
 	}
 	
 }

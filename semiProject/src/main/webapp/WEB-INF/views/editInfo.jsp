@@ -68,6 +68,7 @@
             	font-size: 25px;
             	color: lightcoral;
             	margin-left: 10px;
+            	text-align: center;
             }
 
         </style>
@@ -76,6 +77,7 @@
     <body>
         <div id="container">
             <div class="title">회원 정보 수정</div>
+            <p id="alert">${msg}</p>
             <form class="editInfo_form" action="editInfoProcess" method="POST">
             	<input type="hidden" name="id" id="id" value="${user.user_id}" />
                 <p>
@@ -86,7 +88,6 @@
                 <p>
                     <label for="passwd">비밀번호</label><br />
                     <input type="password" name="passwd" id="passwd" required />
-                    <span id="alert">${msg}</span>
                 </p>
                 <p>
                     <label for="passwdCheck">비밀번호 확인</label><br />
