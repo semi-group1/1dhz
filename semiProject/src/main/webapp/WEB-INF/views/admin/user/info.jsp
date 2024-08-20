@@ -35,12 +35,7 @@
 			<th>가입일</th>
 			<td>${userInfo.userJoinDate }</td>
 		</tr>
-		<tr>
-			<th>신고 누적 횟수</th>
-			<td><button>상세보기</button></td>
-		</tr>
 	</table>
-	<hr>
 	<h2>작성 게시글 목록</h2>
 	<table class="admin-board">
 		<thead>
@@ -69,7 +64,6 @@
 			</c:choose>
 		</tbody>
 	</table>
-	<hr>
 	<h2>작성 댓글 목록</h2>
 	<table class="admin-board">
 		<thead>

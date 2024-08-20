@@ -48,6 +48,23 @@ public class AdminController {
 		return view;
 	}
 
+	@RequestMapping("/user/search")
+	public String findUserByKeyword(Model model, @RequestParam(required = false) String page,
+			@RequestParam String keyword, @RequestParam String type) {
+		if (page == null) {
+			page = "1";
+		}
+
+		model.addAttribute("command", "userSearchList");
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("type", type);
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countByKeyword(keyword, type)));
+		model.addAttribute("list", ams.selectByKeyword(Integer.parseInt(page), keyword, type));
+
+		return view;
+	}
+
 	@RequestMapping("/user/info")
 	public String getUserInfo(Model model, @RequestParam int userId) {
 		model.addAttribute("command", "userInfo");

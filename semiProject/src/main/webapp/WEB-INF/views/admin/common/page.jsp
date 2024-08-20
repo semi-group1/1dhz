@@ -69,6 +69,9 @@
 				<c:when test='${command eq "userListInactive" }'>
 					<%@ include file="../user/listInactive.jsp"%>
 				</c:when>
+				<c:when test='${command eq "userSearchList" }'>
+					<%@ include file="../user/searchResult.jsp"%>
+				</c:when>
 				<c:when
 					test='${command eq "userInfo" or command eq "setUserInacitve" }'>
 					<%@ include file="../user/info.jsp"%>

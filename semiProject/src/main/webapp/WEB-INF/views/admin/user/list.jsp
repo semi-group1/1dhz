@@ -35,4 +35,12 @@
 			<li><a href="list?page=${page+1 }">다음</a></li>
 		</c:if>
 	</ul>
+	<form action="search" class="admin-search">
+		<select name="type">
+			<option selected value="userId">회원 번호</option>
+			<option value="userName">회원 이름</option>
+			<option value="userEmail">회원 이메일</option>
+		</select> <input type="number" name="keyword" id="keyword" required> <input
+			type="submit" value="검색">
+	</form>
 </div>

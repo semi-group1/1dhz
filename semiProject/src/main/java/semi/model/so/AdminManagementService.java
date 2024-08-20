@@ -27,7 +27,6 @@ public class AdminManagementService {
 	}
 
 	public int getMaxPage(int count) {
-		System.out.println(count);
 		return (count - 1) / 20 + 1;
 	}
 
@@ -42,8 +41,16 @@ public class AdminManagementService {
 		return adminUserDAO.selectAllUserInfos(this.getStartNum(page), this.getEndNum(page));
 	}
 
+	public List<AdminUser> selectByKeyword(int page, String keyword, String type) {
+		return adminUserDAO.selectByKeyword(this.getStartNum(page), this.getEndNum(page), keyword, type);
+	}
+
 	public int countAllUser() {
 		return adminUserDAO.countAllUser();
+	}
+
+	public int countByKeyword(String keyword, String type) {
+		return adminUserDAO.countByKeyword(keyword, type);
 	}
 
 	public List<AdminUser> selectInactiveUsers() {

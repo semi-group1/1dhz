@@ -162,6 +162,115 @@ public class AdminUserDAO {
 		return adminUsers;
 	}
 
+	public int countByKeyword(String keyword, String type) {
+		int rowNum = 0;
+		try {
+			conn = ds.getConnection();
+			this.sql = """
+					select count(*) as count
+					from semi_user
+					""";
+			switch (type) {
+			case "userId":
+				sql += "where user_id = ?";
+				break;
+			case "userName":
+				sql += "where user_name like ?";
+				break;
+			case "userEmail":
+				sql += "where user_email = ?";
+				break;
+			}
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				rowNum = rs.getInt("count");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return rowNum;
+	}
+
+	public List<AdminUser> selectByKeyword(int startNum, int endNum, String keyword, String type) {
+		List<AdminUser> adminUsers = new ArrayList<AdminUser>();
+		try {
+			conn = ds.getConnection();
+			this.sql = """
+					select user_id, user_name, user_email
+					from semi_user
+					""";
+			switch (type) {
+			case "userId":
+				sql += "where user_id = ?";
+				break;
+			case "userName":
+				sql += "where user_name like ?";
+				break;
+			case "userEmail":
+				sql += "where user_email = ?";
+				break;
+			}
+			sql += """
+					order by user_id
+					""";
+			this.setPaging();
+
+			System.out.println(sql);
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startNum);
+			pstmt.setInt(3, endNum);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				AdminUser au = new AdminUser();
+
+				au.setUserId(rs.getInt("user_id"));
+				au.setUserName(rs.getString("user_name"));
+				au.setUserEmail(rs.getString("user_email"));
+
+				adminUsers.add(au);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return adminUsers;
+	}
+
 	public List<AdminUser> selectInactiveUsers() {
 		List<AdminUser> adminUsers = new ArrayList<AdminUser>();
 		this.sql = """
