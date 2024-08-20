@@ -68,13 +68,22 @@ body {
 	width: 100%;
 }
 
-.admin-board {
+.admin-board, .admin-category {
 	width: 80%;
+	border-collapse: collapse;
+	border-top: 2px solid gray;
+	border-bottom: 1px solid gray;
 }
 
-.admin-board th, .admin-board td {
+.admin-board th, .admin-board td, .admin-category th, .admin-category td
+	{
 	padding: 10px 20px;
 	text-align: center;
+	border-bottom: 1px solid gray;
+}
+
+.admin-board th, .admin-category th {
+	background-color: gainsboro;
 }
 
 .admin-board-page {
