@@ -69,13 +69,6 @@
 			</c:choose>
 		</tbody>
 	</table>
-	<ul class="admin-board-page">
-		<li>이전</li>
-		<li>1</li>
-		<li>2</li>
-		<li>3</li>
-		<li>다음</li>
-	</ul>
 	<hr>
 	<h2>작성 댓글 목록</h2>
 	<table class="admin-board">
@@ -106,13 +99,6 @@
 			</c:choose>
 		</tbody>
 	</table>
-	<ul class="admin-board-page">
-		<li>이전</li>
-		<li>1</li>
-		<li>2</li>
-		<li>3</li>
-		<li>다음</li>
-	</ul>
 	<hr>
 	<div>
 		<button class="historyBack">이전 페이지로 돌아가기</button>

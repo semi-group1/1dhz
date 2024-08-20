@@ -24,22 +24,26 @@ public class AdminController {
 
 	@RequestMapping("/user/list")
 	public String getAllUserList(Model model, @RequestParam(required = false) String page) {
-		int maxPage = (ams.countAllUser() - 1) % 20;
 		if (page == null) {
 			page = "1";
 		}
 		model.addAttribute("command", "userList");
 		model.addAttribute("page", page);
-		model.addAttribute("maxPage", maxPage);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countAllUser()));
 		model.addAttribute("list", ams.selectAllUserInfos(Integer.parseInt(page)));
 
 		return view;
 	}
 
 	@RequestMapping("/user/listInactive")
-	public String getInactiveUserList(Model model) {
+	public String getInactiveUserList(Model model, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
 		model.addAttribute("command", "userListInactive");
-		model.addAttribute("list", ams.selectInactiveUsers());
+		model.addAttribute("page");
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countInactiveUser()));
+		model.addAttribute("list", ams.selectInactiveUsers(Integer.parseInt(page)));
 
 		return view;
 	}

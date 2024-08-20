@@ -19,13 +19,22 @@ public class AdminUserDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private String sql;
-	private String pagingSql;
 
 	public AdminUserDAO() {
 	}
 
 	public AdminUserDAO(DataSource ds) {
 		this.ds = ds;
+	}
+
+	public void setPaging() {
+		this.sql = """
+				select *
+				from (select rownum as rn, t.* from (
+				""" + this.sql + """
+				) t)
+				where rn between ? and ?
+				""";
 	}
 
 	public List<AdminUser> selectAllUserInfos() {
@@ -113,16 +122,12 @@ public class AdminUserDAO {
 				from semi_user
 				order by user_id
 				""";
-		this.pagingSql = """
-				select *
-				from (select rownum as rn, t.* from (
-				""" + this.sql + """
-				) t)
-				where rn between ? and ?
-				""";
+
+		this.setPaging();
+
 		try {
 			conn = ds.getConnection();
-			pstmt = conn.prepareStatement(pagingSql);
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startNum);
 			pstmt.setInt(2, endNum);
 			rs = pstmt.executeQuery();
@@ -178,6 +183,103 @@ public class AdminUserDAO {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				AdminUser au = new AdminUser();
+
+				au.setUserId(rs.getInt("user_id"));
+				au.setUserName(rs.getString("user_name"));
+				au.setUserInactiveDesc(rs.getString("inactive_desc"));
+				au.setUserInactiveStartDate(rs.getString("inactive_start_date"));
+				au.setUserInactiveEndDate(rs.getString("inactive_end_date"));
+
+				adminUsers.add(au);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return adminUsers;
+	}
+
+	public int countInactiveUser() {
+		int rowNum = 0;
+		this.sql = """
+				SELECT
+					count(*)
+				FROM
+					SEMI_USER su
+				JOIN SEMI_USER_INACTIVE sui ON
+					su.USER_ID = sui.inactive_user_id
+				""";
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				rowNum = rs.getInt("count");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return rowNum;
+	}
+
+	public List<AdminUser> selectInactiveUsers(int startNum, int endNum) {
+		List<AdminUser> adminUsers = new ArrayList<AdminUser>();
+		this.sql = """
+				SELECT
+					user_id,
+					user_name,
+					inactive_desc,
+					to_char(inactive_start_date, 'YYYY-MM-DD') as inactive_start_date,
+					to_char(inactive_end_date, 'YYYY-MM-DD') as inactive_end_date
+				FROM
+					SEMI_USER su
+				JOIN SEMI_USER_INACTIVE sui ON
+					su.USER_ID = sui.inactive_user_id
+				ORDER BY
+					inactive_start_date DESC
+				""";
+
+		this.setPaging();
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startNum);
+			pstmt.setInt(2, endNum);
+			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				AdminUser au = new AdminUser();

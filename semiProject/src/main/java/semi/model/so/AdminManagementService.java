@@ -18,6 +18,19 @@ public class AdminManagementService {
 	@Autowired
 	AdminReportDAO adminReportDAO;
 
+	public int getStartNum(int page) {
+		return (page - 1) * 20 + 1;
+	}
+
+	public int getEndNum(int page) {
+		return (page - 1) * 20 + 20;
+	}
+
+	public int getMaxPage(int count) {
+		System.out.println(count);
+		return (count - 1) / 20 + 1;
+	}
+
 	public AdminManagementService() {
 	}
 
@@ -26,12 +39,7 @@ public class AdminManagementService {
 	}
 
 	public List<AdminUser> selectAllUserInfos(int page) {
-		int startNum, endNum;
-
-		startNum = (page - 1) * 20 + 1;
-		endNum = (page - 1) * 20 + 20;
-
-		return adminUserDAO.selectAllUserInfos(startNum, endNum);
+		return adminUserDAO.selectAllUserInfos(this.getStartNum(page), this.getEndNum(page));
 	}
 
 	public int countAllUser() {
@@ -40,6 +48,14 @@ public class AdminManagementService {
 
 	public List<AdminUser> selectInactiveUsers() {
 		return adminUserDAO.selectInactiveUsers();
+	}
+
+	public List<AdminUser> selectInactiveUsers(int page) {
+		return adminUserDAO.selectInactiveUsers(this.getStartNum(page), this.getEndNum(page));
+	}
+
+	public int countInactiveUser() {
+		return adminUserDAO.countInactiveUser();
 	}
 
 	public AdminUser selectUserInfo(int userId) {
