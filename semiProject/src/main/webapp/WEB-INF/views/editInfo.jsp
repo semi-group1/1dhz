@@ -39,13 +39,6 @@
                 height: 30px;
             }
 
-            #auth_btn{
-                width: 120px;
-                height: 36px;
-                background-color: lightblue;
-                border: 1px solid #333;
-            }
-
             #cancel_btn{
                 background-color: lightcoral;
                 width: 150px;
@@ -83,7 +76,6 @@
                 <p>
                     <label for="email">이메일</label><br />
                     <input type="text" name="email" id="email" value="${user.user_email}" required />
-                    <a href="#"><button id="auth_btn">이메일 인증</button></a>
                 </p>
                 <p>
                     <label for="passwd">비밀번호</label><br />
