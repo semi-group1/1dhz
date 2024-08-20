@@ -23,9 +23,15 @@ public class AdminController {
 	}
 
 	@RequestMapping("/user/list")
-	public String getAllUserList(Model model) {
+	public String getAllUserList(Model model, @RequestParam(required = false) String page) {
+		int maxPage = (ams.countAllUser() - 1) % 20;
+		if (page == null) {
+			page = "1";
+		}
 		model.addAttribute("command", "userList");
-		model.addAttribute("list", ams.selectAllUserInfos());
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", maxPage);
+		model.addAttribute("list", ams.selectAllUserInfos(Integer.parseInt(page)));
 
 		return view;
 	}

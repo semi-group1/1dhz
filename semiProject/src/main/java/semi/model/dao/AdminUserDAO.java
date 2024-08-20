@@ -19,6 +19,7 @@ public class AdminUserDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private String sql;
+	private String pagingSql;
 
 	public AdminUserDAO() {
 	}
@@ -39,6 +40,92 @@ public class AdminUserDAO {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				AdminUser au = new AdminUser();
+
+				au.setUserId(rs.getInt("user_id"));
+				au.setUserName(rs.getString("user_name"));
+				au.setUserEmail(rs.getString("user_email"));
+
+				adminUsers.add(au);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return adminUsers;
+	}
+
+	public int countAllUser() {
+		int rowNum = 0;
+		this.sql = """
+				select count(*) as count from semi_user
+				""";
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				rowNum = rs.getInt("count");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return rowNum;
+	}
+
+	public List<AdminUser> selectAllUserInfos(int startNum, int endNum) {
+		List<AdminUser> adminUsers = new ArrayList<AdminUser>();
+		this.sql = """
+				select user_id, user_name, user_email
+				from semi_user
+				order by user_id
+				""";
+		this.pagingSql = """
+				select *
+				from (select rownum as rn, t.* from (
+				""" + this.sql + """
+				) t)
+				where rn between ? and ?
+				""";
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(pagingSql);
+			pstmt.setInt(1, startNum);
+			pstmt.setInt(2, endNum);
+			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				AdminUser au = new AdminUser();

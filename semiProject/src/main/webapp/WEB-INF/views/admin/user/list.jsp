@@ -25,10 +25,14 @@
 		</tbody>
 	</table>
 	<ul class="admin-board-page">
-		<li>이전</li>
-		<li>1</li>
-		<li>2</li>
-		<li>3</li>
-		<li>다음</li>
+		<c:if test="${page > 1 }">
+			<li><a href="list?page=${page-1 }">이전</a></li>
+		</c:if>
+		<c:forEach var="i" begin="1" end="${maxPage }">
+			<li><a href="list?page=${i }">${i }</a></li>
+		</c:forEach>
+		<c:if test="${page < maxPage}">
+			<li><a href="list?page=${page+1 }">다음</a></li>
+		</c:if>
 	</ul>
 </div>

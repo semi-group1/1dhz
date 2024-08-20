@@ -6,6 +6,20 @@ select * from semi_post_inactive;
 
 INSERT INTO SEMI_USER(USER_ID, USER_NAME, USER_EMAIL, USER_PW, USER_JOB)
 VALUES(0, '테스트 유저', 'test@email.com', '1234', 0);
+
+INSERT
+	INTO
+	SEMI_USER(USER_ID,
+	USER_NAME,
+	USER_EMAIL,
+	USER_PW,
+	USER_JOB)
+VALUES(seq_semi_user_id.nextval,
+concat('테스트 유저', seq_semi_user_id.currval),
+concat(seq_semi_user_id.currval, 'test@email.com'),
+'1234',
+0);
+
 INSERT INTO SEMI_USER(USER_ID, USER_NAME, USER_EMAIL, USER_PW, USER_JOB)
 VALUES(9999, '테스트 유저9999', 'test1234@email.com', '1234', 0);
 

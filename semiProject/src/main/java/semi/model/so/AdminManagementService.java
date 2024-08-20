@@ -25,6 +25,19 @@ public class AdminManagementService {
 		return adminUserDAO.selectAllUserInfos();
 	}
 
+	public List<AdminUser> selectAllUserInfos(int page) {
+		int startNum, endNum;
+
+		startNum = (page - 1) * 20 + 1;
+		endNum = (page - 1) * 20 + 20;
+
+		return adminUserDAO.selectAllUserInfos(startNum, endNum);
+	}
+
+	public int countAllUser() {
+		return adminUserDAO.countAllUser();
+	}
+
 	public List<AdminUser> selectInactiveUsers() {
 		return adminUserDAO.selectInactiveUsers();
 	}
