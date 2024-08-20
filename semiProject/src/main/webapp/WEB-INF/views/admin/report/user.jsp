@@ -14,10 +14,17 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:if test="${empty list }">
+				<tr>
+					<td colspan="5">결과가 존재하지 않습니다.</td>
+				</tr>
+			</c:if>
 			<c:forEach items="${list }" var="item" varStatus="status">
 				<tr>
 					<td>${item.reportTargetId }</td>
-					<td><a href="#" target="_blank">${item.reportedUsername }</a></td>
+					<td><a
+						href="${pageContext.request.contextPath }/admin/user/info?userId=${item.reportTargetId}"
+						target="_blank">${item.reportedUsername }</a></td>
 					<td>${item.reportUserName }</td>
 					<td>${item.reportDesc }</td>
 					<c:choose>
@@ -43,11 +50,4 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<ul class="admin-board-page">
-		<li>이전</li>
-		<li>1</li>
-		<li>2</li>
-		<li>3</li>
-		<li>다음</li>
-	</ul>
 </div>

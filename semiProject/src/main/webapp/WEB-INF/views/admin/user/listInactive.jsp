@@ -13,6 +13,11 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:if test="${empty list }">
+				<tr>
+					<td colspan="4">결과가 존재하지 않습니다.</td>
+				</tr>
+			</c:if>
 			<c:forEach items="${list }" var="item" varStatus="status">
 				<tr>
 					<td>${item.userId }</td>
