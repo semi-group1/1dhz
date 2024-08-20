@@ -77,6 +77,16 @@ public class AdminController {
 	public String getGeneralTopics(Model model) {
 		model.addAttribute("command", "topicListGeneral");
 		model.addAttribute("list", ams.selectGeneralTopics());
+		model.addAttribute("categories", ams.selectGeneralCategories());
+
+		return view;
+	}
+
+	@RequestMapping("/topic/selectCategory")
+	public String getGeneralTopicsByCategory(Model model, int categoryId) {
+		model.addAttribute("command", "topicListGeneral");
+		model.addAttribute("list", ams.selectTopicsByCateogry(categoryId));
+		model.addAttribute("categories", ams.selectGeneralCategories());
 
 		return view;
 	}

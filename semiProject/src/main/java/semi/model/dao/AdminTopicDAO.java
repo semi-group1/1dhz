@@ -70,6 +70,46 @@ public class AdminTopicDAO {
 		return atList;
 	}
 
+	public List<AdminCategory> selectGeneralCategories() {
+		List<AdminCategory> acList = new ArrayList<AdminCategory>();
+		AdminCategory ac = null;
+		this.sql = """
+				SELECT
+					TOPIC_CATEGORY_ID,
+					topic_category_name
+				FROM
+					SEMI_TOPIC_CATEGORY stc
+				ORDER BY TOPIC_CATEGORY_ID
+				""";
+
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				ac = new AdminCategory();
+
+				ac.setCategoryId(rs.getInt("topic_category_id"));
+				ac.setCategoryName(rs.getString("topic_category_name"));
+
+				acList.add(ac);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return acList;
+	}
+
 	public List<AdminTopic> selectGeneralTopics() {
 		List<AdminTopic> atList = new ArrayList<AdminTopic>();
 		this.sql = """
@@ -84,6 +124,50 @@ public class AdminTopicDAO {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				AdminTopic at = new AdminTopic();
+
+				at.setPostId(rs.getInt("post_id"));
+				at.setPostCategoryName(rs.getString("topic_category_name"));
+				at.setPostTitle(rs.getString("post_title"));
+				at.setPostCreatedDate(rs.getString("post_date"));
+				at.setPostUserName(rs.getString("user_name"));
+				at.setPostStatus(rs.getString("post_status"));
+
+				atList.add(at);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return atList;
+	}
+
+	public List<AdminTopic> selectByCategoryId(int categoryId) {
+		List<AdminTopic> atList = new ArrayList<AdminTopic>();
+		this.sql = """
+				SELECT post_id, topic_category_name, post_title, to_char(post_date, 'YYYY-MM-DD') post_date, user_name, post_status
+				FROM SEMI_TOPIC st
+				JOIN SEMI_TOPIC_CATEGORY stc ON st.CATE_NO = stc.TOPIC_CATEGORY_ID
+				JOIN SEMI_USER su ON st.USER_ID = su.USER_ID
+				WHERE job_yn = 'n' and topic_category_id = ?
+				""";
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryId);
+			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				AdminTopic at = new AdminTopic();

@@ -59,6 +59,14 @@ public class AdminManagementService {
 		return adminTopicDAO.selectAllTopics();
 	}
 
+	public List<AdminCategory> selectGeneralCategories() {
+		return adminTopicDAO.selectGeneralCategories();
+	}
+
+	public List<AdminTopic> selectTopicsByCateogry(int categoryId) {
+		return adminTopicDAO.selectByCategoryId(categoryId);
+	}
+
 	public List<AdminTopic> selectGeneralTopics() {
 		return adminTopicDAO.selectGeneralTopics();
 	}
