@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게시판 수정</title>
+<title>게시판 상세</title>
 <%	
 	String boardSeq = request.getParameter("boardSeq");		
 %>
@@ -17,7 +17,6 @@
 
 <!-- 공통 JavaScript -->
 <script type="text/javascript" src="/js/common/jquery.js"></script>
-<script type="text/javascript" src="/js/common/jquery.form.js"></script>
 <script type="text/javascript">
 	
 	$(document).ready(function(){		
@@ -27,6 +26,22 @@
 	/** 게시판 - 목록 페이지 이동 */
 	function goBoardList(){				
 		location.href = "/board/boardList";
+	}
+	
+	/** 게시판 - 수정 페이지 이동 */
+	function goBoardUpdate(){
+		
+		var boardSeq = $("#board_seq").val();
+		
+		location.href = "/board/boardUpdate?boardSeq="+ boardSeq;
+	}
+	
+	/** 게시판 - 답글 페이지 이동 */
+	function goBoardReply(){
+		
+		var boardSeq = $("#board_seq").val();
+		
+		location.href = "/board/boardReply?boardSeq="+ boardSeq;
 	}
 	
 	/** 게시판 - 상세 조회  */
@@ -50,15 +65,16 @@
 		        error 	: function(xhr, status, error) {}
 		        
 		     });
-			
 		} else {
 			alert("오류가 발생했습니다.\n관리자에게 문의하세요.");
-		}	
+		}			
 	}
 	
 	/** 게시판 - 상세 조회  콜백 함수 */
 	function getBoardDetailCallback(obj){
-				
+		
+		var str = "";
+		
 		if(obj != null){								
 							
 			var boardSeq		= obj.board_seq; 
@@ -76,15 +92,26 @@
 			var updDate 		= obj.upd_date;
 			var files			= obj.files;		
 			var filesLen		= files.length;
-								
-			$("#board_subject").val(boardSubject);			
-			$("#board_content").val(boardContent);
-			$("#board_writer").text(boardWriter);
-			
-			var fileStr = "";
+						
+			str += "<tr>";
+			str += "<th>제목</th>";
+			str += "<td>"+ boardSubject +"</td>";
+			str += "<th>조회수</th>";
+			str += "<td>"+ boardHits +"</td>";
+			str += "</tr>";		
+			str += "<tr>";
+			str += "<th>작성자</th>";
+			str += "<td>"+ boardWriter +"</td>";
+			str += "<th>작성일시</th>";
+			str += "<td>"+ insDate +"</td>";
+			str += "</tr>";		
+			str += "<tr>";
+			str += "<th>내용</th>";
+			str += "<td colspan='3'>"+ boardSubject +"</td>";
+			str += "</tr>";
 			
 			if(filesLen > 0){
-				
+			
 				for(var a=0; a<filesLen; a++){
 					
 					var boardSeq	= files[a].board_seq;
@@ -100,92 +127,64 @@
 					var updUserId 	= files[a].upd_user_id;
 					var updDate 	= files[a].upd_date;
 					
-					fileStr += "<a href='/board/fileDownload?fileNameKey="+encodeURI(fileNameKey)+"&fileName="+encodeURI(fileName)+"&filePath="+encodeURI(filePath)+"'>" + fileName + "</a>";
-					fileStr += "<button type='button' class='btn black ml15' style='padding:3px 5px 6px 5px;' onclick='javascript:setDeleteFile("+ boardSeq +", "+ fileNo +")'>X</button>";
-				}			
-								
-			} else {
-				
-				fileStr = "<input type='file' id='files[0]' name='files[0]' value=''></td>";
-			}
+					str += "<th>첨부파일</th>";
+					//str += "<td onclick='javascript:fileDownload(\"" + fileNameKey + "\", \"" + fileName + "\", \"" + filePath + "\");' style='cursor:Pointer'>"+ fileName +"</td>";
+					str += "<td colspan='3'><a href='/board/fileDownload?fileNameKey="+encodeURI(fileNameKey)+"&fileName="+encodeURI(fileName)+"&filePath="+encodeURI(filePath)+"'>" + fileName + "</a></td>";
+					str += "</tr>";
+				}	
+			}			
 			
-			$("#file_td").html(fileStr);
+		} else {
 			
-		} else {			
 			alert("등록된 글이 존재하지 않습니다.");
 			return;
 		}		
+		
+		$("#tbody").html(str);
 	}
 	
-	/** 게시판 - 수정  */
-	function updateBoard(){
+	/** 게시판 - 삭제  */
+	function deleteBoard(){
 
-		var boardSubject = $("#board_subject").val();
-		var boardContent = $("#board_content").val();
-			
-		if (boardSubject == ""){			
-			alert("제목을 입력해주세요.");
-			$("#board_subject").focus();
-			return;
-		}
+		var boardSeq = $("#board_seq").val();
 		
-		if (boardContent == ""){			
-			alert("내용을 입력해주세요.");
-			$("#board_content").focus();
-			return;
-		}
-		
-		var yn = confirm("게시글을 수정하시겠습니까?");		
+		var yn = confirm("게시글을 삭제하시겠습니까?");		
 		if(yn){
-				
-			var filesChk = $("input[name='files[0]']").val();
-			if(filesChk == ""){
-				$("input[name='files[0]']").remove();
-			}
 			
-			$("#boardForm").ajaxForm({
-		    
-				url		: "/board/updateBoard",
-				enctype	: "multipart/form-data",
-				cache   : false,
-		        async   : true,
-				type	: "POST",					 	
-				success : function(obj) {
-					updateBoardCallback(obj);				
-			    },	       
-			    error 	: function(xhr, status, error) {}
-			    
-		    }).submit();
-		}
+			$.ajax({	
+				
+			    url		: "/board/deleteBoard",
+			    data    : $("#boardForm").serialize(),
+		        dataType: "JSON",
+		        cache   : false,
+				async   : true,
+				type	: "POST",	
+		        success : function(obj) {
+		        	deleteBoardCallback(obj);				
+		        },	       
+		        error 	: function(xhr, status, error) {}
+		        
+		     });
+		}		
 	}
 	
-	/** 게시판 - 수정 콜백 함수 */
-	function updateBoardCallback(obj){
+	/** 게시판 - 삭제 콜백 함수 */
+	function deleteBoardCallback(obj){
 	
 		if(obj != null){		
 			
 			var result = obj.result;
 			
 			if(result == "SUCCESS"){				
-				alert("게시글 수정을 성공하였습니다.");				
-				goBoardList();				 
+				alert("게시글 삭제를 성공하였습니다.");				
+				goBoardList();				
 			} else {				
-				alert("게시글 수정을 실패하였습니다.");	
+				alert("게시글 삭제를 실패하였습니다.");	
 				return;
 			}
 		}
 	}
 	
-	/** 게시판 - 삭제할 첨부파일 정보 */
-	function setDeleteFile(boardSeq, fileSeq){
-		
-		var deleteFile = boardSeq + "!" + fileSeq;		
-		$("#delete_file").val(deleteFile);
-				
-		var fileStr = "<input type='file' id='files[0]' name='files[0]' value=''>";		
-		$("#file_td").html(fileStr);		
-	}
-		
 </script>
 </head>
 <body>
@@ -193,39 +192,26 @@
 	<div id="container">
 		<div class="inner">	
 			<h2>게시글 상세</h2>
-			<form id="boardForm" name="boardForm" action="/board/updateBoard" enctype="multipart/form-data" method="post" onsubmit="return false;">	
-				<table width="100%" class="table02">
-				<caption><strong><span class="t_red">*</span> 표시는 필수입력 항목입니다.</strong></caption>
+			<form id="boardForm" name="boardForm">		
+				<table width="100%" class="table01">
 				    <colgroup>
-				         <col width="20%">
+				        <col width="15%">
+				        <col width="35%">
+				        <col width="15%">
 				        <col width="*">
 				    </colgroup>
 				    <tbody id="tbody">
-				       <tr>
-							<th>제목<span class="t_red">*</span></th>
-							<td><input id="board_subject" name="board_subject" value="" class="tbox01"/></td>
-						</tr>
-						 <tr>
-							<th>작성자</th>
-							<td id="board_writer"></td>
-						</tr>
-						<tr>
-							<th>내용<span class="t_red">*</span></th>
-							<td colspan="3"><textarea id="board_content" name="board_content" cols="50" rows="5" class="textarea01"></textarea></td>
-						</tr>
-						<tr>
-							<th>첨부파일</th>
-							<td colspan="3" id="file_td"><input type="file" id="files[0]" name="files[0]" value=""></td>
-						</tr>
+				       
 				    </tbody>
-				</table>	
+				</table>		
 				<input type="hidden" id="board_seq"		name="board_seq"	value="${boardSeq}"/> <!-- 게시글 번호 -->
-				<input type="hidden" id="search_type"	name="search_type"	value="U"/> <!-- 조회 타입 - 상세(S)/수정(U) -->
-				<input type="hidden" id="delete_file"	name="delete_file"	value=""/> <!-- 삭제할 첨부파일 -->
+				<input type="hidden" id="search_type"	name="search_type" 	value="S"/> <!-- 조회 타입 - 상세(S)/수정(U) -->
 			</form>
 			<div class="btn_right mt15">
 				<button type="button" class="btn black mr5" onclick="javascript:goBoardList();">목록으로</button>
-				<button type="button" class="btn black" onclick="javascript:updateBoard();">수정하기</button>
+				<button type="button" class="btn black mr5" onclick="javascript:goBoardUpdate();">수정하기</button>
+				<button type="button" class="btn black" onclick="javascript:deleteBoard();">삭제하기</button>
+				<button type="button" class="btn black mr5" onclick="javascript:goBoardReply();">답글쓰기</button>
 			</div>
 		</div>
 	</div>

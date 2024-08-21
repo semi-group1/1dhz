@@ -1,5 +1,5 @@
 package semi.model.dao;
-/*
+
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -10,8 +10,8 @@ import semi.model.BoardDto;
 @Repository
 public class BoardDao {
 
-	@Resource(name = "sqlSession")
-	private SqlSession sqlSession;
+	@Resource(name = "DataSource ")
+	private DataSource DataSource;
 
 	private static final String NAMESPACE = "com.spring.board.boardMapper";
 
@@ -44,4 +44,3 @@ public class BoardDao {
 	}
 	
 }
-*/
