@@ -17,6 +17,6 @@ public class LoginController {
     @PostMapping("/login")
     public String handleLogin(HttpSession session) {
         session.setAttribute("userId", 1);
-        return "redirect:/chatrooms";
+        return "redirect:/semiProject/chatrooms";
     }
 }

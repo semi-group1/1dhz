@@ -6,7 +6,7 @@
 <html>
 <head>
     <title>채팅</title>
-    <link rel="stylesheet" type="text/css" href="css/chat.css" />
+    <link rel="stylesheet" type="text/css" href="../css/chat.css" />
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
     	$(document).ready(function() {
@@ -15,7 +15,7 @@
         	// 메시지 새로 고침
         	function fetchMessages() {
             	$.ajax({
-                	url: '/chat/messages',
+                	url: '/semiProject/chat/messages',
                 	method: 'GET',
                 	data: { chatRoomId: '${chatRoomId}' },
                 	dataType: 'html',
@@ -58,12 +58,12 @@
 <body>
     <div class="chat-container">
     	<div class="back-button-container">
-        	<a href="/chatrooms" class="back-button">뒤로가기</a>
+        	<a href="/semiProject/chatrooms" class="back-button">뒤로가기</a>
     	</div>
     	<div class="messages" id="messages"></div>
     
     	<div class="input-container">
-        	<form action="/chat" method="post">
+        	<form action="/semiProject/chat" method="post">
             	<input type="hidden" name="chatRoomId" value="${chatRoomId}" />
             	<input type="hidden" name="senderId" value="${userId}" />
             	<input type="text" name="message" placeholder="메시지를 입력하세요" required />

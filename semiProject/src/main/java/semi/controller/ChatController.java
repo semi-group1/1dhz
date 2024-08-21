@@ -27,7 +27,7 @@ public class ChatController {
         this.chatService = chatService;
     }
 
-    @GetMapping("/chat")
+    @GetMapping("/semiProject/chat")
     public String showChatPage(Model model, @RequestParam(value = "chatRoomId", defaultValue = "1") int chatRoomId) {
         List<ChatMessageDto> messages = chatService.getMessages(chatRoomId);
         model.addAttribute("messages", messages);
@@ -35,7 +35,7 @@ public class ChatController {
         return "chat";
     }
 
-    @PostMapping("/chat")
+    @PostMapping("/semiProject/chat")
     public String addMessage(
             @RequestParam("chatRoomId") int chatRoomId,
             @RequestParam("message") String message,
@@ -45,10 +45,10 @@ public class ChatController {
         if (senderId != null && message != null && !message.trim().isEmpty()) {
             chatService.addMessage(chatRoomId, senderId, message);
         }
-        return "redirect:/chat?chatRoomId=" + chatRoomId;
+        return "redirect:/semiProject/chat?chatRoomId=" + chatRoomId;
     }
 
-    @GetMapping("/chat/messages")
+    @GetMapping("/semiProject/chat/messages")
     public ResponseEntity<String> getMessages(@RequestParam("chatRoomId") int chatRoomId) {
     	// chat_room_id값에 해당하는 채팅 메시지를 ChatService에서 가져옴
         List<ChatMessageDto> messages = chatService.getMessages(chatRoomId);

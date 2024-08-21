@@ -19,18 +19,18 @@ public class ChatRoomController {
         this.chatService = chatService;
     }
 
-    @GetMapping("/chatrooms")
+    @GetMapping("/semiProject/chatrooms")
     public String showChatRooms(Model model) {
         List<Integer> chatRoomIds = chatService.getUniqueChatRoomIds();
         model.addAttribute("chatRoomIds", chatRoomIds);
         return "chatrooms";
     }
 
-    @PostMapping("/createChatRoom")
+    @PostMapping("/semiProject/createChatRoom")
     public String createChatRoom() {
         int maxChatRoomId = chatService.getMaxChatRoomId();
         int newChatRoomId = maxChatRoomId + 1;
-        return "redirect:/chat?chatRoomId=" + newChatRoomId;
+        return "redirect:/semiProject/chat?chatRoomId=" + newChatRoomId;
     }
 }
 

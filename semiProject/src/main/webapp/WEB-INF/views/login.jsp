@@ -6,7 +6,7 @@
     <title>로그인</title>
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/login" method="post">
+    <form action="/login" method="post">
         <button type="submit">로그인</button>
     </form>
 </body>
