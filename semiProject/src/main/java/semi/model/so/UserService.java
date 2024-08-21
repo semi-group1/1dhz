@@ -24,13 +24,17 @@ public class UserService {
 	
 	public boolean isEditValidate(UserInfoDto dto) {
 		EditInfoValidation validation = new EditInfoValidation();
-		boolean isEditValidate = validation.validation(dto); 
-		return isEditValidate;
+		return validation.validation(dto);
 	}
 	
 	public boolean isEditSuccess(UserInfoDto dto) {
-		boolean isEditSuccess = userdao.UpdateUserInfo(dto);
-		return isEditSuccess;
+		return userdao.updateUserInfo(dto);
+	}
+	
+	public boolean isDeleteSuccess(int userId) {
+
+		return userdao.deleteUser(userId);
+		
 	}
 	
 }

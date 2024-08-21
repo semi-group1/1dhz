@@ -67,7 +67,7 @@
         }
         /* 회원 정보 수정 버튼 */
         .info_edit_btn{
-            margin-top: 30px;
+            margin-top: 5px;
             width: 200px;
             height: 50px;
             border-radius: 5px;
@@ -80,7 +80,21 @@
                 color: #000;
             }
         }
-
+        
+        /* 회원 탈퇴 버튼 */
+		.user_delete_btn{
+            width: 200px;
+            height: 50px;
+            border-radius: 5px;
+            background-color: lightcoral;
+            border: 1px solid #333;
+            color: #333;
+            font-size: 20px;
+            &:hover{
+                background-color: rgb(200, 100, 100);
+                color: #000;
+            }
+        }
         /* 작성한 게시글 */
         .wrote_post_title{
             width: 90%;
@@ -126,7 +140,8 @@
                 <p>${user.user_job}</p>
                 <p>#태그1 #태그2</p>
                 <p>#태그3 #태그4</p>
-                <a href="/semiProject/editInfo/${user.user_id}"><button class="info_edit_btn">정보 수정</button></a>
+                <p><a href="/semiProject/editInfo/${user.user_id}"><button class="info_edit_btn">정보 수정</button></a></p>
+                <p><a href="/semiProject/userDelete/${user.user_id}"><button class="user_delete_btn">회원 탈퇴</button></a>
             </div>
         </div>
         

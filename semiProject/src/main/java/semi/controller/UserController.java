@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import semi.model.User;
+import semi.model.dao.HelloDao;
 import semi.model.dto.UserInfoDto;
 import semi.model.so.UserService;
 
@@ -12,14 +14,24 @@ import semi.model.so.UserService;
 public class UserController {
 	
 	@Autowired
+	HelloDao dao;
+	
+	@Autowired
 	UserService us;
 	
 	@RequestMapping("/myPage/{userId}")
 	public String myPage(@PathVariable("userId") int userId, Model model) {
-		model.addAttribute("user", us.selectOneUser(userId));
-		model.addAttribute("user_post", us.selectAllUserPost(userId));
-		
-		return "myPage";
+		User user = us.selectOneUser(userId);
+		if(!user.getUser_status().equals("active")) {
+			model.addAttribute("msg", "테스트 입니다.");
+			model.addAttribute("emp", dao.selectAll());
+			return "hello";
+		}else {
+			model.addAttribute("user", user);
+			model.addAttribute("user_post", us.selectAllUserPost(userId));
+			
+			return "myPage";
+		}
 	}
 	
 	@RequestMapping("/editInfo/{userId}")
@@ -27,6 +39,21 @@ public class UserController {
 		model.addAttribute("user", us.selectOneUser(userId));
 		
 		return "editInfo";
+	}
+	
+	@RequestMapping("/userDelete/{userId}")
+	public String deleteUser(@PathVariable("userId") int userId, Model model) {
+		if(us.isDeleteSuccess(userId)) {
+			model.addAttribute("msg", "테스트 입니다.");
+			model.addAttribute("emp", dao.selectAll());
+			return "hello";
+		}else {
+			model.addAttribute("user", us.selectOneUser(userId));
+			model.addAttribute("user_post", us.selectAllUserPost(userId));
+			return "myPage";
+		}
+		
+		
 	}
 	
 	@RequestMapping(value="/editInfo/editInfoProcess", method=RequestMethod.POST)

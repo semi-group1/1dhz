@@ -25,7 +25,7 @@ public class UserDao {
 	}
 	
 	public User selectOneUser(int id) {
-		this.sql = "select user_id, user_name, user_email, job_category_super, job_category_sub, user_comment, user_profile_image from semi_user join semi_job_category on semi_user.user_job = semi_job_category.job_category_id where user_id=" + id;
+		this.sql = "select user_id, user_name, user_email, job_category_super, job_category_sub, user_comment, user_profile_image, user_status from semi_user join semi_job_category on semi_user.user_job = semi_job_category.job_category_id where user_id=" + id;
 		User user = new User();
 		try {
 			conn = ds.getConnection();
@@ -39,6 +39,7 @@ public class UserDao {
 				user.setUser_job(rs.getString("job_category_super") + "<br />" + rs.getString("job_category_sub"));
 				user.setUser_comment(rs.getString("user_comment"));
 				user.setUser_profile_image(rs.getString("user_profile_image"));
+				user.setUser_status(rs.getString("user_status"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -123,7 +124,7 @@ public class UserDao {
 		return upList;
 	}
 	
-	public boolean UpdateUserInfo(UserInfoDto dto) {
+	public boolean updateUserInfo(UserInfoDto dto) {
 		boolean result = true;
 		
 		this.sql = "update semi_user set user_email=?, user_pw=?, user_name=?, user_comment=? where user_id=?";
@@ -136,6 +137,38 @@ public class UserDao {
 			pstmt.setString(3, dto.getName());
 			pstmt.setString(4, dto.getComment());
 			pstmt.setInt(5, dto.getId());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		} finally {
+			try {
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+				result = false;
+			}
+		}
+
+		return true;
+	}
+	
+	public boolean deleteUser(int userId) {
+		boolean result = true;
+		
+		this.sql = "update semi_user set user_status=? where user_id=?";
+		
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "deleted");
+			pstmt.setInt(2, userId);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				
