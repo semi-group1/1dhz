@@ -127,6 +127,7 @@ public class AdminTopicDAO {
 				SELECT post_id, post_title, to_char(post_date, 'YYYY-MM-DD') post_date, user_name, post_status
 				FROM SEMI_TOPIC st
 				JOIN SEMI_USER su ON st.USER_ID = su.USER_ID
+				order by post_id
 				""";
 		this.setPaging();
 
