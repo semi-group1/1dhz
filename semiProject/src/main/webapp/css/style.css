@@ -1,0 +1,76 @@
+#container {
+    width: 1280px;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+.logo img {
+    height: 100px;
+
+}
+
+.search-input:focus {
+    border-color: #6f42c1; 
+    box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25); 
+}
+
+.footer-logo img {
+    height: 50px;
+}
+
+header.bg-dark {
+    background-color: #ffffff !important; 
+    border-color: #ccc; 
+}
+
+footer.bg-dark {
+    background-color: #5e37a6 !important; 
+    border-color: #ccc; 
+}
+
+#write-btn, #login-btn {
+    background-color: #6f42c1 !important; 
+    border-color: #6f42c1 !important; 
+    color: #ffffff !important; 
+}
+
+#write-btn:hover, #login-btn:hover {
+    background-color: #58339d !important; 
+    border-color: #58339d!important;
+}
+
+
+.main-banner{
+	display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    /*align-items: center;*/   
+}
+
+
+
+
+
+/* 카드 스타일 */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.card-header {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-body p {
+    margin: 5px 0;
+}

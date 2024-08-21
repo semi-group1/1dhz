@@ -25,7 +25,6 @@
 			semi.config.AdminBeanConfig
 			semi.config.MvcConfig
 			semi.config.BeanConfig
-			semi.config.UserBeanConfig
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
