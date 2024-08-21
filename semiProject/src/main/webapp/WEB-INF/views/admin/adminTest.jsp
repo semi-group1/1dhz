@@ -9,7 +9,8 @@
 </head>
 <body>
 	<h1>관리자 테스트 페이지</h1>
-	<a href="${pageContext.request.contextPath}/admin">관리자 페이지로 이동</a>
+	<a href="${pageContext.request.contextPath}/admin/user/list">관리자
+		페이지로 이동</a>
 	<a href="${pageContext.request.contextPath }/loginAdmin">관리자 상태로
 		로그인하기</a>
 	<a href="${pageContext.request.contextPath }/logoutAdmin">로그아웃 하기</a>
