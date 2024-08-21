@@ -24,7 +24,68 @@ document.addEventListener('DOMContentLoaded', () => {
                     post.style.display = 'none';
                 }
             });
-        });        
+        });    
+		
+		
+		function loadBoardList(currentPageNo) {
+		        if (currentPageNo === undefined) {
+		            currentPageNo = "1";
+		        }
+
+		        $.ajax({
+		            url: "/board/getBoardList",
+		            data: { function_name: "getBoardList", current_page_no: currentPageNo },
+		            dataType: "JSON",
+		            cache: false,
+		            async: true,
+		            type: "POST",
+		            success: function(obj) {
+		                displayBoardList(obj);
+		            },
+		            error: function(xhr, status, error) {
+		                console.error("Error fetching board list:", status, error);
+		            }
+		        });
+		    }
+
+		    // 게시판 목록 카드 형태로 표시
+		    function displayBoardList(obj) {
+		        var state = obj.state;
+		        if (state === "SUCCESS") {
+		            var data = obj.data;
+		            var list = data.list;
+		            var totalCount = data.totalCount;
+		            var pagination = data.pagination;
+
+		            var cardsContainer = $("#board-cards-container");
+		            cardsContainer.empty(); // Clear existing content
+
+		            if (list.length > 0) {
+		                list.forEach(function(board) {
+		                    var cardHtml = "<div class='card' onclick='goBoardDetail(" + board.board_seq + ");'>";
+		                    cardHtml += "<div class='card-header'>" + board.board_subject + "</div>";
+		                    cardHtml += "<div class='card-body'>";
+		                    cardHtml += "<p><strong>작성자:</strong> " + board.board_writer + "</p>";
+		                    cardHtml += "<p><strong>조회수:</strong> " + board.board_hits + "</p>";
+		                    cardHtml += "<p><strong>작성일:</strong> " + board.ins_date + "</p>";
+		                    cardHtml += "</div></div>";
+
+		                    cardsContainer.append(cardHtml);
+		                });
+
+		                // Optional: Add pagination controls if needed
+		                $("#pagination").html(pagination);
+		            } else {
+		                cardsContainer.append("<p>등록된 글이 존재하지 않습니다.</p>");
+		            }
+		        } else {
+		            alert("관리자에게 문의하세요.");
+		        }
+		    }
+
+		    window.goBoardDetail = function(boardSeq) {
+		        location.href = "/board/boardDetail?boardSeq=" + boardSeq;
+		    };    
 
         // 게시판 내용 예시
         const posts = [
@@ -99,4 +160,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-

@@ -28,10 +28,25 @@
    		 </div><br /><br />
         
         
+       
+        
         <div id="board-content" class="row">
             <!-- 게시판 내용 추가-->
         </div>
     </main>
+    
+  
+     <!-- 메인 컨텐츠 -->
+	    <div id="wrap">
+	        <div id="container">
+	            <div class="inner">
+	                <h2>Welcome to the Board</h2>
+	                <div id="board-section">
+	                    <%@ include file="BoardList.jsp" %>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
     
     <%@ include file="footer.jsp" %>
 
