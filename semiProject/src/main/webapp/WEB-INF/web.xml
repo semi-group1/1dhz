@@ -27,6 +27,7 @@
 			semi.config.BeanConfig
 			semi.config.MainBeanConfig
 			semi.config.UserBeanConfig
+			semi.config.MemberBeanConfig
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
