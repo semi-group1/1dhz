@@ -44,9 +44,7 @@ public class UserController {
 	@RequestMapping("/userDelete/{userId}")
 	public String deleteUser(@PathVariable("userId") int userId, Model model) {
 		if(us.isDeleteSuccess(userId)) {
-			model.addAttribute("msg", "테스트 입니다.");
-			model.addAttribute("emp", dao.selectAll());
-			return "hello";
+			return "toMain";
 		}else {
 			model.addAttribute("user", us.selectOneUser(userId));
 			model.addAttribute("user_post", us.selectAllUserPost(userId));
