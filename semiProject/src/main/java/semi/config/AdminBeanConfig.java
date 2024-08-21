@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import semi.interceptor.AuthCheckInterceptor;
 
 @Configuration
 @PropertySource("classpath:/properties/db.properties")
 @ComponentScan(basePackages = { "semi" })
-public class AdminBeanConfig {
+public class AdminBeanConfig implements WebMvcConfigurer {
 	@Value("${db.oracle.driver}")
 	private String driver;
 	@Value("${db.oracle.url}")
@@ -44,5 +48,15 @@ public class AdminBeanConfig {
 		dstm.setDataSource(dataSource());
 
 		return dstm;
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(this.authCheckInterceptor()).addPathPatterns("/admin/**");
+	}
+
+	@Bean
+	public AuthCheckInterceptor authCheckInterceptor() {
+		return new AuthCheckInterceptor();
 	}
 }
