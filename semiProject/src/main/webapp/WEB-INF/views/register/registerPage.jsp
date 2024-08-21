@@ -59,7 +59,7 @@
 </head>
 <body>
 <h2>회원가입</h2>
-	<form  id="frm" action="RegisterProcess" method="post" >
+	<form  id="frm" action="RegisterProcess" method="post" onsubmit="return checkValueAndSumit()">
 	<label for="email">이메일:</label>
 	<input type="email" id="email" name="email" required><br><br>
 	<label for="password">비밀번호:</label>

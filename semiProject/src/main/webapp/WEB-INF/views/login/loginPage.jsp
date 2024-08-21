@@ -14,7 +14,7 @@
             border: 1px solid #ccc; /* 외곽선 */
         }
 </style>
-<script>
+<script type="text/javascript">
 fuction checkValueAndSumit() {
 	const userEmail = document.getElementById("email");
 	const emailValue = userEmail.value;
@@ -51,7 +51,7 @@ fuction checkValueAndSumit() {
 <h2>로그인</h2>
 	
 	<div class="container">
-	<form id="frm" action="loginProcess" method="post">
+	<form id="frm" action="step3" method="post" onsubmit="return checkValueAndSumit()">
 	<label for="email">이메일:</label>
 	<input type="email" id="email" name="email" placeholder="이메일을 쓰세요." required><br><br>
 	<label for="password">비밀번호:</label>
