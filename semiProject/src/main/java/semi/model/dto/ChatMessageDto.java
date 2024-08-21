@@ -1,32 +1,49 @@
 package semi.model.dto;
 
-//삭제 또는 비워둘 수 있음
+import java.sql.Timestamp;
+
 public class ChatMessageDto {
-	private String user;
-	private String message;
+    private int senderId;
+    private String senderName;
+    private String message;
+    private Timestamp sentTime;
 
-	// 기본 생성자
-	public ChatMessageDto() {
-	}
+    public ChatMessageDto(int senderId, String senderName, String message, Timestamp sentTime) {
+        this.senderId = senderId;
+        this.senderName = senderName;
+        this.message = message;
+        this.sentTime = sentTime;
+    }
+    
+    public int getSenderId() {
+        return senderId;
+    }
 
-	public ChatMessageDto(String user, String message) {
-		this.user = user;
-		this.message = message;
-	}
+    public void setSenderId(int senderId) {
+        this.senderId = senderId;
+    }
+    
+    public String getSenderName() {
+        return senderName;
+    }
 
-	public String getUser() {
-		return user;
-	}
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
 
-	public void setUser(String user) {
-		this.user = user;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public Timestamp getSentTime() {
+        return sentTime;
+    }
+
+    public void setSentTime(Timestamp sentTime) {
+        this.sentTime = sentTime;
+    }
 }

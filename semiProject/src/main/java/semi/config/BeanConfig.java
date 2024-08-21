@@ -7,10 +7,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import semi.controller.ChatController;
+import semi.controller.ChatRoomController;
 import semi.controller.HelloController;
-import semi.model.ChatModel;
+import semi.model.dao.ChatMessageDao;
 import semi.model.dao.HelloDao;
 import semi.service.ChatService;
+import semi.test.LoginController;
 
 @Configuration
 @PropertySource("classpath:/properties/db.properties")
@@ -53,17 +55,27 @@ public class BeanConfig {
 	}
 
 	@Bean
-	public ChatModel chatModel() {
-		return new ChatModel();
-	}
+    public ChatMessageDao chatMessageDao(DataSource dataSource) {
+        return new ChatMessageDao(dataSource);
+    }
 
-	@Bean
-	public ChatService chatService(ChatModel chatModel) {
-		return new ChatService(chatModel);
-	}
+    @Bean
+    public ChatService chatService(ChatMessageDao chatMessageDao) {
+        return new ChatService(chatMessageDao);
+    }
 
-	@Bean
-	public ChatController chatController(ChatService chatService) {
-		return new ChatController(chatService);
-	}
+    @Bean
+    public ChatController chatController(ChatService chatService) {
+        return new ChatController(chatService);
+    }
+    
+    @Bean
+    public LoginController loginController() {
+        return new LoginController();
+    }
+    
+    @Bean
+    public ChatRoomController chatRoomController(ChatService chatService) {
+        return new ChatRoomController(chatService);
+    }
 }

@@ -1,20 +1,30 @@
 package semi.service;
 
-import semi.model.ChatModel;
+import semi.model.dao.ChatMessageDao;
 import semi.model.dto.ChatMessageDto;
 
+import java.util.List;
+
 public class ChatService {
-    private final ChatModel model;
+    private final ChatMessageDao chatMessageDao;
 
-    public ChatService(ChatModel model) {
-        this.model = model;
+    public ChatService(ChatMessageDao chatMessageDao) {
+        this.chatMessageDao = chatMessageDao;
     }
 
-    public void addMessage(String user, String message) {
-        model.addMessage(new ChatMessageDto(user, message));
+    public void addMessage(int chatRoomId, int senderId, String message) {
+        chatMessageDao.insertMessage(chatRoomId, senderId, message);
     }
 
-    public ChatModel getModel() {
-        return model;
+    public List<ChatMessageDto> getMessages(int chatRoomId) {
+        return chatMessageDao.getMessages(chatRoomId);
+    }
+    
+    public List<Integer> getUniqueChatRoomIds() {
+        return chatMessageDao.getUniqueChatRoomIds();
+    }
+    
+    public int getMaxChatRoomId() {
+        return chatMessageDao.getMaxChatRoomId();
     }
 }
