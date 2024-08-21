@@ -22,7 +22,9 @@ public class AuthCheckInterceptor implements HandlerInterceptor {
 			}
 		}
 
-		response.sendRedirect(request.getContextPath() + "/main");
+		if (!authorized) {
+			response.sendRedirect(request.getContextPath() + "/main");
+		}
 		return authorized;
 	}
 }
