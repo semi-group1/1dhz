@@ -15,14 +15,14 @@
         }
 </style>
 <script type="text/javascript">
-fuction checkValueAndSumit() {
+	function checkValueAndSubmit() {
 	const userEmail = document.getElementById("email");
 	const emailValue = userEmail.value;
 	
 	const emailRegex = /^[A-Za-z0-9+_.-]+@(.+)$/;
 	
 	if(emailValue=="") {
-		alert("아이디를 입력해주세요.");
+		alert("이메일을 입력해주세요.");
 		userEmail.focus();
 		return;
 	}
@@ -38,8 +38,10 @@ fuction checkValueAndSumit() {
 		return;
 	}
 	
-	const frm = document.getElementById("frm");
-	frm.submit();
+	//const frm = document.getElementById("frm");
+	//frm.submit();
+	
+	 return true; // 유효성 검사 통과 후 폼 제출
 
 	
 }
@@ -51,12 +53,12 @@ fuction checkValueAndSumit() {
 <h2>로그인</h2>
 	
 	<div class="container">
-	<form id="frm" action="step3" method="post" onsubmit="return checkValueAndSumit()">
+	<form id="frm" action="/main/mainPage" method="post" onsubmit="return checkValueAndSubmit()">
 	<label for="email">이메일:</label>
 	<input type="email" id="email" name="email" placeholder="이메일을 쓰세요." required><br><br>
 	<label for="password">비밀번호:</label>
 	<input type="password" id="password" name="password" required><br><br>
-	<input type="submit" value="로그인" onclick="checkValueAndSubmit">
+	<input type="submit" value="로그인">
 	</form> <br>
 	<a href="${pageContext.request.contextPath}/register/registerPage">회원가입</a>
 	</div>

@@ -4,8 +4,17 @@ public class Member_Register {
     private int user_id;
     private String user_email;
     private String user_pw;
+    private String user_name;
     
-    public Member_Register() {
+    public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+	public Member_Register() {
     }
 
     public int getUser_id() {

@@ -35,7 +35,7 @@ public class MemberDao {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 
-			while (rs.next()) {
+			if(rs.next()) {
 				member.setUser_id(rs.getInt("user_id"));
 				member.setUser_email(rs.getString("user_email"));
 				member.setUser_pw(rs.getString("user_pw"));
@@ -56,32 +56,70 @@ public class MemberDao {
 		return member;
 	}
     
-    public boolean  registerUser(Member_Register signUpForm) {
-    	Member member = new Member();
-        this.sql = "INSERT INTO semi_user (user_email, user_pw) VALUES (?, ?)";
+	public boolean registerUser(Member_Register signUpForm) {
+		Member member = new Member();
+		int rowCount = 0;
+		this.sql = """
+				        		insert into semi_user(user_id, user_name, user_email, user_pw, user_job)
+				values(seq_semi_user_id.nextval, ?, ?, ? ,1)
+				        		""";
 
-        try {
-        	conn = ds.getConnection();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql);
-            conn = ds.getConnection();
-            
-            while (rs.next()) {
-            	pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, signUpForm.getUser_email());
-                pstmt.setString(2, signUpForm.getUser_pw());
-//				member.setUser_id(rs.getInt("user_id"));
-//				member.setUser_email(rs.getString("user_email"));
-//				member.setUser_pw(rs.getString("user_pw"));
+		try {
+			conn = ds.getConnection();
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, signUpForm.getUser_name());
+			pstmt.setString(2, signUpForm.getUser_email());
+			pstmt.setString(3, signUpForm.getUser_pw());
+
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (conn != null && !conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-            
+		}
 
-            int rowCount = pstmt.executeUpdate();
-            return rowCount > 0; // 성공 여부 반환
+		return rowCount > 0;
+	}
+	
+	public Member findByEmail(String email) {
+        Member member = null;
+        this.sql = "SELECT member_id, member_email, member_pw FROM semi_user WHERE member_email = ?";
+        
+        try {
+            conn = ds.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                member = new Member();
+                member.setUser_id(rs.getInt("member_id"));
+                member.setUser_email(rs.getString("member_email"));
+                member.setUser_pw(rs.getString("member_pw"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+                if (pstmt != null && !pstmt.isClosed()) {
+                    pstmt.close();
+                }
                 if (conn != null && !conn.isClosed()) {
                     conn.close();
                 }
@@ -89,13 +127,9 @@ public class MemberDao {
                 e.printStackTrace();
             }
         }
-
-        return false; // 기본적으로 실패로 간주
+        
+        return member;
     }
-    	
-
-    
-    
 //    
 //    public Member selectOneUser(int id) {
 //		this.sql = "select member_id, member_email, member_pw, where user_id=" + id;

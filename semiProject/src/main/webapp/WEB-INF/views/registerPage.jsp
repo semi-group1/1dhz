@@ -17,7 +17,7 @@
 </style>
 
 <script>
-	fuction checkValueAndSumit() {
+	function checkValueAndSubmit1() {
 	const userEmail = document.getElementById("email");
 	const emailValue = userEmail.value;
 	
@@ -51,22 +51,24 @@
 		return;
 	}
 	
-	const frm = document.getElementById("frm");
-	frm.submit();
+	return true;
+	//const frm = document.getElementById("frm");
+	//frm.submit();
+	
 }
 </script>
 
 </head>
 <body>
 <h2>회원가입</h2>
-	<form  id="frm" action="RegisterProcess" method="post" onsubmit="return checkValueAndSumit()">
+	<form  id="frm" action="RegisterProcess" method="post" onsubmit="return checkValueAndSubmit1()">
 	<label for="email">이메일:</label>
 	<input type="email" id="email" name="email" required><br><br>
 	<label for="password">비밀번호:</label>
 	<input type="password" id="password" name="password" required><br><br>
 	<label for="confirmPassword">비밀번호 확인:</label>
 	<input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
-	<input type="submit" value="회원가입하기" onclick="checkValueAndSubmit">
+	<input type="submit" value="회원가입하기">
 	</form>
 </body>
 </html>
