@@ -1,0 +1,152 @@
+/* 전체틀 스타일 */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* 메시지 영역 스타일 */
+.messages {
+    flex: 1;
+    border: 1px solid #ddd;
+    overflow-y: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* 메시지 기본 스타일 */
+.message {
+	width: max-content;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 사용자 이름 스타일 */
+.message-header {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* 나의 메시지 스타일 */
+.user1 {
+    margin-right: auto;
+    position: relative;
+}
+
+.user1 .message-body {
+	width: max-content;
+    background-color: #d1f7c4;
+    border: 1px solid #b8e1a4;
+    border-radius: 20px;
+    padding: 10px 15px;
+    margin-right: auto;
+    margin-bottom: 5px;
+}
+
+.user1 .message-time {
+    position: absolute;
+    bottom: 16px;
+    right: -20px;
+    font-size: 12px;
+    color: #888;
+}
+
+/* 다른 사용자 스타일 */
+.user2 {
+    margin-left: auto;
+    position: relative;
+}
+
+.user2 .message-header {
+    margin-left: auto;
+}
+
+.user2 .message-body{
+	width: max-content;
+    background-color: #f1f0f0;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 10px 15px;
+    margin-left: auto;
+    margin-bottom: 5px;
+}
+
+.user2 .message-time {
+    position: absolute;
+    bottom: 16px;
+    left: -20px;
+    font-size: 12px;
+    color: #888;
+}
+
+/* 입력칸 */
+.input-container {
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-container form {
+    display: flex;
+    width: 100%;
+}
+
+.input-container input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.input-container button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input-container button:hover {
+    background-color: #0056b3;
+}
+
+/* 뒤로가기 버튼 */
+.back-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.back-button {
+    padding: 8px 15px;
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin-left: auto;
+    margin-bottom: 10px;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+}
