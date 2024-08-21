@@ -16,6 +16,25 @@ body {
 	background-color: gainsboro;
 }
 
+#container a {
+	text-decoration: none;
+	color: black;
+	transition: 0.6s;
+}
+
+#container a:hover {
+	cursor: pointer;
+	color: white;
+}
+
+#logo-admin>a {
+	color: white !important;
+}
+
+#logo-admin>a:hover {
+	text-shadow: 0px 0px 20px #555555;
+}
+
 #container {
 	width: 1280px;
 	margin: auto;
@@ -44,8 +63,28 @@ body {
 	box-sizing: border-box;
 }
 
-.admin-menu>p {
+.admin-menu {
+	width: 300px;
+}
+
+.admin-menu-title, .admin-menu-element {
 	padding: 20px;
+	box-sizing: border-box;
+}
+
+.admin-menu-element {
+	transition: 0.6s;
+}
+
+.admin-menu-element>a {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.admin-menu-element:hover {
+	color: white;
+	background-color: darkgray;
 }
 
 .admin-menu-title {
@@ -57,7 +96,7 @@ body {
 #right {
 	display: flex;
 	flex-direction: column;
-	gap: 50px;
+	gap: 30px;
 	width: 75%;
 	padding: 50px;
 	box-sizing: border-box;
@@ -68,21 +107,89 @@ body {
 	width: 100%;
 }
 
-.admin-board {
-	width: 80%;
+.admin-board, .admin-category {
+	width: 100%;
+	border-collapse: collapse;
+	border-top: 2px solid gray;
+	border-bottom: 1px solid gray;
 }
 
-.admin-board th, .admin-board td {
+.admin-board th, .admin-board td, .admin-category th, .admin-category td
+	{
 	padding: 10px 20px;
 	text-align: center;
+	border-bottom: 1px solid gray;
+}
+
+.admin-board th, .admin-category th {
+	background-color: gainsboro;
+}
+
+.admin-board caption {
+	padding: 20px;
+	font-size: large;
 }
 
 .admin-board-page {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	gap: 20px;
 	align-items: center;
 	justify-content: center;
 	list-style: none;
+}
+
+.admin-board-page a {
+	padding: 10px 15px;
+}
+
+#right a {
+	text-decoration: none;
+	color: black;
+	transition: 0.6s;
+}
+
+#right a:hover {
+	background: gainsboro;
+}
+
+#right button, #right input[type="submit"], #right input[type="button"]
+	{
+	height: 100%;
+	padding: 5px 15px;
+	box-sizing: border-box;
+	transition: 0.6s;
+	border: 1px solid gray;
+}
+
+#right button:hover, #right input[type="submit"]:hover, #right input[type="button"]:hover
+	{
+	background: darkgray;
+	font-weight: bold;
+}
+
+button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+	cursor: pointer;
+}
+
+.admin-search {
+	text-align: center;
+	margin: auto;
+}
+
+.admin-search>* {
+	height: 100%;
+	font-size: medium;
+	border: 1px solid gray;
+	padding: 5px 15px;
+	box-sizing: border-box;
+	transition: 0.3s;
+}
+
+.text-align-right {
+	text-align: right !important;
+}
+
+.margin-top-20px {
+	margin-top: 20px;
 }

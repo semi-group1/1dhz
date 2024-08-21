@@ -71,6 +71,4 @@ insert into semi_job_category values(seq_semi_job_category_id.nextval, '생산·
 insert into semi_job_category values(seq_semi_job_category_id.nextval, '생산·제조', '포장·가공');
 insert into semi_job_category values(seq_semi_job_category_id.nextval, '생산·제조', '섬유·의류·패션');
 
-commit;
-
 select * from semi_job_category;

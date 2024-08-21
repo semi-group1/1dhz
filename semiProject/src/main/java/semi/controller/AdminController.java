@@ -22,18 +22,50 @@ public class AdminController {
 		view = "admin/common/page";
 	}
 
+	@RequestMapping("")
+	public String setDefaultPage() {
+		return "redirect: admin/user/list";
+	}
+
 	@RequestMapping("/user/list")
-	public String getAllUserList(Model model) {
+	public String getAllUserList(Model model, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
 		model.addAttribute("command", "userList");
-		model.addAttribute("list", ams.selectAllUserInfos());
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countAllUser()));
+		model.addAttribute("list", ams.selectAllUserInfos(Integer.parseInt(page)));
 
 		return view;
 	}
 
 	@RequestMapping("/user/listInactive")
-	public String getInactiveUserList(Model model) {
+	public String getInactiveUserList(Model model, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
 		model.addAttribute("command", "userListInactive");
-		model.addAttribute("list", ams.selectInactiveUsers());
+		model.addAttribute("page");
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countInactiveUser()));
+		model.addAttribute("list", ams.selectInactiveUsers(Integer.parseInt(page)));
+
+		return view;
+	}
+
+	@RequestMapping("/user/search")
+	public String findUserByKeyword(Model model, @RequestParam(required = false) String page,
+			@RequestParam String keyword, @RequestParam String type) {
+		if (page == null) {
+			page = "1";
+		}
+
+		model.addAttribute("command", "userSearchList");
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("type", type);
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countByKeyword(keyword, type)));
+		model.addAttribute("list", ams.selectByKeyword(Integer.parseInt(page), keyword, type));
 
 		return view;
 	}
@@ -66,25 +98,72 @@ public class AdminController {
 	}
 
 	@RequestMapping("/topic/listAll")
-	public String getAllPostList(Model model) {
+	public String getAllPostList(Model model, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
 		model.addAttribute("command", "topicListAll");
-		model.addAttribute("list", ams.selectAllTopics());
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countAllTopic()));
+		model.addAttribute("list", ams.selectAllTopics(Integer.parseInt(page)));
 
 		return view;
 	}
 
 	@RequestMapping("/topic/listGeneral")
-	public String getGeneralTopics(Model model) {
+	public String getGeneralTopics(Model model, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
 		model.addAttribute("command", "topicListGeneral");
-		model.addAttribute("list", ams.selectGeneralTopics());
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countGeneralTopic()));
+		model.addAttribute("list", ams.selectGeneralTopics(Integer.parseInt(page)));
+		model.addAttribute("categories", ams.selectGeneralCategories());
+
+		return view;
+	}
+
+	@RequestMapping("/topic/selectCategory")
+	public String getTopicsByCategory(Model model, int categoryId, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
+		model.addAttribute("command", "topicListGeneral");
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countByCategoryId(categoryId)));
+		model.addAttribute("list", ams.selectTopicsByCategory(Integer.parseInt(page), categoryId));
+		model.addAttribute("categories", ams.selectGeneralCategories());
+		model.addAttribute("categoryId", categoryId);
 
 		return view;
 	}
 
 	@RequestMapping("/topic/listJob")
-	public String getJobTopics(Model model) {
+	public String getJobTopics(Model model, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
 		model.addAttribute("command", "topicListJob");
-		model.addAttribute("list", ams.selectJobTopics());
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countJobTopics()));
+		model.addAttribute("list", ams.selectJobTopics(Integer.parseInt(page)));
+		model.addAttribute("categories", ams.selectJobCategories());
+
+		return view;
+	}
+
+	@RequestMapping("/topic/selectJobCategory")
+	public String getTopicsByJobCategory(Model model, int categoryId, @RequestParam(required = false) String page) {
+		if (page == null) {
+			page = "1";
+		}
+		model.addAttribute("command", "topicListJob");
+		model.addAttribute("page", page);
+		model.addAttribute("maxPage", ams.getMaxPage(ams.countByJobCategoryId(categoryId)));
+		model.addAttribute("list", ams.selectByJobCategoryId(Integer.parseInt(page), categoryId));
+		model.addAttribute("categories", ams.selectJobCategories());
+		model.addAttribute("categoryId", categoryId);
 
 		return view;
 	}

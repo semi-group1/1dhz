@@ -27,6 +27,16 @@ public class AdminUserDAO {
 		this.ds = ds;
 	}
 
+	public void setPaging() {
+		this.sql = """
+				select *
+				from (select rownum as rn, t.* from (
+				""" + this.sql + """
+				) t)
+				where rn between ? and ?
+				""";
+	}
+
 	public List<AdminUser> selectAllUserInfos() {
 		List<AdminUser> adminUsers = new ArrayList<AdminUser>();
 		this.sql = """
@@ -53,6 +63,200 @@ public class AdminUserDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return adminUsers;
+	}
+
+	public int countAllUser() {
+		int rowNum = 0;
+		this.sql = """
+				select count(*) as count from semi_user
+				""";
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				rowNum = rs.getInt("count");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return rowNum;
+	}
+
+	public List<AdminUser> selectAllUserInfos(int startNum, int endNum) {
+		List<AdminUser> adminUsers = new ArrayList<AdminUser>();
+		this.sql = """
+				select user_id, user_name, user_email
+				from semi_user
+				order by user_id
+				""";
+
+		this.setPaging();
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startNum);
+			pstmt.setInt(2, endNum);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				AdminUser au = new AdminUser();
+
+				au.setUserId(rs.getInt("user_id"));
+				au.setUserName(rs.getString("user_name"));
+				au.setUserEmail(rs.getString("user_email"));
+
+				adminUsers.add(au);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return adminUsers;
+	}
+
+	public int countByKeyword(String keyword, String type) {
+		int rowNum = 0;
+		try {
+			conn = ds.getConnection();
+			this.sql = """
+					select count(*) as count
+					from semi_user
+					""";
+			switch (type) {
+			case "userId":
+				sql += "where user_id = ?";
+				break;
+			case "userName":
+				sql += "where user_name like ?";
+				break;
+			case "userEmail":
+				sql += "where user_email = ?";
+				break;
+			}
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				rowNum = rs.getInt("count");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return rowNum;
+	}
+
+	public List<AdminUser> selectByKeyword(int startNum, int endNum, String keyword, String type) {
+		List<AdminUser> adminUsers = new ArrayList<AdminUser>();
+		try {
+			conn = ds.getConnection();
+			this.sql = """
+					select user_id, user_name, user_email
+					from semi_user
+					""";
+			switch (type) {
+			case "userId":
+				sql += "where user_id = ?";
+				break;
+			case "userName":
+				sql += "where user_name like ?";
+				break;
+			case "userEmail":
+				sql += "where user_email = ?";
+				break;
+			}
+			sql += """
+					order by user_id
+					""";
+			this.setPaging();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startNum);
+			pstmt.setInt(3, endNum);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				AdminUser au = new AdminUser();
+
+				au.setUserId(rs.getInt("user_id"));
+				au.setUserName(rs.getString("user_name"));
+				au.setUserEmail(rs.getString("user_email"));
+
+				adminUsers.add(au);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}
@@ -101,6 +305,109 @@ public class AdminUserDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return adminUsers;
+	}
+
+	public int countInactiveUser() {
+		int rowNum = 0;
+		this.sql = """
+				SELECT
+					count(*) as count
+				FROM
+					SEMI_USER su
+				JOIN SEMI_USER_INACTIVE sui ON
+					su.USER_ID = sui.inactive_user_id
+				""";
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				rowNum = rs.getInt("count");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return rowNum;
+	}
+
+	public List<AdminUser> selectInactiveUsers(int startNum, int endNum) {
+		List<AdminUser> adminUsers = new ArrayList<AdminUser>();
+		this.sql = """
+				SELECT
+					user_id,
+					user_name,
+					inactive_desc,
+					to_char(inactive_start_date, 'YYYY-MM-DD') as inactive_start_date,
+					to_char(inactive_end_date, 'YYYY-MM-DD') as inactive_end_date
+				FROM
+					SEMI_USER su
+				JOIN SEMI_USER_INACTIVE sui ON
+					su.USER_ID = sui.inactive_user_id
+				ORDER BY
+					inactive_start_date DESC
+				""";
+
+		this.setPaging();
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startNum);
+			pstmt.setInt(2, endNum);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				AdminUser au = new AdminUser();
+
+				au.setUserId(rs.getInt("user_id"));
+				au.setUserName(rs.getString("user_name"));
+				au.setUserInactiveDesc(rs.getString("inactive_desc"));
+				au.setUserInactiveStartDate(rs.getString("inactive_start_date"));
+				au.setUserInactiveEndDate(rs.getString("inactive_end_date"));
+
+				adminUsers.add(au);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}
@@ -138,6 +445,12 @@ public class AdminUserDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}
@@ -181,6 +494,12 @@ public class AdminUserDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}
@@ -230,6 +549,12 @@ public class AdminUserDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}
@@ -259,6 +584,12 @@ public class AdminUserDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}
@@ -289,6 +620,12 @@ public class AdminUserDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}
@@ -320,6 +657,12 @@ public class AdminUserDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (stmt != null && !stmt.isClosed()) {
+					stmt.close();
+				}
 				if (!conn.isClosed()) {
 					conn.close();
 				}

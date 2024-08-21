@@ -18,6 +18,18 @@ public class AdminManagementService {
 	@Autowired
 	AdminReportDAO adminReportDAO;
 
+	public int getStartNum(int page) {
+		return (page - 1) * 20 + 1;
+	}
+
+	public int getEndNum(int page) {
+		return (page - 1) * 20 + 20;
+	}
+
+	public int getMaxPage(int count) {
+		return (count - 1) / 20 + 1;
+	}
+
 	public AdminManagementService() {
 	}
 
@@ -25,8 +37,32 @@ public class AdminManagementService {
 		return adminUserDAO.selectAllUserInfos();
 	}
 
+	public List<AdminUser> selectAllUserInfos(int page) {
+		return adminUserDAO.selectAllUserInfos(this.getStartNum(page), this.getEndNum(page));
+	}
+
+	public List<AdminUser> selectByKeyword(int page, String keyword, String type) {
+		return adminUserDAO.selectByKeyword(this.getStartNum(page), this.getEndNum(page), keyword, type);
+	}
+
+	public int countAllUser() {
+		return adminUserDAO.countAllUser();
+	}
+
+	public int countByKeyword(String keyword, String type) {
+		return adminUserDAO.countByKeyword(keyword, type);
+	}
+
 	public List<AdminUser> selectInactiveUsers() {
 		return adminUserDAO.selectInactiveUsers();
+	}
+
+	public List<AdminUser> selectInactiveUsers(int page) {
+		return adminUserDAO.selectInactiveUsers(this.getStartNum(page), this.getEndNum(page));
+	}
+
+	public int countInactiveUser() {
+		return adminUserDAO.countInactiveUser();
 	}
 
 	public AdminUser selectUserInfo(int userId) {
@@ -59,8 +95,64 @@ public class AdminManagementService {
 		return adminTopicDAO.selectAllTopics();
 	}
 
+	public List<AdminTopic> selectAllTopics(int page) {
+		return adminTopicDAO.selectAllTopics(this.getStartNum(page), this.getEndNum(page));
+	}
+
+	public int countAllTopic() {
+		return adminTopicDAO.countAllTopic();
+	}
+
+	public List<AdminCategory> selectGeneralCategories() {
+		return adminTopicDAO.selectGeneralCategories();
+	}
+
+	public List<AdminTopic> selectTopicsByCateogry(int categoryId) {
+		return adminTopicDAO.selectByCategoryId(categoryId);
+	}
+
+	public int countByCategoryId(int categoryId) {
+		return adminTopicDAO.countByCategoryId(categoryId);
+	}
+
+	public List<AdminTopic> selectTopicsByCategory(int page, int categoryId) {
+		return adminTopicDAO.selectByCategoryId(categoryId, this.getStartNum(page), this.getEndNum(page));
+	}
+
 	public List<AdminTopic> selectGeneralTopics() {
 		return adminTopicDAO.selectGeneralTopics();
+	}
+
+	public int countGeneralTopic() {
+		return adminTopicDAO.countGeneralTopic();
+	}
+
+	public List<AdminTopic> selectGeneralTopics(int page) {
+		return adminTopicDAO.selectGeneralTopics(this.getStartNum(page), this.getEndNum(page));
+	}
+
+	public int countByJobCategoryId(int categoryId) {
+		return adminTopicDAO.countByJobCategoryId(categoryId);
+	}
+
+	public List<AdminTopic> selectByJobCategoryId(int page, int categoryId) {
+		return adminTopicDAO.selectByJobCategoryId(categoryId, this.getStartNum(page), this.getEndNum(page));
+	}
+
+	public List<AdminTopic> selectTopicByJobCateogry(int categoryId) {
+		return adminTopicDAO.selectByJobCategoryId(categoryId);
+	}
+
+	public List<AdminCategory> selectJobCategories() {
+		return adminTopicDAO.selectJobCategories();
+	}
+
+	public int countJobTopics() {
+		return adminTopicDAO.countJobTopics();
+	}
+
+	public List<AdminTopic> selectJobTopics(int page) {
+		return adminTopicDAO.selectJobTopics(this.getStartNum(page), this.getStartNum(page));
 	}
 
 	public List<AdminTopic> selectJobTopics() {

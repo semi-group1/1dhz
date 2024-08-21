@@ -35,12 +35,7 @@
 			<th>가입일</th>
 			<td>${userInfo.userJoinDate }</td>
 		</tr>
-		<tr>
-			<th>신고 누적 횟수</th>
-			<td><button>상세보기</button></td>
-		</tr>
 	</table>
-	<hr>
 	<h2>작성 게시글 목록</h2>
 	<table class="admin-board">
 		<thead>
@@ -69,14 +64,6 @@
 			</c:choose>
 		</tbody>
 	</table>
-	<ul class="admin-board-page">
-		<li>이전</li>
-		<li>1</li>
-		<li>2</li>
-		<li>3</li>
-		<li>다음</li>
-	</ul>
-	<hr>
 	<h2>작성 댓글 목록</h2>
 	<table class="admin-board">
 		<thead>
@@ -106,15 +93,7 @@
 			</c:choose>
 		</tbody>
 	</table>
-	<ul class="admin-board-page">
-		<li>이전</li>
-		<li>1</li>
-		<li>2</li>
-		<li>3</li>
-		<li>다음</li>
-	</ul>
-	<hr>
-	<div>
+	<div class="text-align-right">
 		<button class="historyBack">이전 페이지로 돌아가기</button>
 		<button class="inactivateBtn" data-id="${userInfo.userId }">회원
 			정지</button>

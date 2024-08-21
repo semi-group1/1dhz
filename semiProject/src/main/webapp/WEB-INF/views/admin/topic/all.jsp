@@ -13,6 +13,11 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:if test="${empty list }">
+				<tr>
+					<td colspan="4">결과가 존재하지 않습니다.</td>
+				</tr>
+			</c:if>
 			<c:forEach items="${list }" var="item" varStatus="status">
 				<tr>
 					<td>${item.postId }</td>
@@ -25,10 +30,14 @@
 		</tbody>
 	</table>
 	<ul class="admin-board-page">
-		<li>이전</li>
-		<li>1</li>
-		<li>2</li>
-		<li>3</li>
-		<li>다음</li>
+		<c:if test="${page > 1 }">
+			<li><a href="listAll?page=${page-1 }">이전</a></li>
+		</c:if>
+		<c:forEach var="i" begin="1" end="${maxPage }">
+			<li><a href="listAll?page=${i }">${i }</a></li>
+		</c:forEach>
+		<c:if test="${page < maxPage}">
+			<li><a href="listAll?page=${page+1 }">다음</a></li>
+		</c:if>
 	</ul>
 </div>
