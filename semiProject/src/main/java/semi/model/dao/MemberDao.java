@@ -12,30 +12,30 @@ import semi.model.Member_Register;
 @Repository
 public class MemberDao {
 
-    @Autowired
-    private DataSource ds;
-    private Connection conn;
-    private Statement stmt;
-    private PreparedStatement pstmt;
-    private ResultSet rs;
-    private String sql;
+	@Autowired
+	private DataSource ds;
+	private Connection conn;
+	private Statement stmt;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
+	private String sql;
 
-    public MemberDao() {
-    }
+	public MemberDao() {
+	}
 
-    public MemberDao(DataSource ds) {
-        this.ds = ds;
-    }
+	public MemberDao(DataSource ds) {
+		this.ds = ds;
+	}
 
-    public Member selectOneUser(int id, String user_email, String user_password) {
-		this.sql = "select member_id, member_email, member_pw, where user_id=" + id;
+	public Member selectOneUser(int id, String user_email, String user_password) {
+		this.sql = "select user_id, user_email, user_pw from semi_user where user_id=" + id;
 		Member member = new Member();
 		try {
 			conn = ds.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 
-			if(rs.next()) {
+			if (rs.next()) {
 				member.setUser_id(rs.getInt("user_id"));
 				member.setUser_email(rs.getString("user_email"));
 				member.setUser_pw(rs.getString("user_pw"));
@@ -51,11 +51,10 @@ public class MemberDao {
 				e2.printStackTrace();
 			}
 		}
-		
-		
+
 		return member;
 	}
-    
+
 	public boolean registerUser(Member_Register signUpForm) {
 		Member member = new Member();
 		int rowCount = 0;
@@ -93,43 +92,43 @@ public class MemberDao {
 
 		return rowCount > 0;
 	}
-	
-	public Member findByEmail(String email) {
-        Member member = null;
-        this.sql = "SELECT member_id, member_email, member_pw FROM semi_user WHERE member_email = ?";
-        
-        try {
-            conn = ds.getConnection();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, email);
-            rs = pstmt.executeQuery();
 
-            if (rs.next()) {
-                member = new Member();
-                member.setUser_id(rs.getInt("member_id"));
-                member.setUser_email(rs.getString("member_email"));
-                member.setUser_pw(rs.getString("member_pw"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null && !rs.isClosed()) {
-                    rs.close();
-                }
-                if (pstmt != null && !pstmt.isClosed()) {
-                    pstmt.close();
-                }
-                if (conn != null && !conn.isClosed()) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        return member;
-    }
+	public Member findByEmail(String email) {
+		Member member = null;
+		this.sql = "SELECT user_id, user_email, user_pw FROM semi_user WHERE user_email = ?";
+
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				member = new Member();
+				member.setUser_id(rs.getInt("user_id"));
+				member.setUser_email(rs.getString("user_email"));
+				member.setUser_pw(rs.getString("user_pw"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null && !rs.isClosed()) {
+					rs.close();
+				}
+				if (pstmt != null && !pstmt.isClosed()) {
+					pstmt.close();
+				}
+				if (conn != null && !conn.isClosed()) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return member;
+	}
 //    
 //    public Member selectOneUser(int id) {
 //		this.sql = "select member_id, member_email, member_pw, where user_id=" + id;
@@ -161,8 +160,6 @@ public class MemberDao {
 //	}
 //    
 //    insert into T_MEMBER(email,pw) values(?,?)
-    
-    
 
 //	public List<User> selectAllUser() {
 //		this.sql = "select * from semi_user order by user_id";
@@ -197,6 +194,6 @@ public class MemberDao {
 //		return userList;
 //	}
 
-    // 회원가입 처리 메소드
-    
+	// 회원가입 처리 메소드
+
 }

@@ -12,6 +12,8 @@
 	<ol>
 		<li><a href="${pageContext.request.contextPath }/main">메인
 				페이지로 이동하기</a></li>
+		<li><a href="${pageContext.request.contextPath }/login/loginPage">로그인
+				페이지로 이동하기</a></li>
 		<li><a href="${pageContext.request.contextPath }/chatrooms">채팅
 				기능</a></li>
 		<li><a href="${pageContext.request.contextPath }/myPage/1">마이페이지로
