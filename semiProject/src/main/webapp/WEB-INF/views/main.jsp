@@ -22,7 +22,7 @@
         
         <!-- 게시판 홈 연결 -->
  		<div class="main-banner">
-	        <a href="#" id="main-banner">
+	        <a href="http://localhost:8080/semiProject/main" id="main-banner">
 	            <img src="images/main_banner.png" alt="메인배너" class="img-fluid">
 	        </a>
    		 </div><br /><br />
